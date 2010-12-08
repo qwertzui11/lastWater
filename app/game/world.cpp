@@ -22,6 +22,13 @@ void world::initialise()
     m_sprite.SetY(0);
 }
 
+void world::update(float timeLastFrame)
+{
+    const sf::View view = m_rw->GetView();
+    m_sprite.SetX(view.GetCenter().x - view.GetHalfSize().x);
+    m_sprite.SetY(view.GetCenter().y - view.GetHalfSize().y);
+}
+
 void world::render()
 {
     m_rw->Draw(m_sprite);
