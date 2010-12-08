@@ -15,7 +15,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     game.cpp \
-    client.cpp \
     world.cpp \
     planet.cpp \
     ship.cpp \
@@ -37,7 +36,6 @@ win32 {
 
 HEADERS += \
     game.hpp \
-    client.hpp \
     world.hpp \
     planet.hpp \
     ship.hpp \

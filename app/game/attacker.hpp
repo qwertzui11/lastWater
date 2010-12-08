@@ -3,7 +3,7 @@
 
 #include "ship.hpp"
 
-class attacker : public ship
+class attacker // : public ship
 {
 public:
     attacker();
