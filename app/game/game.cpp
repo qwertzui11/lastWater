@@ -2,7 +2,7 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
+    : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
     , m_test(0)
     , m_world(&m_window)
 {
@@ -21,7 +21,7 @@ void game::initialise()
     {
         std::cout << "m_imgShip.LoadFromFile";
     }
-    if (!m_imgAsteroid.LoadFromFile("../data/img/1p_fighter.tga"))
+    if (!m_imgAsteroid.LoadFromFile("../data/img/asteroid.tga"))
     {
         std::cout << "m_imgAsteroid.LoadFromFile";
     }
