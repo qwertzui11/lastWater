@@ -85,6 +85,15 @@ int game::run()
                 {
                     view2.Move(0.f/**m_window.GetFrameTime()*/, 10.f);
                 }
+                if (view2.GetCenter().x - view.GetHalfSize().x < 0)
+                    view2.SetCenter(view2.GetHalfSize().x, view.GetCenter().y);
+                if (view2.GetCenter().y - view.GetHalfSize().y < 0)
+                    view2.SetCenter(view.GetCenter().x, view.GetHalfSize().y);
+
+                if (view2.GetCenter().x + view.GetHalfSize().x > 2000)
+                    view2.SetCenter(2000-view2.GetHalfSize().x, view.GetCenter().y);
+                if (view2.GetCenter().y + view.GetHalfSize().y > 2000)
+                    view2.SetCenter(view.GetCenter().x, 2000-view.GetHalfSize().y);
                 m_window.SetView(view2);
             }
         }
