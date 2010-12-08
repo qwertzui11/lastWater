@@ -17,7 +17,7 @@ public:
 private:
 
     sf::RenderWindow m_window;
-
+    client m_client;
 
 };
 
