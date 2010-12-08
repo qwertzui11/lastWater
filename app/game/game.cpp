@@ -24,6 +24,20 @@ void game::initialise()
     }
 
     m_test = new ship(&m_imgShip, &m_window);
+
+    if (!m_img1p.LoadFromFile("../data/img/1p_planet.tga"))
+    {
+        std::cout << "m_img1p.LoadFromFile";
+    }
+
+    m_1p = new planet(&m_img1p, &m_window);
+
+    if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
+    {
+        std::cout << "m_imgWater.LoadFromFile";
+    }
+
+    m_water = new planet(&m_imgWater, &m_window);
 }
 
 int game::run()
