@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "client.hpp"
+#include "server.hpp"
 
 class game
 {
@@ -18,7 +19,7 @@ private:
 
     sf::RenderWindow m_window;
     client m_client;
-
+    server m_server;
 };
 
 #endif // GAME_HPP

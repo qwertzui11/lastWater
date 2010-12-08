@@ -1,4 +1,6 @@
 #include "server.hpp"
+#include "stdio.h"
+#include <iostream>
 
 server::server()
 {
@@ -22,6 +24,10 @@ void server::initialise()
     if (Listener.Accept(Client, &ClientAddress) != sf::Socket::Done)
     {
         // Error...
+    }
+    else
+    {
+        std::cout << "Sers bub";
     }
 
 }
