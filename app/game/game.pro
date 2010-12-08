@@ -30,6 +30,7 @@ unix {
     LIBS+= -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfml-audio
 }
 
+# dingdong
 win32 {
     LIBS+= C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-graphics.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-window.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-system.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-audio.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-network.a
     INCLUDEPATH+= C:\Users\andreas\UNI\GameDesign\SFML\include
