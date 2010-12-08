@@ -4,7 +4,7 @@ server::server()
 {
 }
 
-server::initialise()
+void server::initialise()
 {
 
 

@@ -26,9 +26,9 @@ int game::run()
         {
             if (Event.Type == sf::Event::Closed)
                 m_window.Close();
-            m_client.render();
         }
         m_window.Clear();
+        m_client.render();
         m_window.Display();
     }
     return EXIT_SUCCESS;

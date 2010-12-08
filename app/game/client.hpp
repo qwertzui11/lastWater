@@ -20,6 +20,9 @@ private:
 
     sf::String m_text;
     sf::Font m_font;
+
+    sf::Image m_image;
+    sf::Sprite m_sprite;
 };
 
 #endif // CLIENT_HPP
