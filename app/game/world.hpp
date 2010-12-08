@@ -15,6 +15,7 @@ public:
 private:
     sf::RenderWindow *m_rw;
     sf::Image m_image;
+    sf::Sprite m_sprite;
 };
 
 #endif // WORLD_HPP
