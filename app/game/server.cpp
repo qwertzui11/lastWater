@@ -3,3 +3,9 @@
 server::server()
 {
 }
+
+server::initialise()
+{
+
+
+}
