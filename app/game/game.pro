@@ -42,4 +42,5 @@ HEADERS += \
     collector.hpp \
     attacker.hpp \
     asteroid.hpp \
-    messages.hpp
+    messages.hpp \
+    useful.hpp

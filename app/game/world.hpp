@@ -10,6 +10,7 @@ public:
     ~world();
 
     void initialise();
+    void update(float );
     void render();
 
 private:

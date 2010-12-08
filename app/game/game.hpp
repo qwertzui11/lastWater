@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "ship.hpp"
 #include "world.hpp"
+#include "asteroid.hpp"
 
 class game
 {
@@ -22,8 +23,10 @@ private:
 
     sf::RenderWindow m_window;
     sf::Image m_imgShip;
+    sf::Image m_imgAsteroid;
     ship *m_test;
     world m_world;
+    asteroid *m_asteroids;
 };
 
 #endif // GAME_HPP
