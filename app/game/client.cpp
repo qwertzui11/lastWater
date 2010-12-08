@@ -3,3 +3,13 @@
 client::client()
 {
 }
+
+client::~client()
+{
+}
+
+void client::initialise()
+{
+
+}
+
