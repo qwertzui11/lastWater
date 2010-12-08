@@ -16,3 +16,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp
+
+# INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
+LIBS+= -lsfml-graphics -lsfml-window -lsfml-system
