@@ -4,11 +4,8 @@
 #include <SFML/Graphics.hpp>
 #include "ship.hpp"
 #include "world.hpp"
-<<<<<<< HEAD
 #include "planet.hpp"
-=======
 #include "asteroid.hpp"
->>>>>>> 9138d7be38f7231c0b0cec76b17ddae23cd12a09
 
 class game
 {
@@ -36,8 +33,6 @@ private:
     planet *m_water;
 
     sf::Image m_imgAsteroid;
-    ship *m_test;
-    world m_world;
     asteroid *m_asteroids;
 };
 
