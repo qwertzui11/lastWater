@@ -4,9 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= core
-
-QT       -= gui
+QT       -= core gui
 
 TARGET = game
 CONFIG   += console
@@ -18,4 +16,14 @@ TEMPLATE = app
 SOURCES += main.cpp
 
 # INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
+
+unix
+{
 LIBS+= -lsfml-graphics -lsfml-window -lsfml-system
+}
+
+win32
+{
+    LIBS+=
+    INCLUDEPATH+=
+}
