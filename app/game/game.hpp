@@ -2,7 +2,7 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
-#include "client.hpp"
+#include "ship.hpp"
 
 class game
 {
@@ -14,11 +14,14 @@ public:
     void initialise();
 
     int run();
+
+    void update(float timeLastFrame);
+    void render();
 private:
 
     sf::RenderWindow m_window;
-    client m_client;
-
+    sf::Image m_imgShip;
+    ship *m_test;
 };
 
 #endif // GAME_HPP

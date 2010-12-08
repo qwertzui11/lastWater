@@ -3,7 +3,7 @@
 
 #include "ship.hpp"
 
-class collector : public ship
+class collector // : public ship
 {
 public:
     collector();
