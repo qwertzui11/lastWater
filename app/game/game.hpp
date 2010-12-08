@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "ship.hpp"
+#include "world.hpp"
 
 class game
 {
@@ -22,6 +23,7 @@ private:
     sf::RenderWindow m_window;
     sf::Image m_imgShip;
     ship *m_test;
+    world m_world;
 };
 
 #endif // GAME_HPP
