@@ -15,7 +15,7 @@ void ship::render()
 
 void ship::update(float timeLastFrame)
 {
-    m_sprite.Move((m_goTo-m_sprite.GetPosition())*timeLastFrame);
+    m_sprite.Move((m_goTo - m_sprite.GetPosition()) * timeLastFrame);
 }
 
 void ship::goTo(sf::Vector2f goTo)
