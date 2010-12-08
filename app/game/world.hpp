@@ -6,11 +6,14 @@
 class world
 {
 public:
-    world();
+    world(sf::RenderWindow *rw);
     ~world();
 
     void initialise();
+    void render();
+
 private:
+    sf::RenderWindow *m_rw;
     sf::Image m_image;
 };
 
