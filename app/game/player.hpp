@@ -19,10 +19,9 @@ protected:
     void render();
 
     sf::RenderWindow *m_rw;
-private:
     std::vector<attacker *> m_attacker;
     std::vector<collector *> m_collector;
-
+private:
     sf::Image *m_imgCollector;
     sf::Image *m_imgAttacker;
 

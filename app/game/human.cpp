@@ -29,6 +29,29 @@ void human::update(float timeLastFrame)
         m_select->SetPointPosition(1, pos.x, m_select->GetPointPosition(0).y);
         m_select->SetPointPosition(3, m_select->GetPointPosition(0).x, pos.y);
         m_select->SetPointPosition(2, pos.x, pos.y);
+
+        for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+        {
+            sf::FloatRect coll(m_select->GetPointPosition(0).x, m_select->GetPointPosition(0).y, pos.x, pos.y);
+            if (pos.x < m_select->GetPointPosition(0).x)
+            {
+                coll.Left = pos.x;
+                coll.Right = m_select->GetPointPosition(0).x;
+            }
+            if (pos.y < m_select->GetPointPosition(0).y)
+            {
+                coll.Top = pos.y;
+                coll.Bottom = m_select->GetPointPosition(0).y;
+            }
+            if (coll.Intersects((*it)->collRect()))
+            {
+                (*it)->setSelected(true);
+            }
+            else
+            {
+                (*it)->setSelected(false);
+            }
+        }
     }
 }
 
@@ -54,5 +77,9 @@ void human::stopSelect()
     {
         delete m_select;
         m_select = 0;
+    }
+    for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+    {
+
     }
 }
