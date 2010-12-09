@@ -31,15 +31,15 @@ void game::initialise()
     {
         std::cout << "m_img1p.LoadFromFile";
     }
-    sf::Vector2f m_pos1p(50,50);
-    m_1p = new planet(&m_img1p, &m_window, m_pos1p);
+    sf::Vector2f m_pos1p(250,250);
+    m_1p = new planet(&m_img1p, &m_window, m_pos1p, sf::Color(230,185,117));
 
     if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
     {
         std::cout << "m_imgWater.LoadFromFile";
     }
-    sf::Vector2f m_posWater(1000,1000);
-    m_water = new planet(&m_imgWater, &m_window, m_posWater);
+    sf::Vector2f m_posWater(1200,1200);
+    m_water = new planet(&m_imgWater, &m_window, m_posWater, sf::Color(32,167,225));
 }
 
 int game::run()
@@ -129,8 +129,8 @@ void game::render()
         (*it)->render();
     }
     if(m_1p)
-        m_1p->render();
+        m_1p->render(sf::Vector2f(200,200));
     if(m_water)
-        m_water->render();
+        m_water->render(sf::Vector2f(250,247));
     m_player.render();
 }
