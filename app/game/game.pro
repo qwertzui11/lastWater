@@ -20,7 +20,10 @@ SOURCES += main.cpp \
     ship.cpp \
     collector.cpp \
     attacker.cpp \
-    asteroid.cpp
+    asteroid.cpp \
+    player.cpp \
+    human.cpp \
+    computer.cpp
 
 # INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
 
@@ -43,4 +46,7 @@ HEADERS += \
     attacker.hpp \
     asteroid.hpp \
     messages.hpp \
-    useful.hpp
+    useful.hpp \
+    player.hpp \
+    human.hpp \
+    computer.hpp
