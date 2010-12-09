@@ -33,19 +33,22 @@ void ship::render()
 void ship::update(float timeLastFrame)
 {
     sf::Vector2f wantedDir = normalize(m_goTo - m_sprite.GetPosition());
+    wantedDir *= 300.0f;
 
     for (std::vector<ship*>::iterator it = g_ships.begin(); it < g_ships.end(); ++it)
     {
         if ((*it) == this)
             continue;
         sf::Vector2f otherPos = (*it)->pos();
-        if (length(otherPos - pos()) < g_radius*2.f)
+        sf::Vector2f otherDir = otherPos - pos();
+        if (length(otherDir) < g_radius*2.f)
         {
-            std::cerr << "collision\n";
+            sf::Vector2f inv = sf::Vector2f(1.f/otherDir.x, 1.f/otherDir.y);
+            wantedDir-=inv*10000.f;
         }
     }
 
-    m_sprite.Move((m_goTo - m_sprite.GetPosition()) * timeLastFrame);
+    m_sprite.Move(wantedDir * timeLastFrame);
 }
 
 void ship::goTo(sf::Vector2f goTo)
