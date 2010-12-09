@@ -16,3 +16,8 @@ sf::Vector2f mousePos(sf::RenderWindow *rw)
                         rw->GetInput().GetMouseY()+rw->GetView().GetCenter().y-rw->GetView().GetHalfSize().y);
 }
 
+float length(sf::Vector2f vec)
+{
+    return sqrt(vec.x * vec.x + vec.y * vec.y);
+}
+
