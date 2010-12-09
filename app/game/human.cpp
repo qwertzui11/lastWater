@@ -10,13 +10,21 @@ human::human(sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorl
 void human::event(const sf::Event *ev)
 {
     if (ev->Type == sf::Event::MouseButtonPressed)
-        startSelect();
+        if (ev->MouseButton.Button==sf::Mouse::Left)
+            startSelect();
 
     if (ev->Type == sf::Event::MouseButtonReleased)
-        stopSelect();
+    {
+        if (ev->MouseButton.Button==sf::Mouse::Left)
+            stopSelect();
+        if (ev->MouseButton.Button==sf::Mouse::Right)
+            sendSelected();
+    }
+
 
     if (ev->Type == sf::Event::KeyReleased)
-        newCollector();
+        if (ev->Key.Code == 'c')
+            newCollector();
 
 }
 
@@ -78,8 +86,15 @@ void human::stopSelect()
         delete m_select;
         m_select = 0;
     }
+}
+
+void human::sendSelected()
+{
     for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
     {
-
+        if ((*it)->isSelected())
+        {
+            (*it)->goTo(mousePos(m_rw));
+        }
     }
 }

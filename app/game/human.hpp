@@ -15,6 +15,7 @@ public:
 private:
     void startSelect();
     void stopSelect();
+    void sendSelected();
 
     sf::Shape *m_select;
 
