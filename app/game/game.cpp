@@ -91,6 +91,8 @@ int game::run()
                     view2.SetCenter(view.GetCenter().x, 2000-view.GetHalfSize().y);
                 m_window.SetView(view2);
             }
+
+            m_player.event(&Event);
         }
         // m_window.SetView();
         m_window.Clear();
@@ -103,6 +105,8 @@ int game::run()
 
 void game::update(float timeLastFrame)
 {
+    m_player.update(timeLastFrame);
+
     m_nextAsteroid+=timeLastFrame;
     if (m_nextAsteroid > 1.f)
     {
@@ -139,4 +143,5 @@ void game::render()
         m_water->render();
     if (m_test)
         m_test->render();
+    m_player.render();
 }

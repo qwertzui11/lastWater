@@ -23,7 +23,8 @@ SOURCES += main.cpp \
     asteroid.cpp \
     player.cpp \
     human.cpp \
-    computer.cpp
+    computer.cpp \
+    useful.cpp
 
 # INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
 

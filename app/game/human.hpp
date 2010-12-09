@@ -13,7 +13,11 @@ public:
     void update(float timeLastFrame);
     void render();
 private:
-    sf::FloatRect m_select;
+    void startSelect();
+    void stopSelect();
+
+    sf::Shape *m_select;
+
 };
 
 #endif // HUMAN_HPP
