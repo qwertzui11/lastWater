@@ -1,11 +1,12 @@
 #include "planet.hpp"
 
-planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos)
+planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Color col)
     : m_rw(rw)
     , m_sprite(*img)
     , m_pos(pos)
     , m_waterLvl(0)
 {
+    m_sprite.SetColor(col);
     m_sprite.SetPosition(m_pos);
 }
 
@@ -19,4 +20,6 @@ void planet::render(sf::Vector2f pos)
 void planet::update(int lvl)
 {
    m_waterLvl = lvl;
+   //if(0 < lvl)
+    //m_sprite.SetColor();
 }

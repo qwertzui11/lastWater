@@ -6,7 +6,7 @@
 class planet
 {
 public:
-    planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos);
+    planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Color col);
 
     void update(int lvl);
     void render(sf::Vector2f pos);
