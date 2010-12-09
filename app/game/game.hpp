@@ -6,6 +6,7 @@
 #include "world.hpp"
 #include "planet.hpp"
 #include "asteroid.hpp"
+#include <vector>
 
 class game
 {
@@ -33,7 +34,9 @@ private:
     planet *m_water;
 
     sf::Image m_imgAsteroid;
-    asteroid *m_asteroids;
+    std::vector<asteroid *>m_asteroids;
+
+    float m_nextAsteroid;
 };
 
 #endif // GAME_HPP

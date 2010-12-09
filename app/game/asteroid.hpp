@@ -6,11 +6,13 @@
 class asteroid
 {
 public:
-    asteroid()  {;}
     asteroid(sf::Image *img, sf::RenderWindow *rw);
+    ~asteroid();
 
     void update (float timeLastFrame);
     void render ();
+
+    sf::Vector2f pos() {return m_sprite.GetPosition();}
 private:
     sf::RenderWindow *m_rw;
     sf::Sprite m_sprite;

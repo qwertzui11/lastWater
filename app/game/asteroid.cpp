@@ -1,6 +1,8 @@
 #include "asteroid.hpp"
 #include "useful.hpp"
 
+#include <iostream>
+
 asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_sprite(*img)
@@ -11,7 +13,7 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     dir/=1000.f;
     if (start == 0)
     {
-        m_sprite.SetPosition(rand()%2000, 0);
+        m_sprite.SetPosition(rand()%2000, -(int)img->GetHeight());
         m_dir = normalize(sf::Vector2f(dir, 1));
     }
     // unten
@@ -23,7 +25,7 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     // links
     if (start == 2)
     {
-        m_sprite.SetPosition(0, rand()%2000);
+        m_sprite.SetPosition(-(int)img->GetWidth(), rand()%2000);
         m_dir = normalize(sf::Vector2f(1, dir));
     }
     // rechts
@@ -41,11 +43,18 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     {
         m_dir.y*=-1.f;
     }*/
+
+    std::cerr << "asteroid()\n";
+}
+
+asteroid::~asteroid()
+{
+    std::cerr << "~asteroid()\n";
 }
 
 void asteroid::update (float timeLastFrame)
 {
-    m_sprite.Move(m_dir*timeLastFrame*10.0f);
+    m_sprite.Move(m_dir*timeLastFrame*100.0f);
 }
 
 void asteroid::render ()

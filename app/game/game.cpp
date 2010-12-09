@@ -5,6 +5,7 @@ game::game()
     : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
     , m_test(0)
     , m_world(&m_window)
+    , m_nextAsteroid(0.f)
 {
 }
 
@@ -42,13 +43,6 @@ void game::initialise()
     }
 
     m_water = new planet(&m_imgWater, &m_window);
-
-    m_asteroids = new asteroid[20];
-    for (int ind = 0; ind < 20; ++ind)
-    {
-        m_asteroids[ind] = asteroid(&m_imgAsteroid, &m_window);
-    }
-
 }
 
 int game::run()
@@ -108,10 +102,25 @@ int game::run()
 
 void game::update(float timeLastFrame)
 {
-    m_world.update(timeLastFrame);
-    for (int ind = 0; ind < 20; ++ind)
+    m_nextAsteroid+=timeLastFrame;
+    if (m_nextAsteroid > 1.f)
     {
-        m_asteroids[ind].update(timeLastFrame);
+        m_nextAsteroid = 0.f;
+        m_asteroids.push_back(new asteroid(&m_imgAsteroid, &m_window));
+    }
+
+    m_world.update(timeLastFrame);
+
+    for (std::vector<asteroid *>::iterator it = m_asteroids.begin(); it < m_asteroids.end(); ++it)
+    {
+        (*it)->update(timeLastFrame);
+        sf::Vector2f pos = (*it)->pos();
+        if (pos.x > 2000.f || pos.y > 2000.f || pos.x + m_imgAsteroid.GetWidth() < 0.f || pos.y + m_imgAsteroid.GetHeight() < 0.f)
+        {
+            delete (*it);
+            m_asteroids.erase(it);
+            break;
+        }
     }
     m_test->update(timeLastFrame);
 }
@@ -119,9 +128,10 @@ void game::update(float timeLastFrame)
 void game::render()
 {
     m_world.render();
-    for (int ind = 0; ind < 20; ++ind)
+    for (std::vector<asteroid *>::iterator it = m_asteroids.begin(); it < m_asteroids.end(); ++it)
     {
-        m_asteroids[ind].render();
+        (*it)->render();
+        //if ((*it)->pos)
     }
     if (m_test)
         m_test->render();
