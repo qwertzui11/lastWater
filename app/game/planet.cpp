@@ -1,12 +1,12 @@
 #include "planet.hpp"
 
-planet::planet(sf::Image *img, sf::RenderWindow *rw)
+planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos)
     : m_rw(rw)
     , m_sprite(*img)
-    , m_pos(0.f, 0.f)
+    , m_pos(pos)
     , m_waterLvl(0)
 {
-
+    m_sprite.SetPosition(m_pos);
 }
 
 void planet::render()
@@ -17,10 +17,4 @@ void planet::render()
 void planet::update(int lvl)
 {
    m_waterLvl = lvl;
-}
-
-void planet::positon(sf::Vector2f pos)
-{
-    m_pos = pos;
-    m_sprite.SetPosition(m_pos);
 }
