@@ -3,10 +3,9 @@
 
 game::game()
     : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
-    , m_test(0)
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
-    , m_player(&m_window, sf::Color::Blue)
+    , m_player(&m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Blue)
 {
 }
 
@@ -27,9 +26,6 @@ void game::initialise()
     {
         std::cout << "m_imgAsteroid.LoadFromFile";
     }
-
-    m_test = new ship(&m_imgShip, &m_window);
-
 
     if (!m_img1p.LoadFromFile("../data/img/1p_planet.tga"))
     {
@@ -55,10 +51,6 @@ int game::run()
         {
             if (Event.Type == sf::Event::Closed)
                 m_window.Close();
-
-            if (Event.Type == sf::Event::MouseButtonPressed && m_test)
-                m_test->goTo(sf::Vector2f(m_window.GetInput().GetMouseX() + m_window.GetView().GetCenter().x - m_window.GetWidth()/2,
-                                          m_window.GetInput().GetMouseY() + m_window.GetView().GetCenter().y - m_window.GetHeight()/2));
 
             if (Event.Type == sf::Event::MouseMoved)
             {
@@ -127,7 +119,6 @@ void game::update(float timeLastFrame)
             break;
         }
     }
-    m_test->update(timeLastFrame);
 }
 
 void game::render()
@@ -141,7 +132,5 @@ void game::render()
         m_1p->render();
     if(m_water)
         m_water->render();
-    if (m_test)
-        m_test->render();
     m_player.render();
 }

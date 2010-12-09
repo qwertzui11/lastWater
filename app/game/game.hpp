@@ -29,7 +29,6 @@ private:
 
     sf::Image m_img1p;
     sf::Image m_imgWater;
-    ship *m_test;
     world m_world;
     planet *m_1p;
     planet *m_water;

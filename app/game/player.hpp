@@ -10,13 +10,23 @@
 class player
 {
 public:
-    player(sf::RenderWindow *rw, sf::Color colour);
+    player(sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour);
     ~player();
 protected:
+    void newCollector();
+
+    void update(float time);
+    void render();
+
     sf::RenderWindow *m_rw;
 private:
     std::vector<attacker *> m_attacker;
     std::vector<collector *> m_collector;
+
+    sf::Image *m_imgCollector;
+    sf::Image *m_imgAttacker;
+
+    sf::Color m_colour;
 };
 
 #endif // PLAYER_HPP

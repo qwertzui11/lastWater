@@ -1,11 +1,11 @@
 #include "ship.hpp"
 
-ship::ship(sf::Image *img, sf::RenderWindow *rw)
+ship::ship(sf::Image *img, sf::RenderWindow *rw, sf::Color col)
     : m_rw(rw)
     , m_sprite(*img)
     , m_goTo(0.f, 0.f)
 {
-
+    m_sprite.SetColor(col);
 }
 
 void ship::render()

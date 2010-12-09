@@ -3,10 +3,10 @@
 
 #include "ship.hpp"
 
-class collector // : public ship
+class collector : public ship
 {
 public:
-    collector();
+    collector(sf::Image *img, sf::RenderWindow *rw, sf::Color col) : ship(img, rw, col) {;}
 };
 
 #endif // COLLECTOR_HPP
