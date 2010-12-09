@@ -9,7 +9,7 @@ public:
     planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos);
 
     void update(int lvl);
-    void render();
+    void render(sf::Vector2f pos);
 
 private:
     sf::RenderWindow *m_rw;

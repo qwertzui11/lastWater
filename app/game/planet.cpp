@@ -9,8 +9,10 @@ planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos)
     m_sprite.SetPosition(m_pos);
 }
 
-void planet::render()
+void planet::render(sf::Vector2f pos)
 {
+    m_sprite.SetCenter(pos);
+    m_sprite.SetRotation(m_sprite.GetRotation()+0.02f);
     m_rw->Draw(m_sprite);
 }
 
