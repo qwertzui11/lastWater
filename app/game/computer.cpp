@@ -1,5 +1,6 @@
 #include "computer.hpp"
 
-computer::computer()
+/*computer::computer()
 {
 }
+*/

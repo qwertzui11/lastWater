@@ -6,6 +6,7 @@
 #include "world.hpp"
 #include "planet.hpp"
 #include "asteroid.hpp"
+#include "human.hpp"
 #include <vector>
 
 class game
@@ -37,6 +38,8 @@ private:
     std::vector<asteroid *>m_asteroids;
 
     float m_nextAsteroid;
+
+    human m_player;
 };
 
 #endif // GAME_HPP

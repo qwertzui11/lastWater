@@ -6,6 +6,7 @@ game::game()
     , m_test(0)
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
+    , m_player(&m_window, sf::Color::Blue)
 {
 }
 
@@ -131,7 +132,6 @@ void game::render()
     for (std::vector<asteroid *>::iterator it = m_asteroids.begin(); it < m_asteroids.end(); ++it)
     {
         (*it)->render();
-        //if ((*it)->pos)
     }
     if (m_test)
         m_test->render();

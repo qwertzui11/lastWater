@@ -8,7 +8,7 @@ class planet
 public:
     planet(sf::Image *img, sf::RenderWindow *rw);
 
-    void update();
+    void update(int lvl);
     void render();
 
     void positon(sf::Vector2f pos);
