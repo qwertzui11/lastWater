@@ -22,6 +22,7 @@ void human::event(const sf::Event *ev)
 
 void human::update(float timeLastFrame)
 {
+    player::update(timeLastFrame);
     if (m_select)
     {
         sf::Vector2f pos = mousePos(m_rw);

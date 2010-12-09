@@ -15,12 +15,17 @@ player::~player()
 
 void player::newCollector()
 {
-    m_collector.push_back(new collector(m_imgCollector, m_rw, m_colour));
+    collector *newOne = new collector(m_imgCollector, m_rw, m_colour);
+    newOne->goTo(sf::Vector2f(200, 200));
+    m_collector.push_back(newOne);
 }
 
 void player::update(float time)
 {
-
+    for(std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+    {
+        (*it)->update(time);
+    }
 }
 
 void player::render()
