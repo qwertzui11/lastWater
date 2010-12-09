@@ -43,13 +43,10 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     {
         m_dir.y*=-1.f;
     }*/
-
-    std::cerr << "asteroid()\n";
 }
 
 asteroid::~asteroid()
 {
-    std::cerr << "~asteroid()\n";
 }
 
 void asteroid::update (float timeLastFrame)
