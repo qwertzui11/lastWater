@@ -50,8 +50,12 @@ void ship::update(float timeLastFrame)
         sf::Vector2f otherDir = otherPos - pos();
         if (length(otherDir) < g_radius*2.f)
         {
-            sf::Vector2f inv = sf::Vector2f(1.f/otherDir.x, 1.f/otherDir.y);
-            wantedDir-=inv*10000.f;
+            /*sf::Vector2f inv = sf::Vector2f(1.f/otherDir.x, 1.f/otherDir.y);
+            wantedDir-=inv*5000.f;*/
+            sf::Vector2f newPos = pos();
+            otherDir = normalize(otherDir);
+            newPos = otherPos - otherDir*g_radius*2.f;// + sf::Vector2f(5.f, 5.f);
+            m_sprite.SetPosition(newPos-m_sprite.GetCenter());
         }
     }
 

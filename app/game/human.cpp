@@ -90,6 +90,7 @@ void human::stopSelect()
 
 void human::sendSelected()
 {
+    int num(0);
     for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
     {
         if ((*it)->isSelected())
