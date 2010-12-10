@@ -52,38 +52,6 @@ int game::run()
             if (Event.Type == sf::Event::Closed)
                 m_window.Close();
 
-            if (Event.Type == sf::Event::MouseMoved)
-            {
-                const sf::View view = m_window.GetView();
-                sf::View view2 = view;
-                if (m_window.GetInput().GetMouseX() < 10)
-                {
-                    view2.Move(-10.f/**m_window.GetFrameTime()*/, 0.f);
-                }
-                if (m_window.GetInput().GetMouseX() > m_window.GetWidth()-10)
-                {
-                    view2.Move(10.f/**m_window.GetFrameTime()*/, 0.f);
-                }
-                if (m_window.GetInput().GetMouseY() < 10)
-                {
-                    view2.Move(0.f/**m_window.GetFrameTime()*/, -10.f);
-                }
-                if (m_window.GetInput().GetMouseY() > m_window.GetHeight()-10)
-                {
-                    view2.Move(0.f/**m_window.GetFrameTime()*/, 10.f);
-                }
-                if (view2.GetCenter().x - view.GetHalfSize().x < 0)
-                    view2.SetCenter(view2.GetHalfSize().x, view.GetCenter().y);
-                if (view2.GetCenter().y - view.GetHalfSize().y < 0)
-                    view2.SetCenter(view.GetCenter().x, view.GetHalfSize().y);
-
-                if (view2.GetCenter().x + view.GetHalfSize().x > 2000)
-                    view2.SetCenter(2000-view2.GetHalfSize().x, view.GetCenter().y);
-                if (view2.GetCenter().y + view.GetHalfSize().y > 2000)
-                    view2.SetCenter(view.GetCenter().x, 2000-view.GetHalfSize().y);
-                m_window.SetView(view2);
-            }
-
             m_player.event(&Event);
         }
         // m_window.SetView();
@@ -97,6 +65,8 @@ int game::run()
 
 void game::update(float timeLastFrame)
 {
+    updateScroll(timeLastFrame);
+
     m_player.update(timeLastFrame);
 
     m_nextAsteroid+=timeLastFrame;
@@ -134,3 +104,34 @@ void game::render()
         m_water->render(sf::Vector2f(250,247));
     m_player.render();
 }
+
+void game::updateScroll(float time)
+{
+    if (m_window.GetInput().GetMouseX() < 20 || m_window.GetInput().IsKeyDown(sf::Key::Left))
+    {
+        m_viewPos.x-=g_scrollSpeed*time;
+    }
+    if (m_window.GetInput().GetMouseX() > m_window.GetWidth()-20 || m_window.GetInput().IsKeyDown(sf::Key::Right))
+    {
+        m_viewPos.x+=g_scrollSpeed*time;
+    }
+    if (m_window.GetInput().GetMouseY() < 20 || m_window.GetInput().IsKeyDown(sf::Key::Up))
+    {
+        m_viewPos.y-=g_scrollSpeed*time;
+    }
+    if (m_window.GetInput().GetMouseY() > m_window.GetHeight()-10 || m_window.GetInput().IsKeyDown(sf::Key::Down))
+    {
+        m_viewPos.y+=g_scrollSpeed*time;
+    }
+    if (m_viewPos.x - m_window.GetDefaultView().GetHalfSize().x < 0)
+        m_viewPos.x = m_window.GetDefaultView().GetHalfSize().x;
+    if (m_viewPos.y - m_window.GetDefaultView().GetHalfSize().y < 0)
+        m_viewPos.y = m_window.GetDefaultView().GetHalfSize().y;
+
+    if (m_viewPos.x + m_window.GetDefaultView().GetHalfSize().x > 2000)
+        m_viewPos.x = 2000-m_window.GetDefaultView().GetHalfSize().x;
+    if (m_viewPos.y + m_window.GetDefaultView().GetHalfSize().y > 2000)
+        m_viewPos.y = 2000-m_window.GetDefaultView().GetHalfSize().y;
+    m_window.GetDefaultView().SetCenter(m_viewPos);
+}
+

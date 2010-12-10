@@ -23,6 +23,9 @@ public:
     void update(float timeLastFrame);
     void render();
 private:
+    void updateScroll(float time);
+
+    static const float g_scrollSpeed = 500.f;
 
     sf::RenderWindow m_window;
     sf::Image m_imgShip;
@@ -39,6 +42,8 @@ private:
     float m_nextAsteroid;
 
     human m_player;
+
+    sf::Vector2f m_viewPos;
 };
 
 #endif // GAME_HPP
