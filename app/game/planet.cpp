@@ -21,7 +21,7 @@ void planet::render()
 
 void planet::update(float time)
 {
-    m_sprite.SetRotation(m_sprite.GetRotation()+0.02f);
+    m_sprite.SetRotation(m_sprite.GetRotation()+(1.0f*time));
 }
 
 void planet::addWater(int lvl)
