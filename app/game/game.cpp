@@ -2,10 +2,10 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
+    : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
-    , m_player(sf::Vector2f(200.f, 200.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Blue)
+    , m_player(sf::Vector2f(200.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Blue)
 {
 }
 
@@ -18,7 +18,15 @@ void game::initialise()
 {
     m_world.initialise();
 
-    if (!m_imgShip.LoadFromFile("../data/img/1p_collector.tga"))
+    if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
+    {
+        std::cout << "m_imgShip.LoadFromFile";
+    }
+    if (!m_imgAttacker.LoadFromFile("../data/img/1p_fighter.tga"))
+    {
+        std::cout << "m_imgShip.LoadFromFile";
+    }
+    if (!m_imgBullet.LoadFromFile("../data/img/shot.tga"))
     {
         std::cout << "m_imgShip.LoadFromFile";
     }
@@ -51,11 +59,11 @@ void game::initialise()
     sf::Vector2f m_cposWater(250,247);
     m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225), 1000, 0, 1, 900.f, 1000.f);
 
-    computer *newComp = new computer(sf::Vector2f(1800.f, 200.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Cyan);
+    computer *newComp = new computer(sf::Vector2f(1800.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(200.f, 1800.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Red);
+    newComp = new computer(sf::Vector2f(200.f, 1800.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Red);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(1800.f, 1800.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Green);
+    newComp = new computer(sf::Vector2f(1800.f, 1800.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Green);
     m_computers.push_back(newComp);
 }
 

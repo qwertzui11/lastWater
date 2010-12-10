@@ -1,8 +1,8 @@
 #include "human.hpp"
 #include <iostream>
 
-human::human(sf::Vector2f pos, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
-    : player(pos, imgCollector, imgAttacker, imgWorld, rw, colour)
+human::human(sf::Vector2f pos, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
+    : player(pos, imgCollector, imgAttacker, imgBullet, imgWorld, rw, colour)
     , m_select(0)
 {
 }
@@ -25,7 +25,9 @@ void human::event(const sf::Event *ev)
     if (ev->Type == sf::Event::KeyReleased)
         if (ev->Key.Code == 'c')
             newCollector();
-
+    if (ev->Type == sf::Event::KeyReleased)
+        if (ev->Key.Code == 'a')
+            newAttacker();
 }
 
 void human::update(float timeLastFrame)
@@ -37,6 +39,32 @@ void human::update(float timeLastFrame)
         m_select->SetPointPosition(1, pos.x, m_select->GetPointPosition(0).y);
         m_select->SetPointPosition(3, m_select->GetPointPosition(0).x, pos.y);
         m_select->SetPointPosition(2, pos.x, pos.y);
+
+        bool gotOneAttacker(false);
+        for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
+        {
+            sf::FloatRect coll(m_select->GetPointPosition(0).x, m_select->GetPointPosition(0).y, pos.x, pos.y);
+            if (pos.x < m_select->GetPointPosition(0).x)
+            {
+                coll.Left = pos.x;
+                coll.Right = m_select->GetPointPosition(0).x;
+            }
+            if (pos.y < m_select->GetPointPosition(0).y)
+            {
+                coll.Top = pos.y;
+                coll.Bottom = m_select->GetPointPosition(0).y;
+            }
+            if (coll.Intersects((*it)->collRect()))
+            {
+                gotOneAttacker = true;
+                (*it)->setSelected(true);
+            }
+            else
+            {
+                (*it)->setSelected(false);
+            }
+        }
+
 
         for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
         {
@@ -51,7 +79,7 @@ void human::update(float timeLastFrame)
                 coll.Top = pos.y;
                 coll.Bottom = m_select->GetPointPosition(0).y;
             }
-            if (coll.Intersects((*it)->collRect()))
+            if (coll.Intersects((*it)->collRect()) && !gotOneAttacker)
             {
                 (*it)->setSelected(true);
             }
@@ -92,6 +120,17 @@ void human::sendSelected()
 {
     int num(0);
 
+
+    bool gotAnAttacker(false);
+    for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
+    {
+        if ((*it)->isSelected())
+        {
+            gotAnAttacker = true;
+            ++num;
+        }
+    }
+
     for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
     {
         if ((*it)->isSelected())
@@ -104,17 +143,33 @@ void human::sendSelected()
     float sqrtNum = sqrt(num);
     int ind = 0;
 
-    for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+
+    if (gotAnAttacker)
     {
-        if ((*it)->isSelected())
+        for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
         {
-            sf::Vector2f to = mousePos(m_rw);
-            to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
-                               (0.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);
-            (*it)->goTo(to);
-            ++ind;
+            if ((*it)->isSelected())
+            {
+                sf::Vector2f to = mousePos(m_rw);
+                to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
+                                   (-sqrtNum/2.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);
+                (*it)->goTo(to);
+                ++ind;
+            }
         }
     }
-
-
+    else
+    {
+        for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+        {
+            if ((*it)->isSelected())
+            {
+                sf::Vector2f to = mousePos(m_rw);
+                to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
+                                   (-sqrtNum/2.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);
+                (*it)->goTo(to);
+                ++ind;
+            }
+        }
+    }
 }
