@@ -11,14 +11,14 @@ public:
 
     void update(float time);
     void render();
-    void kill() {m_alive = false;}
-    bool alive() {return m_alive;}
+
+    void kill();
 
     static std::vector<attacker*> g_attacker;
 
     float m_lastShot;
 private:
-    bool m_alive;
+
 };
 
 #endif // ATTACKER_HPP

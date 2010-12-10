@@ -21,6 +21,11 @@ public:
 
     static std::vector<ship*> g_ships;
     static const float g_radius = 15.f;
+
+    virtual void kill() = 0;
+    bool alive() {return m_alive;}
+protected:
+    bool m_alive;
 private:
     sf::RenderWindow *m_rw;
     sf::Sprite m_sprite;

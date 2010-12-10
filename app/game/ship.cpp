@@ -5,7 +5,8 @@
 std::vector<ship*> ship::g_ships;
 
 ship::ship(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col)
-    : m_rw(rw)
+    : m_alive(true)
+    , m_rw(rw)
     , m_sprite(*img)
     , m_goTo(0.f, 0.f)
     , m_selected(0)

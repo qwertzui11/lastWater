@@ -35,8 +35,8 @@ collector* player::newCollector()
 void player::update(float time)
 {
     // check for attack
-    std::vector<attacker *> enemys;
-    for(std::vector<attacker *>::iterator it = attacker::g_attacker.begin(); it < attacker::g_attacker.end(); ++it)
+    std::vector<ship *> enemys;
+    for(std::vector<ship *>::iterator it = ship::g_ships.begin(); it < ship::g_ships.end(); ++it)
     {
         bool in (false);
         for(std::vector<attacker *>::iterator it2 = m_attacker.begin(); it2 < m_attacker.end(); ++it2)
@@ -49,12 +49,23 @@ void player::update(float time)
         }
         if (!in)
         {
+            for(std::vector<collector *>::iterator it2 = m_collector.begin(); it2 < m_collector.end(); ++it2)
+            {
+                if ((*it2) == (*it))
+                {
+                    in = true;
+                    break;
+                }
+            }
+        }
+        if (!in)
+        {
             enemys.push_back((*it));
         }
     }
     for(std::vector<attacker *>::iterator it2 = m_attacker.begin(); it2 < m_attacker.end(); ++it2)
     {
-        for(std::vector<attacker *>::iterator it = enemys.begin(); it < enemys.end(); ++it)
+        for(std::vector<ship *>::iterator it = enemys.begin(); it < enemys.end(); ++it)
         {
             if (length ((*it)->pos() - (*it2)->pos()) < 400.f)
             {
@@ -80,6 +91,16 @@ void player::update(float time)
             break;
         }
     }
+    for(std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+    {
+    //    (*it)->update(time);
+        if (!(*it)->alive())
+        {
+            delete (*it);
+            m_collector.erase((it));
+            break;
+        }
+    }
 
 
     for(std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
@@ -97,19 +118,18 @@ void player::update(float time)
     for (std::vector<bullet *>::iterator it = m_bullets.begin(); it < m_bullets.end(); ++it)
     {
         (*it)->update(time);
-        if ((*it)->lifeTime() > 3.f)
+        if ((*it)->lifeTime() > 1.f)
         {
             toDelete.push_back((*it));
             continue;
         }
-        for(std::vector<attacker *>::iterator it2 = enemys.begin(); it2 < enemys.end(); ++it2)
+        for(std::vector<ship *>::iterator it2 = enemys.begin(); it2 < enemys.end(); ++it2)
         {
             if (length ((*it)->pos() - (*it2)->pos()) < attacker::g_radius)
             {
                 toDelete.push_back((*it));
 
-                if (rand()%2 == 0)
-                    (*it2)->kill();
+                (*it2)->kill();
 
                 break;
             }
