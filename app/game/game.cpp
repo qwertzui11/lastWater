@@ -54,7 +54,6 @@ int game::run()
 
             m_player.event(&Event);
         }
-        // m_window.SetView();
         m_window.Clear();
         update(m_window.GetFrameTime());
         render();
@@ -66,7 +65,6 @@ int game::run()
 void game::update(float timeLastFrame)
 {
     updateScroll(timeLastFrame);
-
     m_player.update(timeLastFrame);
 
     m_nextAsteroid+=timeLastFrame;

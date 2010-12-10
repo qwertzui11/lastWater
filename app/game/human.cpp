@@ -95,7 +95,24 @@ void human::sendSelected()
     {
         if ((*it)->isSelected())
         {
-            (*it)->goTo(mousePos(m_rw));
+            ++num;
         }
     }
+
+    float sqrtNum = sqrt(num);
+    int ind = 0;
+
+    for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+    {
+        if ((*it)->isSelected())
+        {
+            sf::Vector2f to = mousePos(m_rw);
+            to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
+                               (0.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);
+            (*it)->goTo(to);
+            ++ind;
+        }
+    }
+
+
 }
