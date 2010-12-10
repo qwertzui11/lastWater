@@ -88,21 +88,22 @@ void player::update(float time)
         (*it)->update(time);
     }
 
+
+    std::vector<bullet*> toDelete;
+
     for (std::vector<bullet *>::iterator it = m_bullets.begin(); it < m_bullets.end(); ++it)
     {
         (*it)->update(time);
         if ((*it)->lifeTime() > 3.f)
         {
-            delete (*it);
-            m_bullets.erase(it);
+            toDelete.push_back((*it));
             continue;
         }
         for(std::vector<attacker *>::iterator it2 = enemys.begin(); it2 < enemys.end(); ++it2)
         {
             if (length ((*it)->pos() - (*it2)->pos()) < attacker::g_radius)
             {
-                delete (*it);
-                m_bullets.erase(it);
+                toDelete.push_back((*it));
 
                 if (rand()%10 == 0)
                     (*it2)->kill();
@@ -111,6 +112,20 @@ void player::update(float time)
             }
         }
     }
+
+    for (std::vector<bullet *>::iterator it = toDelete.begin(); it < toDelete.end(); ++it)
+    {
+        delete (*it);
+        for (std::vector<bullet *>::iterator it2 = m_bullets.begin(); it2 < m_bullets.end(); ++it2)
+        {
+            if ((*it2) == (*it))
+            {
+                m_bullets.erase(it2);
+                break;
+            }
+        }
+    }
+    toDelete.clear();
 }
 
 void player::render()
