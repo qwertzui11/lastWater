@@ -6,7 +6,7 @@
 class human : public player
 {
 public:
-    human(sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour);
+    human(sf::Vector2f pos, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour);
 
     void event(const sf::Event *ev);
 

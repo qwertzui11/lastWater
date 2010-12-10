@@ -6,7 +6,7 @@
 class ship
 {
 public:
-    ship(sf::Image *img, sf::RenderWindow *rw, sf::Color col);
+    ship(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col);
     ~ship();
 
     void update(float timeLastFrame);

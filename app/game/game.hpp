@@ -7,6 +7,7 @@
 #include "planet.hpp"
 #include "asteroid.hpp"
 #include "human.hpp"
+#include "computer.hpp"
 #include <vector>
 
 class game
@@ -44,6 +45,7 @@ private:
     float m_nextAsteroid;
 
     human m_player;
+    std::vector <computer*> m_computers;
 
     sf::Vector2f m_viewPos;
 };

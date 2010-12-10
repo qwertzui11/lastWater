@@ -5,7 +5,7 @@ game::game()
     : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
-    , m_player(&m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Blue)
+    , m_player(sf::Vector2f(200.f, 200.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Blue)
 {
 }
 
@@ -50,6 +50,11 @@ void game::initialise()
     sf::Vector2f m_posWater(1000,1000);
     sf::Vector2f m_cposWater(250,247);
     m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225));
+
+    computer *newComp = new computer(sf::Vector2f(1000.f, 200.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Red);
+    m_computers.push_back(newComp);
+    newComp = new computer(sf::Vector2f(200.f, 1000.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Red);
+    m_computers.push_back(newComp);
 }
 
 int game::run()
@@ -76,6 +81,10 @@ void game::update(float timeLastFrame)
 {
     updateScroll(timeLastFrame);
     m_player.update(timeLastFrame);
+    for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
+    {
+        (*it)->update(timeLastFrame);
+    }
 
     m_nextAsteroid+=timeLastFrame;
     if (m_nextAsteroid > 1.f)
@@ -115,6 +124,10 @@ void game::render()
         m_2p->render();
     if(m_water)
         m_water->render();
+    for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
+    {
+        (*it)->render();
+    }
     m_player.render();
 }
 

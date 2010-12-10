@@ -1,8 +1,8 @@
 #include "human.hpp"
 #include <iostream>
 
-human::human(sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
-    : player(imgCollector, imgAttacker, imgWorld, rw, colour)
+human::human(sf::Vector2f pos, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
+    : player(pos, imgCollector, imgAttacker, imgWorld, rw, colour)
     , m_select(0)
 {
 }
@@ -91,6 +91,7 @@ void human::stopSelect()
 void human::sendSelected()
 {
     int num(0);
+
     for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
     {
         if ((*it)->isSelected())
@@ -98,6 +99,7 @@ void human::sendSelected()
             ++num;
         }
     }
+
 
     float sqrtNum = sqrt(num);
     int ind = 0;

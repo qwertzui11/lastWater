@@ -4,13 +4,14 @@
 
 std::vector<ship*> ship::g_ships;
 
-ship::ship(sf::Image *img, sf::RenderWindow *rw, sf::Color col)
+ship::ship(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col)
     : m_rw(rw)
     , m_sprite(*img)
     , m_goTo(0.f, 0.f)
     , m_selected(0)
 {
     m_sprite.SetColor(col);
+    m_sprite.SetPosition(pos);
     g_ships.push_back(this);
 }
 
