@@ -29,7 +29,9 @@ private:
     static const float g_scrollSpeed = 500.f;
 
     sf::RenderWindow m_window;
-    sf::Image m_imgShip;
+    sf::Image m_imgCollector;
+    sf::Image m_imgAttacker;
+    sf::Image m_imgBullet;
 
     sf::Image m_img1p;
     sf::Image m_img2p;
