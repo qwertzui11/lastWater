@@ -34,6 +34,13 @@ void game::initialise()
     sf::Vector2f m_pos1p(250,250);
     m_1p = new planet(&m_img1p, &m_window, m_pos1p, sf::Color(230,185,117));
 
+    if (!m_img2p.LoadFromFile("../data/img/1p_planet.tga"))
+    {
+        std::cout << "m_img2p.LoadFromFile";
+    }
+    sf::Vector2f m_pos2p(1750,1750);
+    m_2p = new planet(&m_img2p, &m_window, m_pos1p, sf::Color(230,185,117));
+
     if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
     {
         std::cout << "m_imgWater.LoadFromFile";
@@ -76,6 +83,9 @@ void game::update(float timeLastFrame)
         m_asteroids.push_back(new asteroid(&m_imgAsteroid, &m_window));
     }
 
+    m_1p->update(timeLastFrame);
+    m_2p->update(timeLastFrame);
+    m_water->update(timeLastFrame);
     m_world.update(timeLastFrame);
 
     for (std::vector<asteroid *>::iterator it = m_asteroids.begin(); it < m_asteroids.end(); ++it)
@@ -99,9 +109,11 @@ void game::render()
         (*it)->render();
     }
     if(m_1p)
-        m_1p->render(sf::Vector2f(200,200));
+        m_1p->render();
+    if(m_2p)
+        m_2p->render();
     if(m_water)
-        m_water->render(sf::Vector2f(250,247));
+        m_water->render();
     m_player.render();
 }
 
