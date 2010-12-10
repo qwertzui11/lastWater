@@ -62,19 +62,22 @@ void player::update(float time)
                 {
                     (*it2)->m_lastShot = 0.5f;
                     m_bullets.push_back(new bullet((*it2)->pos(), (*it)->pos() - (*it2)->pos(), m_imgBullet, m_rw, m_colour));
+                    break;
                 }
             }
         }
     }
 
 
+
     for(std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
     {
-        (*it)->update(time);
+    //    (*it)->update(time);
         if (!(*it)->alive())
         {
             delete (*it);
             m_attacker.erase((it));
+            break;
         }
     }
 
@@ -105,7 +108,7 @@ void player::update(float time)
             {
                 toDelete.push_back((*it));
 
-                if (rand()%10 == 0)
+                if (rand()%2 == 0)
                     (*it2)->kill();
 
                 break;

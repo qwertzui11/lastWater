@@ -2,7 +2,7 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
+    : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
     , m_player(sf::Vector2f(200.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Blue)

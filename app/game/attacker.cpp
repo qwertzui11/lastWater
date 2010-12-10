@@ -10,6 +10,18 @@ attacker::attacker(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::C
     g_attacker.push_back(this);
 }
 
+attacker::~attacker()
+{
+    for (std::vector<attacker*>::iterator it = g_attacker.begin(); it < g_attacker.end(); ++it)
+    {
+        if ((*it) == this)
+        {
+            g_attacker.erase(it);
+            break;
+        }
+    }
+}
+
 void attacker::update(float time)
 {
     ship::update(time);

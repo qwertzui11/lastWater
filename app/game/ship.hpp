@@ -20,7 +20,7 @@ public:
     sf::FloatRect collRect();
 
     static std::vector<ship*> g_ships;
-    static const float g_radius = 30.f;
+    static const float g_radius = 15.f;
 private:
     sf::RenderWindow *m_rw;
     sf::Sprite m_sprite;

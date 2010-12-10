@@ -7,6 +7,7 @@ class attacker : public ship
 {
 public:
     attacker(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col);
+    ~attacker();
 
     void update(float time);
     void render();
