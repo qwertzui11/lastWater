@@ -31,9 +31,11 @@ private:
     sf::Image m_imgShip;
 
     sf::Image m_img1p;
+    sf::Image m_img2p;
     sf::Image m_imgWater;
     world m_world;
     planet *m_1p;
+    planet *m_2p;
     planet *m_water;
 
     sf::Image m_imgAsteroid;
