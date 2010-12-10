@@ -26,10 +26,20 @@ void planet::update(float time)
 
 void planet::addWater(int lvl)
 {
-    m_waterLvl = lvl;
+    m_waterLvl += lvl;
 }
 
 void planet::addIron(int lvl)
 {
-    m_ironLvl = lvl;
+    m_ironLvl += lvl;
+}
+
+void planet::subWater(int lvl)
+{
+    m_waterLvl -= lvl;
+}
+
+void planet::subIron(int lvl)
+{
+    m_ironLvl -= lvl;
 }

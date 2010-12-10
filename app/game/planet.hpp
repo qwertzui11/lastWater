@@ -13,6 +13,8 @@ public:
 
     void addWater(int lvl);
     void addIron(int lvl);
+    void subWater(int lvl);
+    void subIron(int lvl);
 
 private:
     sf::RenderWindow *m_rw;
