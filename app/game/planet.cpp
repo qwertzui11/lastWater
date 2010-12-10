@@ -1,25 +1,45 @@
 #include "planet.hpp"
 
-planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Color col)
+planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vector2f cpos, sf::Color col)
     : m_rw(rw)
     , m_sprite(*img)
     , m_pos(pos)
+    , m_cpos(cpos)
     , m_waterLvl(0)
+    , m_ironLvl(0)
 {
     m_sprite.SetColor(col);
+    m_sprite.SetCenter(m_cpos);
     m_sprite.SetPosition(m_pos);
 }
 
-void planet::render(sf::Vector2f pos)
+void planet::render()
 {
-    m_sprite.SetCenter(pos);
-    m_sprite.SetRotation(m_sprite.GetRotation()+0.02f);
+
     m_rw->Draw(m_sprite);
 }
 
-void planet::update(int lvl)
+void planet::update(float time)
 {
-   m_waterLvl = lvl;
-   //if(0 < lvl)
-    //m_sprite.SetColor();
+    m_sprite.SetRotation(m_sprite.GetRotation()+0.02f);
+}
+
+void planet::addWater(int lvl)
+{
+    m_waterLvl += lvl;
+}
+
+void planet::addIron(int lvl)
+{
+    m_ironLvl += lvl;
+}
+
+void planet::subWater(int lvl)
+{
+    m_waterLvl -= lvl;
+}
+
+void planet::subIron(int lvl)
+{
+    m_ironLvl -= lvl;
 }
