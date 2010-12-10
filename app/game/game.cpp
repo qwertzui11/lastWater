@@ -2,7 +2,7 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
+    : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
     , m_player(sf::Vector2f(200.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Blue)
@@ -49,7 +49,7 @@ void game::initialise()
     }
     sf::Vector2f m_pos2p(1750,1750);
     sf::Vector2f m_cpos2p(200,200);
-    m_2p = new planet(&m_img2p, &m_window, m_pos2p, m_cpos2p, sf::Color(230,185,117), 0, 0, 0, 1600.f, 1600.f);
+    m_2p = new planet(&m_img2p, &m_window, m_pos2p, m_cpos2p, sf::Color(230,185,117), 0, 0, 0, 1600.f, 1750.f);
 
     if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
     {
@@ -57,7 +57,7 @@ void game::initialise()
     }
     sf::Vector2f m_posWater(1000,1000);
     sf::Vector2f m_cposWater(250,247);
-    m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225), 1000, 0, 1, 900.f, 1000.f);
+    m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225), 1000, 0, 1, 800.f, 100.f);
 
     computer *newComp = new computer(sf::Vector2f(1800.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
