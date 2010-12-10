@@ -51,9 +51,11 @@ void game::initialise()
     sf::Vector2f m_cposWater(250,247);
     m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225));
 
-    computer *newComp = new computer(sf::Vector2f(1000.f, 200.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Red);
+    computer *newComp = new computer(sf::Vector2f(1800.f, 200.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(200.f, 1000.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Red);
+    newComp = new computer(sf::Vector2f(200.f, 1800.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Red);
+    m_computers.push_back(newComp);
+    newComp = new computer(sf::Vector2f(1800.f, 1800.f), &m_imgShip, &m_imgShip, 0, &m_window, sf::Color::Green);
     m_computers.push_back(newComp);
 }
 
