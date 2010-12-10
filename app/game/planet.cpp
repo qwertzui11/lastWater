@@ -1,15 +1,16 @@
 #include "planet.hpp"
 
-planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Color col)
+planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vector2f cpos, sf::Color col)
     : m_rw(rw)
     , m_sprite(*img)
     , m_pos(pos)
+    , m_cpos(cpos)
     , m_waterLvl(0)
     , m_ironLvl(0)
 {
     m_sprite.SetColor(col);
+    m_sprite.SetCenter(m_cpos);
     m_sprite.SetPosition(m_pos);
-    m_sprite.SetCenter(m_pos);
 }
 
 void planet::render()

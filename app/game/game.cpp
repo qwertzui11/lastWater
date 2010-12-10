@@ -32,21 +32,24 @@ void game::initialise()
         std::cout << "m_img1p.LoadFromFile";
     }
     sf::Vector2f m_pos1p(250,250);
-    m_1p = new planet(&m_img1p, &m_window, m_pos1p, sf::Color(230,185,117));
+    sf::Vector2f m_cpos1p(200,200);
+    m_1p = new planet(&m_img1p, &m_window, m_pos1p, m_cpos1p, sf::Color(230,185,117));
 
     if (!m_img2p.LoadFromFile("../data/img/1p_planet.tga"))
     {
         std::cout << "m_img2p.LoadFromFile";
     }
     sf::Vector2f m_pos2p(1750,1750);
-    m_2p = new planet(&m_img2p, &m_window, m_pos1p, sf::Color(230,185,117));
+    sf::Vector2f m_cpos2p(200,200);
+    m_2p = new planet(&m_img2p, &m_window, m_pos2p, m_cpos2p, sf::Color(230,185,117));
 
     if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
     {
         std::cout << "m_imgWater.LoadFromFile";
     }
-    sf::Vector2f m_posWater(1200,1200);
-    m_water = new planet(&m_imgWater, &m_window, m_posWater, sf::Color(32,167,225));
+    sf::Vector2f m_posWater(1000,1000);
+    sf::Vector2f m_cposWater(250,247);
+    m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225));
 }
 
 int game::run()

@@ -6,7 +6,7 @@
 class planet
 {
 public:
-    planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Color col);
+    planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vector2f cpos, sf::Color col);
 
     void update(float time);
     void render();
@@ -19,6 +19,7 @@ private:
     sf::Sprite m_sprite;
 
     sf::Vector2f m_pos;
+    sf::Vector2f m_cpos;
     int m_waterLvl;
     int m_ironLvl;
 };
