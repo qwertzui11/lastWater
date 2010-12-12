@@ -41,16 +41,14 @@ private:
 
     world m_world;
 
-    planet *m_1p;
-    planet *m_2p;
-    planet *m_water;
+    planet *m_planetWater;
 
     sf::Image m_imgAsteroid;
     std::vector<asteroid *>m_asteroids;
 
     float m_nextAsteroid;
 
-    human m_player;
+    human *m_player;
     std::vector <computer*> m_computers;
 
     sf::Vector2f m_viewPos;

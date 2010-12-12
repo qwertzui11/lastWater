@@ -1,8 +1,9 @@
 #include "player.hpp"
 #include "iostream"
 
-player::player(sf::Vector2f pos, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
+player::player(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
     : m_rw(rw)
+    , m_planet(imgWet, imgDry, font, rw, pos, colour, 0, 10)
     , m_imgCollector(imgCollector)
     , m_imgAttacker(imgAttacker)
     , m_imgBullet(imgBullet)
@@ -30,7 +31,7 @@ collector* player::newCollector()
 {
     collector *newOne = new collector(m_pos, m_imgCollector, m_rw, m_colour);
     float ra = rand()%10000;
-    ra/=10.f;
+    ra/=1000.f;
     newOne->goTo(sf::Vector2f(m_pos.x+ra, m_pos.y+1.f));
     m_collector.push_back(newOne);
     return newOne;
@@ -153,6 +154,8 @@ void player::update(float time)
         }
     }
     toDelete.clear();
+
+    m_planet.update(time);
 }
 
 void player::render()
@@ -169,4 +172,5 @@ void player::render()
     {
         (*it)->render();
     }
+    m_planet.render();
 }

@@ -5,7 +5,6 @@ game::game()
     : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
-    , m_player(sf::Vector2f(200.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Blue)
 {
 }
 
@@ -34,7 +33,6 @@ void game::initialise()
     {
         std::cout << "m_imgAsteroid.LoadFromFile";
     }
-
     if (!m_img1p.LoadFromFile("../data/img/1p_planet.tga"))
     {
         std::cout << "m_img1p.LoadFromFile";
@@ -47,26 +45,15 @@ void game::initialise()
     {
          std::cout << "m_font.LoadFromFile";
     }
-    m_1p = new planet(&m_imgWater, &m_img1p, &m_font, &m_window, sf::Vector2f(200.f, 200.f), sf::Color(230,185,117), 600, 0);
 
-    if (!m_img2p.LoadFromFile("../data/img/1p_planet.tga"))
-    {
-        std::cout << "m_img2p.LoadFromFile";
-    }
-/*    sf::Vector2f m_pos2p(1750,1750);
-    sf::Vector2f m_cpos2p(200,200);
-    m_2p = new planet(&m_img2p, &m_window, m_pos2p, m_cpos2p, sf::Color(230,185,117), 0, 0, 0, 1600.f, 1700.f);
+    m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Blue);
+    m_planetWater = new planet(&m_imgWater, &m_imgWater, &m_font, &m_window, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, 0);
 
-
-    sf::Vector2f m_posWater(1000,1000);
-    sf::Vector2f m_cposWater(250,247);
-    m_water = new planet(&m_imgWater, m_img1p, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225), 1000, 0, 1, 800.f, 1000.f);
-*/
-    computer *newComp = new computer(sf::Vector2f(1800.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Cyan);
+    computer *newComp = new computer(sf::Vector2f(1600.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(200.f, 1800.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Red);
+    newComp = new computer(sf::Vector2f(400.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Red);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(1800.f, 1800.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Green);
+    newComp = new computer(sf::Vector2f(1600.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Green);
     m_computers.push_back(newComp);
 }
 
@@ -80,7 +67,7 @@ int game::run()
             if (Event.Type == sf::Event::Closed)
                 m_window.Close();
 
-            m_player.event(&Event);
+            m_player->event(&Event);
         }
         m_window.Clear();
         update(m_window.GetFrameTime());
@@ -93,7 +80,7 @@ int game::run()
 void game::update(float timeLastFrame)
 {
     updateScroll(timeLastFrame);
-    m_player.update(timeLastFrame);
+    m_player->update(timeLastFrame);
     for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
     {
         (*it)->update(timeLastFrame);
@@ -106,9 +93,7 @@ void game::update(float timeLastFrame)
         m_asteroids.push_back(new asteroid(&m_imgAsteroid, &m_window));
     }
 
-    m_1p->update(timeLastFrame);
-/*    m_2p->update(timeLastFrame);
-    m_water->update(timeLastFrame);*/
+    m_planetWater->update(timeLastFrame);
     m_world.update(timeLastFrame);
 
     for (std::vector<asteroid *>::iterator it = m_asteroids.begin(); it < m_asteroids.end(); ++it)
@@ -131,17 +116,12 @@ void game::render()
     {
         (*it)->render();
     }
-    if(m_1p)
-        m_1p->render();
-/*    if(m_2p)
-        m_2p->render();
-    if(m_water)
-        m_water->render();*/
+    m_planetWater->render();
     for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
     {
         (*it)->render();
     }
-    m_player.render();
+    m_player->render();
 }
 
 void game::updateScroll(float time)

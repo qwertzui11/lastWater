@@ -1,8 +1,8 @@
 #include "human.hpp"
 #include <iostream>
 
-human::human(sf::Vector2f pos, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
-    : player(pos, imgCollector, imgAttacker, imgBullet, imgWorld, rw, colour)
+human::human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::RenderWindow *rw, sf::Color colour)
+    : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, rw, colour)
     , m_select(0)
 {
 }

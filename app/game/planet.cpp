@@ -13,8 +13,6 @@ planet::planet(sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::RenderW
     , m_ironLvl(ironLvl)
     , m_font(font)
 {
-    /*m_sprite.SetColor(col);
-    m_sprite.SetCenter(m_cpos);*/
     m_spriteDry.SetPosition(m_pos);
     m_spriteDry.SetCenter(m_spriteDry.GetSize().x/2.0f, m_spriteDry.GetSize().y/2.0f);
     m_spriteWet.SetPosition(m_pos);
@@ -74,8 +72,8 @@ void planet::render()
 
 void planet::update(float time)
 {
-    m_spriteDry.SetRotation(m_spriteDry.GetRotation()+(90.0f*time));
-    m_spriteWet.SetRotation(m_spriteWet.GetRotation()+(90.0f*time));
+    m_spriteDry.SetRotation(m_spriteDry.GetRotation()+(1.0f*time));
+    m_spriteWet.SetRotation(m_spriteWet.GetRotation()+(1.0f*time));
 }
 
 void planet::addWater(int lvl)
