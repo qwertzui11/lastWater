@@ -25,7 +25,9 @@ SOURCES += main.cpp \
     human.cpp \
     computer.cpp \
     useful.cpp \
-    bullet.cpp
+    bullet.cpp \
+    bubble.cpp \
+    collectable.cpp
 
 # INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
 
@@ -52,4 +54,6 @@ HEADERS += \
     player.hpp \
     human.hpp \
     computer.hpp \
-    bullet.hpp
+    bullet.hpp \
+    bubble.hpp \
+    collectable.hpp

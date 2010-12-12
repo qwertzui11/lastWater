@@ -87,7 +87,7 @@ void game::update(float timeLastFrame)
     }
 
     m_nextAsteroid+=timeLastFrame;
-    if (m_nextAsteroid > 1.f)
+    if (m_nextAsteroid > 0.25f)
     {
         m_nextAsteroid = 0.f;
         new asteroid(&m_imgAsteroid, &m_window);

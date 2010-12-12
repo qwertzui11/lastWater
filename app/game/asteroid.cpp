@@ -7,11 +7,8 @@
 std::vector <asteroid*> asteroid::g_asteroids;
 
 asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
-    : m_rw(rw)
-    , m_sprite(*img)
-    , m_collector(0)
+    : collectable(img, rw)
 {
-    m_sprite.SetCenter(m_sprite.GetSize().x/2.f, m_sprite.GetSize().y/2.f);
     // kommt der asteroid von oben?
     int start = rand()%4;
     float dir = (rand()%2000)-1000;
@@ -45,10 +42,7 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
 
 asteroid::~asteroid()
 {
-    if (!findAndDelete<asteroid>(&g_asteroids, this))
-        std::cerr << "asteroid::~asteroid()!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
-    else
-        std::cerr << "asteroid::~asteroid() left " << g_asteroids.size() << "\n";
+    findAndDelete<asteroid>(&g_asteroids, this);
 }
 
 void asteroid::update (float timeLastFrame)
@@ -59,17 +53,4 @@ void asteroid::update (float timeLastFrame)
         m_sprite.Move((m_collector->pos() - pos())*timeLastFrame*10.f);
 }
 
-void asteroid::render ()
-{
-    m_rw->Draw(m_sprite);
-}
 
-void asteroid::setCollector(collector *set)
-{
-    m_collector = set;
-}
-
-collector * asteroid::getCollector()
-{
-    return m_collector;
-}
