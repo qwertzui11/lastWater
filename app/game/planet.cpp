@@ -4,25 +4,22 @@
 
 std::vector<planet*> planet::g_planets;
 
-planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vector2f cpos, sf::Color col, int waterLvl, int ironLvl, int type, float textX, float textY)
+planet::planet(sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::RenderWindow *rw, sf::Vector2f pos, sf::Color col, int waterLvl, int ironLvl)
     : m_rw(rw)
-    , m_sprite(*img)
+    , m_spriteWet(*imgWet)
+    , m_spriteDry(*imgDry)
     , m_pos(pos)
-    , m_cpos(cpos)
     , m_waterLvl(waterLvl)
     , m_ironLvl(ironLvl)
-    , m_font()
-    , m_type(type)
-    , m_textX(textX)
-    , m_textY(textY)
+    , m_font(font)
 {
-    m_sprite.SetColor(col);
-    m_sprite.SetCenter(m_cpos);
-    m_sprite.SetPosition(m_pos);
-    if (!m_font.LoadFromFile("../data/font/pirulen.ttf", 30))
-    {
-         std::cout << "m_font.LoadFromFile";
-    }
+    /*m_sprite.SetColor(col);
+    m_sprite.SetCenter(m_cpos);*/
+    m_spriteDry.SetPosition(m_pos);
+    m_spriteDry.SetCenter(m_spriteDry.GetSize().x/2.0f, m_spriteDry.GetSize().y/2.0f);
+    m_spriteWet.SetPosition(m_pos);
+    m_spriteWet.SetCenter(m_spriteWet.GetSize().x/2.0f, m_spriteWet.GetSize().y/2.0f);
+    m_spriteWet.SetColor(sf::Color(255, 255, 255, (m_waterLvl*255)/1000));
 
     g_planets.push_back(this);
 }
@@ -42,9 +39,10 @@ planet::~planet()
 void planet::render()
 {
 
-    m_rw->Draw(m_sprite);
+    m_rw->Draw(m_spriteDry);
+    m_rw->Draw(m_spriteWet);
 
-    std::string w;
+    /*std::string w;
     std::stringstream wout;
     wout << m_waterLvl;
     w = wout.str();
@@ -71,12 +69,13 @@ void planet::render()
         iText.SetScale(2.f, 2.f);
         iText.Move(m_textX, m_textY+50.f);
         m_rw->Draw(iText);
-    }
+    }*/
 }
 
 void planet::update(float time)
 {
-    m_sprite.SetRotation(m_sprite.GetRotation()+(1.0f*time));
+    m_spriteDry.SetRotation(m_spriteDry.GetRotation()+(90.0f*time));
+    m_spriteWet.SetRotation(m_spriteWet.GetRotation()+(90.0f*time));
 }
 
 void planet::addWater(int lvl)

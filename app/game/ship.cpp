@@ -14,6 +14,7 @@ ship::ship(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col
 {
     m_sprite.SetColor(col);
     m_sprite.SetPosition(pos);
+    m_sprite.SetCenter(m_sprite.GetSize().x/2.0f, m_sprite.GetSize().y/2.0f);
     g_ships.push_back(this);
 }
 
@@ -59,9 +60,13 @@ void ship::update(float timeLastFrame)
             sf::Vector2f newPos = pos();
             otherDir = normalize(otherDir);
             newPos = otherPos - otherDir*g_radius*2.f;// + sf::Vector2f(5.f, 5.f);
-            m_sprite.SetPosition(newPos-m_sprite.GetCenter());
+            m_sprite.SetPosition(newPos/*-m_sprite.GetCenter()*/);
         }
     }
+
+    m_sprite.Move(wantedDir * timeLastFrame);
+    if (m_selected)
+        m_selected->SetPosition(m_sprite.GetPosition());
 
     // collidate with planets
     for (std::vector<planet*>::iterator it = planet::g_planets.begin(); it < planet::g_planets.end(); ++it)
@@ -73,14 +78,10 @@ void ship::update(float timeLastFrame)
             sf::Vector2f newPos = pos();
             otherDir = normalize(otherDir);
             newPos = otherPos + otherDir*(g_radius+planet::radius());
-            m_sprite.SetPosition(newPos - m_sprite.GetCenter());
+            m_sprite.SetPosition(newPos/* - m_sprite.GetCenter()*/);
             break;
         }
     }
-
-    m_sprite.Move(wantedDir * timeLastFrame);
-    if (m_selected)
-        m_selected->SetPosition(m_sprite.GetPosition()+m_sprite.GetSize()/2.0f);
 }
 
 void ship::goTo(sf::Vector2f goTo)
@@ -90,7 +91,7 @@ void ship::goTo(sf::Vector2f goTo)
 
 sf::Vector2f ship::pos()
 {
-    return m_sprite.GetPosition() + m_sprite.GetCenter();
+    return m_sprite.GetPosition();/* + m_sprite.GetCenter();*/
 }
 
 void ship::setSelected(bool sel)

@@ -10,7 +10,7 @@ void computer::update(float time){
     player::update(time);
 
     m_createShip+= time;
-    if (m_createShip > 1.f)
+    if (m_createShip > 10.f)
     {
         m_createShip = 0.f;
         attacker *att = player::newAttacker();

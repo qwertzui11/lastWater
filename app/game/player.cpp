@@ -19,7 +19,9 @@ player::~player()
 attacker* player::newAttacker()
 {
     attacker *newOne = new attacker(m_pos, m_imgAttacker, m_rw, m_colour);
-    newOne->goTo(sf::Vector2f(m_pos.x+1.f, m_pos.y+1.f));
+    float ra = rand()%10000;
+    ra/=1000.f;
+    newOne->goTo(sf::Vector2f(m_pos.x+ra, m_pos.y+1.f));
     m_attacker.push_back(newOne);
     return newOne;
 }
@@ -27,7 +29,9 @@ attacker* player::newAttacker()
 collector* player::newCollector()
 {
     collector *newOne = new collector(m_pos, m_imgCollector, m_rw, m_colour);
-    newOne->goTo(sf::Vector2f(m_pos.x+1.f, m_pos.y+1.f));
+    float ra = rand()%10000;
+    ra/=10.f;
+    newOne->goTo(sf::Vector2f(m_pos.x+ra, m_pos.y+1.f));
     m_collector.push_back(newOne);
     return newOne;
 }

@@ -29,14 +29,18 @@ private:
     static const float g_scrollSpeed = 500.f;
 
     sf::RenderWindow m_window;
+
     sf::Image m_imgCollector;
     sf::Image m_imgAttacker;
     sf::Image m_imgBullet;
-
     sf::Image m_img1p;
     sf::Image m_img2p;
     sf::Image m_imgWater;
+
+    sf::Font m_font;
+
     world m_world;
+
     planet *m_1p;
     planet *m_2p;
     planet *m_water;

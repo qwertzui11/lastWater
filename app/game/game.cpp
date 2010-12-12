@@ -39,26 +39,29 @@ void game::initialise()
     {
         std::cout << "m_img1p.LoadFromFile";
     }
-    sf::Vector2f m_pos1p(250,250);
-    sf::Vector2f m_cpos1p(200,200);
-    m_1p = new planet(&m_img1p, &m_window, m_pos1p, m_cpos1p, sf::Color(230,185,117), 0, 0, 0, 100.f, 200.f);
+    if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
+    {
+        std::cout << "m_imgWater.LoadFromFile";
+    }
+    if (!m_font.LoadFromFile("../data/font/pirulen.ttf", 30))
+    {
+         std::cout << "m_font.LoadFromFile";
+    }
+    m_1p = new planet(&m_imgWater, &m_img1p, &m_font, &m_window, sf::Vector2f(200.f, 200.f), sf::Color(230,185,117), 600, 0);
 
     if (!m_img2p.LoadFromFile("../data/img/1p_planet.tga"))
     {
         std::cout << "m_img2p.LoadFromFile";
     }
-    sf::Vector2f m_pos2p(1750,1750);
+/*    sf::Vector2f m_pos2p(1750,1750);
     sf::Vector2f m_cpos2p(200,200);
     m_2p = new planet(&m_img2p, &m_window, m_pos2p, m_cpos2p, sf::Color(230,185,117), 0, 0, 0, 1600.f, 1700.f);
 
-    if (!m_imgWater.LoadFromFile("../data/img/water.tga"))
-    {
-        std::cout << "m_imgWater.LoadFromFile";
-    }
+
     sf::Vector2f m_posWater(1000,1000);
     sf::Vector2f m_cposWater(250,247);
-    m_water = new planet(&m_imgWater, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225), 1000, 0, 1, 800.f, 1000.f);
-
+    m_water = new planet(&m_imgWater, m_img1p, &m_window, m_posWater, m_cposWater, sf::Color(32,167,225), 1000, 0, 1, 800.f, 1000.f);
+*/
     computer *newComp = new computer(sf::Vector2f(1800.f, 200.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
     newComp = new computer(sf::Vector2f(200.f, 1800.f), &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Red);
@@ -104,8 +107,8 @@ void game::update(float timeLastFrame)
     }
 
     m_1p->update(timeLastFrame);
-    m_2p->update(timeLastFrame);
-    m_water->update(timeLastFrame);
+/*    m_2p->update(timeLastFrame);
+    m_water->update(timeLastFrame);*/
     m_world.update(timeLastFrame);
 
     for (std::vector<asteroid *>::iterator it = m_asteroids.begin(); it < m_asteroids.end(); ++it)
@@ -130,10 +133,10 @@ void game::render()
     }
     if(m_1p)
         m_1p->render();
-    if(m_2p)
+/*    if(m_2p)
         m_2p->render();
     if(m_water)
-        m_water->render();
+        m_water->render();*/
     for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
     {
         (*it)->render();
