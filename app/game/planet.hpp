@@ -23,9 +23,12 @@ public:
     sf::Vector2f pos () {return m_pos;}
 
     static float radius() {return 200.f;}
+    static float size() {return 200.f;}
 
     static std::vector<planet*> g_planets;
 private:
+    void updateWater();
+
     sf::RenderWindow *m_rw;
     sf::Sprite m_spriteWet;
     sf::Sprite m_spriteDry;

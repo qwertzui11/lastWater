@@ -50,7 +50,7 @@ void asteroid::update (float timeLastFrame)
     if (!m_collector)
         m_sprite.Move(m_dir*timeLastFrame*100.0f);
     else
-        m_sprite.Move((m_collector->pos() - pos())*timeLastFrame*10.f);
+        collectable::update(timeLastFrame);
 }
 
 

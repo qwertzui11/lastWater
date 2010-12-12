@@ -6,6 +6,7 @@
 #include "world.hpp"
 #include "planet.hpp"
 #include "asteroid.hpp"
+#include "bubble.hpp"
 #include "human.hpp"
 #include "computer.hpp"
 #include <vector>
@@ -33,8 +34,8 @@ private:
     sf::Image m_imgCollector;
     sf::Image m_imgAttacker;
     sf::Image m_imgBullet;
+    sf::Image m_imgBubble;
     sf::Image m_img1p;
-    sf::Image m_img2p;
     sf::Image m_imgWater;
 
     sf::Font m_font;

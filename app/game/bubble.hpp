@@ -6,8 +6,10 @@
 class bubble : public collectable
 {
 public:
-    bubble(sf::Image *img, sf::RenderWindow *rw);
+    bubble(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw);
     ~bubble();
+
+    static std::vector <bubble*> g_bubbles;
 };
 
 #endif // BUBBLE_HPP

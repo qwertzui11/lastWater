@@ -1,4 +1,5 @@
 #include "collectable.hpp"
+#include "collector.hpp"
 
 collectable::collectable(sf::Image *img, sf::RenderWindow *rw)
     : m_rw(rw)
@@ -28,3 +29,8 @@ collector * collectable::getCollector()
     return m_collector;
 }
 
+void collectable::update(float timeLastFrame)
+{
+    if (m_collector)
+        m_sprite.Move((m_collector->pos() - pos())*timeLastFrame*10.f);
+}

@@ -17,8 +17,7 @@ planet::planet(sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::RenderW
     m_spriteDry.SetCenter(m_spriteDry.GetSize().x/2.0f, m_spriteDry.GetSize().y/2.0f);
     m_spriteWet.SetPosition(m_pos);
     m_spriteWet.SetCenter(m_spriteWet.GetSize().x/2.0f, m_spriteWet.GetSize().y/2.0f);
-    m_spriteWet.SetColor(sf::Color(255, 255, 255, (m_waterLvl*255)/1000));
-
+    updateWater();
     g_planets.push_back(this);
 }
 
@@ -32,6 +31,11 @@ planet::~planet()
             break;
         }
     }
+}
+
+void planet::updateWater()
+{
+    m_spriteWet.SetColor(sf::Color(255, 255, 255, (m_waterLvl*255)/1000));
 }
 
 void planet::render()
@@ -53,7 +57,7 @@ void planet::render()
     wText.SetPosition(m_spriteDry.GetPosition() + sf::Vector2f(-wText.GetRect().GetWidth()/2.f, -10.0f-wText.GetRect().GetHeight()/2.f));
     m_rw->Draw(wText);
 
-    if(m_ironLvl > 0)
+    if(m_ironLvl > -1)
     {
         std::string i;
         std::stringstream iout;
@@ -79,6 +83,7 @@ void planet::update(float time)
 void planet::addWater(int lvl)
 {
     m_waterLvl += lvl;
+    updateWater();
 }
 
 void planet::addIron(int lvl)
@@ -89,6 +94,7 @@ void planet::addIron(int lvl)
 void planet::subWater(int lvl)
 {
     m_waterLvl -= lvl;
+    updateWater();
 }
 
 void planet::subIron(int lvl)

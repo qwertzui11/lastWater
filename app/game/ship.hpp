@@ -26,8 +26,8 @@ public:
     bool alive() {return m_alive;}
 protected:
     bool m_alive;
-private:
     sf::RenderWindow *m_rw;
+private:
     sf::Sprite m_sprite;
 
     sf::Vector2f m_goTo;

@@ -20,6 +20,7 @@ public:
            sf::Image *imgAttacker,
            sf::Image *imgBullet,
            sf::Image *imgWorld,
+           sf::Image *imgBubble,
            sf::RenderWindow *rw,
            sf::Color colour);
     ~player();
@@ -41,6 +42,7 @@ private:
     sf::Image *m_imgCollector;
     sf::Image *m_imgAttacker;
     sf::Image *m_imgBullet;
+    sf::Image *m_imgBubble;
 
     sf::Color m_colour;
 

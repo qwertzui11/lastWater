@@ -45,15 +45,19 @@ void game::initialise()
     {
          std::cout << "m_font.LoadFromFile";
     }
+    if (!m_imgBubble.LoadFromFile("../data/img/bubble.jpg"))
+    {
+        std::cout << "m_imgBubble.LoadFromFile";
+    }
 
-    m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Blue);
-    m_planetWater = new planet(&m_imgWater, &m_imgWater, &m_font, &m_window, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, 0);
+    m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Blue);
+    m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, &m_window, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, -1);
 
-    computer *newComp = new computer(sf::Vector2f(1600.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Cyan);
+    computer *newComp = new computer(sf::Vector2f(1600.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(400.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Red);
+    newComp = new computer(sf::Vector2f(400.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Red);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(1600.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_window, sf::Color::Green);
+    newComp = new computer(sf::Vector2f(1600.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Green);
     m_computers.push_back(newComp);
 }
 
@@ -106,6 +110,10 @@ void game::update(float timeLastFrame)
             break;
         }
     }
+    for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
+    {
+        (*it)->update(timeLastFrame);
+    }
 }
 
 void game::render()
@@ -117,6 +125,10 @@ void game::render()
     }
     m_planetWater->render();
     for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
+    {
+        (*it)->render();
+    }
+    for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
     {
         (*it)->render();
     }
