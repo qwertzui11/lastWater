@@ -162,8 +162,8 @@ void human::sendSelected()
             if ((*it)->isSelected())
             {
                 sf::Vector2f to = mousePos(m_rw);
-                to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
-                                   (-sqrtNum/2.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);
+                /*to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
+                                   (-sqrtNum/2.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);*/
                 (*it)->goTo(to);
                 ++ind;
             }

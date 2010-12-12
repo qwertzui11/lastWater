@@ -1,5 +1,6 @@
 #include "asteroid.hpp"
 #include "useful.hpp"
+#include "collector.hpp"
 
 #include <iostream>
 
@@ -8,7 +9,9 @@ std::vector <asteroid*> asteroid::g_asteroids;
 asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_sprite(*img)
+    , m_collector(0)
 {
+    m_sprite.SetCenter(m_sprite.GetSize().x/2.f, m_sprite.GetSize().y/2.f);
     // kommt der asteroid von oben?
     int start = rand()%4;
     float dir = (rand()%2000)-1000;
@@ -37,15 +40,6 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
         m_dir = normalize(sf::Vector2f(-1, dir));
     }
 
-    /*if (rand()%2 == 0)
-    {
-        m_dir.x*=-1.f;
-    }
-    if (rand()%2 == 0)
-    {
-        m_dir.y*=-1.f;
-    }*/
-
     g_asteroids.push_back(this);
 }
 
@@ -56,10 +50,23 @@ asteroid::~asteroid()
 
 void asteroid::update (float timeLastFrame)
 {
-    m_sprite.Move(m_dir*timeLastFrame*100.0f);
+    if (!m_collector)
+        m_sprite.Move(m_dir*timeLastFrame*100.0f);
+    else
+        m_sprite.Move((m_collector->pos() - pos())*timeLastFrame*10.f);
 }
 
 void asteroid::render ()
 {
     m_rw->Draw(m_sprite);
+}
+
+void asteroid::setCollector(collector *set)
+{
+    m_collector = set;
+}
+
+collector * asteroid::getCollector()
+{
+    return m_collector;
 }

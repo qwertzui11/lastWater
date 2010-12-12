@@ -29,7 +29,7 @@ attacker* player::newAttacker()
 
 collector* player::newCollector()
 {
-    collector *newOne = new collector(m_pos, m_imgCollector, m_rw, m_colour);
+    collector *newOne = new collector(m_pos, m_imgCollector, m_rw, m_colour, &m_planet);
     float ra = rand()%10000;
     ra/=1000.f;
     newOne->goTo(sf::Vector2f(m_pos.x+ra, m_pos.y+1.f));

@@ -8,11 +8,13 @@
 class collector : public ship
 {
 public:
-    collector(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col);
+    collector(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf::Color col, planet *home);
+    ~collector();
     void kill();
     void update (float timeLastFrame);
 
     void goTo(sf::Vector2f goTo);
+
 
 private:
     enum state
