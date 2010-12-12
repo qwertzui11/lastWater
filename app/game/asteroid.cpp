@@ -3,6 +3,8 @@
 
 #include <iostream>
 
+std::vector <asteroid*> asteroid::g_asteroids;
+
 asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_sprite(*img)
@@ -43,10 +45,13 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
     {
         m_dir.y*=-1.f;
     }*/
+
+    g_asteroids.push_back(this);
 }
 
 asteroid::~asteroid()
 {
+    findAndDelete<asteroid>(&g_asteroids, this);
 }
 
 void asteroid::update (float timeLastFrame)

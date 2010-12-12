@@ -44,7 +44,7 @@ private:
     planet *m_planetWater;
 
     sf::Image m_imgAsteroid;
-    std::vector<asteroid *>m_asteroids;
+    // std::vector<asteroid *>m_asteroids;
 
     float m_nextAsteroid;
 

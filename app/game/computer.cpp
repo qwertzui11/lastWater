@@ -13,8 +13,8 @@ void computer::update(float time){
     if (m_createShip > 10.f)
     {
         m_createShip = 0.f;
-        attacker *att = player::newAttacker();
-        att->goTo(sf::Vector2f(1000.f, 1000.f));
+        /*attacker *att = player::newAttacker();
+        att->goTo(sf::Vector2f(1000.f, 1000.f));*/
     }
 
 }

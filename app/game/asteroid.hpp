@@ -13,6 +13,9 @@ public:
     void render ();
 
     sf::Vector2f pos() {return m_sprite.GetPosition();}
+
+    static float size() {return 15.f;}
+    static std::vector <asteroid*> g_asteroids;
 private:
     sf::RenderWindow *m_rw;
     sf::Sprite m_sprite;

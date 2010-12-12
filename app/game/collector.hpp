@@ -12,7 +12,7 @@ public:
     void kill();
     void update (float timeLastFrame);
 
-//    void goTo(sf::Vector2f goTo);
+    void goTo(sf::Vector2f goTo);
 
 private:
     enum state
@@ -22,6 +22,9 @@ private:
         gettingHome,
         manualPositionGoTo
     };
+
+    void setState(state set);
+    asteroid* findNearest();
 
     planet *m_goToPl;
     asteroid *m_goToAs;
