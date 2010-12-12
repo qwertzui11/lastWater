@@ -17,6 +17,9 @@ public:
     void subWater(int lvl);
     void subIron(int lvl);
 
+    int iron();
+    int water();
+
     sf::Vector2f pos () {return m_pos;}
 
     static float radius() {return 200.f;}

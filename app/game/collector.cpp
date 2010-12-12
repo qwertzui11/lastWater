@@ -5,6 +5,7 @@ collector::collector(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw, sf:
     : ship(pos, img, rw, col)
     , m_state(manualPositionGoTo)
     , m_home(home)
+    , m_goToAs(0)
 {
 
 }
@@ -32,7 +33,7 @@ void collector::update (float timeLastFrame)
     {
         if (find(asteroid::g_asteroids, m_goToAs) != 0 && m_goToAs->getCollector() == 0)
         {
-            goTo(m_goToAs->pos());
+            ship::goTo(m_goToAs->pos());
             if (length(m_goToAs->pos() - pos()) < collector::g_radius + asteroid::size())
             {
                 setState(gettingHome);
@@ -46,7 +47,7 @@ void collector::update (float timeLastFrame)
     }
     if (m_state == gettingHome)
     {
-        goTo(m_home->pos());
+        ship::goTo(m_home->pos());
         if (length(m_home->pos() - pos()) < collector::g_radius + planet::radius() + 10.0f)
         {
             m_home->addIron(10);
@@ -62,19 +63,20 @@ void collector::goTo(sf::Vector2f goTo)
 {
     // is it an asteroid?
     asteroid * find = findByPos<asteroid>(asteroid::g_asteroids, goTo);
-    if (find)
+    if (find && m_state == manualPositionGoTo)
     {
         setState(lookingForAsteroid);
         m_goToAs = find;
     }
-    ship::goTo(goTo);
+    if (m_state == manualPositionGoTo)
+        ship::goTo(goTo);
 }
 
 void collector::setState(state set)
 {
-    if (m_state != lookingForAsteroid)
+    /*if (m_state != lookingForAsteroid)
         m_goToAs = 0;
-    m_goToPl = 0;
+    m_goToPl = 0;*/
     m_state = set;
 }
 

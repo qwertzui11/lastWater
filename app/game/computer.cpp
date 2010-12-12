@@ -10,11 +10,23 @@ void computer::update(float time){
     player::update(time);
 
     m_createShip+= time;
-    if (m_createShip > 10.f)
+    if (m_createShip > 0.25f)
     {
         m_createShip = 0.f;
-        /*attacker *att = player::newAttacker();
-        att->goTo(sf::Vector2f(1000.f, 1000.f));*/
+        if (m_collector.size() < 5)
+        {
+            collector *coll = player::newCollector();
+            if (coll)
+            {
+                coll->setState(collector::lookingForAsteroid);
+            }
+        }
+        else
+        {
+            attacker *att = player::newAttacker();
+            if (att)
+                att->goTo(sf::Vector2f(1000.f, 1000.f));
+        }
     }
 
 }

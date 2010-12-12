@@ -95,3 +95,13 @@ void planet::subIron(int lvl)
 {
     m_ironLvl -= lvl;
 }
+
+int planet::iron()
+{
+    return m_ironLvl;
+}
+
+int planet::water()
+{
+    return m_waterLvl;
+}

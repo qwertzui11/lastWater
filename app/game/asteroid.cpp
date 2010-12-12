@@ -45,7 +45,10 @@ asteroid::asteroid(sf::Image *img, sf::RenderWindow *rw)
 
 asteroid::~asteroid()
 {
-    findAndDelete<asteroid>(&g_asteroids, this);
+    if (!findAndDelete<asteroid>(&g_asteroids, this))
+        std::cerr << "asteroid::~asteroid()!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n";
+    else
+        std::cerr << "asteroid::~asteroid() left " << g_asteroids.size() << "\n";
 }
 
 void asteroid::update (float timeLastFrame)

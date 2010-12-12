@@ -15,8 +15,6 @@ public:
 
     void goTo(sf::Vector2f goTo);
 
-
-private:
     enum state
     {
         lookingForAsteroid,
@@ -24,8 +22,10 @@ private:
         gettingHome,
         manualPositionGoTo
     };
-
     void setState(state set);
+private:
+
+
     asteroid* findNearest();
 
     planet *m_goToPl;

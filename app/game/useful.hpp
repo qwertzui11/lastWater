@@ -38,7 +38,7 @@ T* findNearest(std::vector<T*> vec, sf::Vector2f pos)
 }*/
 
 template <class T>
-void findAndDelete(std::vector<T*> *vec, T* toFind)
+bool findAndDelete(std::vector<T*> *vec, T* toFind)
 {
     typedef typename std::vector<T*>::iterator t_it;
     for (t_it it = vec->begin(); it < vec->end(); ++it)
@@ -46,9 +46,10 @@ void findAndDelete(std::vector<T*> *vec, T* toFind)
         if ((*it) == toFind)
         {
             vec->erase(it);
-            return;
+            return true;
         }
     }
+    return false;
 }
 
 template <class T>

@@ -19,6 +19,10 @@ player::~player()
 
 attacker* player::newAttacker()
 {
+    if (m_planet.iron() < 10)
+        return 0;
+    m_planet.subIron(10);
+
     attacker *newOne = new attacker(m_pos, m_imgAttacker, m_rw, m_colour);
     float ra = rand()%10000;
     ra/=1000.f;
@@ -29,6 +33,10 @@ attacker* player::newAttacker()
 
 collector* player::newCollector()
 {
+    if (m_planet.iron() < 5)
+        return 0;
+    m_planet.subIron(5);
+
     collector *newOne = new collector(m_pos, m_imgCollector, m_rw, m_colour, &m_planet);
     float ra = rand()%10000;
     ra/=1000.f;

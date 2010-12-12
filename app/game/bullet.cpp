@@ -7,7 +7,7 @@ bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWin
     , m_lifeTime(0.f)
 {
     m_sprite.SetPosition(pos);
-    m_sprite.SetColor(sf::Color::Magenta);
+    m_sprite.SetColor(sf::Color::Green);
     float rot = acos(m_dir.x);
     m_dir = normalize(dir);
     //m_sprite.SetRotation((rot*3.141515f)*360.f+90.f);
