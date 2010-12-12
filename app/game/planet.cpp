@@ -2,6 +2,8 @@
 #include <iostream>
 #include <sstream>
 
+std::vector<planet*> planet::g_planets;
+
 planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vector2f cpos, sf::Color col, int waterLvl, int ironLvl, int type, float textX, float textY)
     : m_rw(rw)
     , m_sprite(*img)
@@ -20,6 +22,20 @@ planet::planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vecto
     if (!m_font.LoadFromFile("../data/font/pirulen.ttf", 30))
     {
          std::cout << "m_font.LoadFromFile";
+    }
+
+    g_planets.push_back(this);
+}
+
+planet::~planet()
+{
+    for (std::vector<planet*>::iterator it = g_planets.begin(); it < g_planets.end(); ++it)
+    {
+        if ((*it) == this)
+        {
+            g_planets.erase(it);
+            break;
+        }
     }
 }
 

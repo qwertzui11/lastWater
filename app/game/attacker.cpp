@@ -35,7 +35,7 @@ void attacker::render()
 
 void attacker::kill()
 {
-    if (rand()%3 == 0)
+    if (rand()%100 == 0)
         m_alive = false;
 }
 

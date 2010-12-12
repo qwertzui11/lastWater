@@ -40,10 +40,15 @@ void human::update(float timeLastFrame)
         m_select->SetPointPosition(3, m_select->GetPointPosition(0).x, pos.y);
         m_select->SetPointPosition(2, pos.x, pos.y);
 
+        sf::FloatRect coll(m_select->GetPointPosition(0).x, m_select->GetPointPosition(0).y, pos.x, pos.y);
+        if (coll.GetWidth() == 0)
+            coll.Right = coll.Left+1.0f;
+        if (coll.GetHeight() == 0)
+            coll.Bottom = coll.Top+1.0f;
+
         bool gotOneAttacker(false);
         for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
         {
-            sf::FloatRect coll(m_select->GetPointPosition(0).x, m_select->GetPointPosition(0).y, pos.x, pos.y);
             if (pos.x < m_select->GetPointPosition(0).x)
             {
                 coll.Left = pos.x;
@@ -64,11 +69,8 @@ void human::update(float timeLastFrame)
                 (*it)->setSelected(false);
             }
         }
-
-
         for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
         {
-            sf::FloatRect coll(m_select->GetPointPosition(0).x, m_select->GetPointPosition(0).y, pos.x, pos.y);
             if (pos.x < m_select->GetPointPosition(0).x)
             {
                 coll.Left = pos.x;
@@ -119,8 +121,6 @@ void human::stopSelect()
 void human::sendSelected()
 {
     int num(0);
-
-
     bool gotAnAttacker(false);
     for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
     {
@@ -139,11 +139,8 @@ void human::sendSelected()
         }
     }
 
-
     float sqrtNum = sqrt(num);
     int ind = 0;
-
-
     if (gotAnAttacker)
     {
         for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)

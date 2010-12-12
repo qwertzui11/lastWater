@@ -7,6 +7,7 @@ class planet
 {
 public:
     planet(sf::Image *img, sf::RenderWindow *rw, sf::Vector2f pos, sf::Vector2f cpos, sf::Color col, int waterLvl, int ironLvl, int type, float textX, float textY);
+    ~planet();
 
     void update(float time);
     void render();
@@ -16,6 +17,11 @@ public:
     void subWater(int lvl);
     void subIron(int lvl);
 
+    sf::Vector2f pos () {return m_pos;/*+m_sprite.GetCenter()*/}
+
+    static float radius() {return 200.f;}
+
+    static std::vector<planet*> g_planets;
 private:
     sf::RenderWindow *m_rw;
     sf::Sprite m_sprite;

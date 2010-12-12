@@ -1,6 +1,7 @@
 #include "ship.hpp"
 #include "useful.hpp"
 #include <iostream>
+#include "planet.hpp"
 
 std::vector<ship*> ship::g_ships;
 
@@ -44,6 +45,7 @@ void ship::update(float timeLastFrame)
     else
         wantedDir *= distance;
 
+    // collidate with other ships
     for (std::vector<ship*>::iterator it = g_ships.begin(); it < g_ships.end(); ++it)
     {
         if ((*it) == this)
@@ -58,6 +60,21 @@ void ship::update(float timeLastFrame)
             otherDir = normalize(otherDir);
             newPos = otherPos - otherDir*g_radius*2.f;// + sf::Vector2f(5.f, 5.f);
             m_sprite.SetPosition(newPos-m_sprite.GetCenter());
+        }
+    }
+
+    // collidate with planets
+    for (std::vector<planet*>::iterator it = planet::g_planets.begin(); it < planet::g_planets.end(); ++it)
+    {
+        sf::Vector2f otherPos = (*it)->pos();
+        sf::Vector2f otherDir = pos() - otherPos;
+        if (length(otherDir) < g_radius+planet::radius())
+        {
+            sf::Vector2f newPos = pos();
+            otherDir = normalize(otherDir);
+            newPos = otherPos + otherDir*(g_radius+planet::radius());
+            m_sprite.SetPosition(newPos - m_sprite.GetCenter());
+            break;
         }
     }
 

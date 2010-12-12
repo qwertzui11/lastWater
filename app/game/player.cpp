@@ -65,13 +65,13 @@ void player::update(float time)
     }
     for(std::vector<attacker *>::iterator it2 = m_attacker.begin(); it2 < m_attacker.end(); ++it2)
     {
-        for(std::vector<ship *>::iterator it = enemys.begin(); it < enemys.end(); ++it)
+        if ((*it2)->m_lastShot <0.0f)
         {
-            if (length ((*it)->pos() - (*it2)->pos()) < 400.f)
+            for(std::vector<ship *>::iterator it = enemys.begin(); it < enemys.end(); ++it)
             {
-                if ((*it2)->m_lastShot <0.0f)
+                if (length ((*it)->pos() - (*it2)->pos()) < 400.f)
                 {
-                    (*it2)->m_lastShot = 0.5f;
+                    (*it2)->m_lastShot = 0.2f;
                     m_bullets.push_back(new bullet((*it2)->pos(), (*it)->pos() - (*it2)->pos(), m_imgBullet, m_rw, m_colour));
                     break;
                 }

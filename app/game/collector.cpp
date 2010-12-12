@@ -2,7 +2,7 @@
 
 void collector::kill()
 {
-    if (rand()%10 == 0)
+    if (rand()%20 == 0)
         m_alive = false;
 }
 
