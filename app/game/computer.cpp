@@ -3,6 +3,7 @@
 computer::computer(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour)
     , m_createShip(0.f)
+    , m_lastMostWater(1000.f, 1000.f)
 {
 }
 
@@ -23,6 +24,19 @@ void computer::update(float time){
             }
         }
 
+        if (m_lastMostWater != mostWater)
+        {
+            m_lastMostWater = mostWater;
+            for (std::vector<attacker*>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
+            {
+                (*it)->goTo(mostWater);
+            }
+            for (std::vector<collector*>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+            {
+                if ((*it)->getState() == collector::manualPositionGoTo)
+                    (*it)->goTo(mostWater);
+            }
+        }
 
         m_createShip = 0.f;
         bool createAColl(false);

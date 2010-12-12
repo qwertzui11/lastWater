@@ -26,6 +26,7 @@ public:
         manualPositionGoTo
     };
     void setState(state set);
+    state getState();
 private:
 
 

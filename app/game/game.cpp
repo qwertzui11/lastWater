@@ -109,6 +109,19 @@ void game::update(float timeLastFrame)
             delete (*it);
             break;
         }
+        bool cancel(false);
+        for (std::vector<planet *>::iterator it2 = planet::g_planets.begin(); it2 < planet::g_planets.end(); ++it2)
+        {
+            if (length(pos - (*it2)->pos()) < planet::size())
+            {
+                (*it2)->addIron(5);
+                delete (*it);
+                cancel = true;
+                break;
+            }
+        }
+        if (cancel)
+            break;
     }
     for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
     {

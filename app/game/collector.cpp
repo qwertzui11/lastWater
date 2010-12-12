@@ -171,6 +171,11 @@ void collector::getWater(planet *pl)
     goTo(pl->pos());
 }
 
+collector::state collector::getState()
+{
+    return m_state;
+}
+
 void collector::setState(state set)
 {
     /*if (m_state != lookingForAsteroid)
