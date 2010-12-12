@@ -53,11 +53,11 @@ void game::initialise()
     m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Blue);
     m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, &m_window, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, -1);
 
-    computer *newComp = new computer(sf::Vector2f(1600.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Cyan);
+    computer *newComp = new computer(sf::Vector2f(1610.f, 410.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Cyan);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(400.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Red);
+    newComp = new computer(sf::Vector2f(410.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Red);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(1600.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Green);
+    newComp = new computer(sf::Vector2f(1610.f, 1610.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Green);
     m_computers.push_back(newComp);
 }
 
