@@ -2,7 +2,7 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
+    : m_window(sf::VideoMode(1024, 768, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
 {
@@ -45,7 +45,7 @@ void game::initialise()
     {
          std::cout << "m_font.LoadFromFile";
     }
-    if (!m_imgBubble.LoadFromFile("../data/img/bubble.jpg"))
+    if (!m_imgBubble.LoadFromFile("../data/img/bubble.tga"))
     {
         std::cout << "m_imgBubble.LoadFromFile";
     }
