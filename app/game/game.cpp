@@ -2,7 +2,7 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1600, 1200, 32), "lastWater")
+    : m_window(sf::VideoMode(1920, 1000, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
 {
