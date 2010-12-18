@@ -26,8 +26,10 @@ public:
     void render();
 private:
     void updateScroll(float time);
+    void zoom(float time);
 
     static const float g_scrollSpeed = 500.f;
+    static const float g_zoomSpeed = 20.f;
 
     sf::RenderWindow m_window;
 
@@ -53,6 +55,7 @@ private:
     std::vector <computer*> m_computers;
 
     sf::Vector2f m_viewPos;
+    float m_zoom;
 };
 
 #endif // GAME_HPP

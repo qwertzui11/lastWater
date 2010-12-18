@@ -2,7 +2,7 @@
 #include <iostream>
 
 game::game()
-    : m_window(sf::VideoMode(1920, 1000, 32), "lastWater")
+    : m_window(sf::VideoMode(1920, 1020, 32), "lastWater")
     , m_world(&m_window)
     , m_nextAsteroid(0.f)
 {
@@ -70,11 +70,22 @@ int game::run()
         {
             if (Event.Type == sf::Event::Closed)
                 m_window.Close();
-
+            if (Event.Type == sf::Event::MouseWheelMoved)
+            {
+                if (Event.MouseWheel.Delta < 0)
+                    zoom (m_window.GetFrameTime());
+                else
+                    zoom (-m_window.GetFrameTime());
+            }
+            if (Event.Type == sf::Event::Resized)
+                m_window.GetDefaultView().SetHalfSize((float)Event.Size.Width, (float)Event.Size.Height);
             m_player->event(&Event);
         }
         m_window.Clear();
-        update(m_window.GetFrameTime());
+        float frameTime = m_window.GetFrameTime();
+        if (frameTime > 1.f/60.f)
+            frameTime = 1.f/60.f;
+        update(frameTime);
         render();
         m_window.Display();
     }
@@ -176,5 +187,27 @@ void game::updateScroll(float time)
     if (m_viewPos.y + m_window.GetDefaultView().GetHalfSize().y > 2000)
         m_viewPos.y = 2000-m_window.GetDefaultView().GetHalfSize().y;
     m_window.GetDefaultView().SetCenter(m_viewPos);
+    zoom(0.f);
 }
+
+void game::zoom(float time)
+{
+    sf::View * view = &m_window.GetDefaultView();
+    sf::FloatRect rect = view->GetRect();
+    float aspect = ((float)m_window.GetHeight())/((float)m_window.GetWidth());
+    float width = rect.Right - rect.Left;
+    float height = rect.Bottom - rect.Top;
+    width*=1.f+time*g_zoomSpeed;
+    if (width>2000.f)
+        width=2000.f;
+    if (width<400.f)
+        width=400.f;
+    height=width*aspect;
+    rect.Right=rect.Left+width;
+    rect.Bottom=rect.Top+height;
+    view->SetFromRect(rect);
+    /*view->Zoom(1.f + time*g_zoomSpeed);
+    if (view->GetHalfSize().x*2.f > m_window.GetWidth())*/
+}
+
 

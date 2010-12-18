@@ -88,7 +88,8 @@ void planet::addWater(int lvl)
 
 void planet::addIron(int lvl)
 {
-    m_ironLvl += lvl;
+    if (m_ironLvl >= 0)
+        m_ironLvl += lvl;
 }
 
 void planet::subWater(int lvl)

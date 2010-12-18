@@ -12,8 +12,11 @@ sf::Vector2f normalize(sf::Vector2f vec)
 
 sf::Vector2f mousePos(sf::RenderWindow *rw)
 {
-    return sf::Vector2f(rw->GetInput().GetMouseX()+rw->GetView().GetCenter().x-rw->GetView().GetHalfSize().x,
-                        rw->GetInput().GetMouseY()+rw->GetView().GetCenter().y-rw->GetView().GetHalfSize().y);
+    float xPos = rw->GetDefaultView().GetRect().Left;
+    float yPos = rw->GetDefaultView().GetRect().Top;
+    xPos += ((float)rw->GetInput().GetMouseX())*((rw->GetDefaultView().GetHalfSize().x*2.f) / ((float)rw->GetWidth()));
+    yPos += ((float)rw->GetInput().GetMouseY())*((rw->GetDefaultView().GetHalfSize().y*2.f) / ((float)rw->GetHeight()));
+    return sf::Vector2f(xPos, yPos);
 }
 
 float length(sf::Vector2f vec)

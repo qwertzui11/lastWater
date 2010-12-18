@@ -59,7 +59,7 @@ void collector::update (float timeLastFrame)
     if (m_state == gettingHome)
     {
         ship::goTo(m_home->pos());
-        if (length(m_home->pos() - pos()) < collector::g_radius + planet::radius() + 10.0f)
+        if (length(m_home->pos() - pos()) < collector::g_radius + planet::radius() + 20.0f)
         {
             if (m_goToAs)
             {
