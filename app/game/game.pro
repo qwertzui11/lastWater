@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= core gui
+QT       -= gui
 
 TARGET = game
 CONFIG   += console
@@ -28,19 +28,6 @@ SOURCES += main.cpp \
     bullet.cpp \
     bubble.cpp \
     collectable.cpp
-
-# INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
-
-unix {
-    LIBS+= -lsfml-graphics -lsfml-window -lsfml-system -lsfml-network -lsfml-audio
-}
-
-# dingdong
-win32 {
-    LIBS+= C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-graphics.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-window.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-system.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-audio.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-network.a
-    INCLUDEPATH+= C:\Users\andreas\UNI\GameDesign\SFML\include
-}
-
 HEADERS += \
     game.hpp \
     world.hpp \
@@ -57,3 +44,16 @@ HEADERS += \
     bullet.hpp \
     bubble.hpp \
     collectable.hpp
+
+unix {
+    INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
+    LIBS+= -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
+}
+
+# dingdong
+win32 {
+    LIBS+= C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-graphics.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-window.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-system.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-audio.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-network.a
+    INCLUDEPATH+= C:\Users\andreas\UNI\GameDesign\SFML\include
+}
+
+OBJECTS_DIR = ./build

@@ -1,6 +1,8 @@
 #include "bullet.hpp"
 #include "useful.hpp"
 
+#include <QtCore/QtGlobal>
+
 bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWindow *rw, sf::Color col)
     : m_sprite(*img)
     , m_rw(rw)
@@ -8,9 +10,15 @@ bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWin
 {
     m_sprite.SetPosition(pos);
     m_sprite.SetColor(col);
-    float rot = acos(m_dir.x);
     m_dir = normalize(dir);
-    //m_sprite.SetRotation((rot*3.141515f)*360.f+90.f);
+    float rot = acos(m_dir.x);
+    if (-m_dir.y < 0.0)
+    {
+        rot = 2.f*3.1415926f - rot;
+    }
+    float res = (rot/(2.f*3.1415926f))*360.f+90.f;
+
+    m_sprite.SetRotation(res);
 }
 
 void bullet::update(float time)
