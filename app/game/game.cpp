@@ -165,7 +165,7 @@ void game::updateScroll(float time)
     {
         m_viewPos.x-=g_scrollSpeed*time;
     }
-    if (m_window.GetInput().GetMouseX() > m_window.GetWidth()-20 || m_window.GetInput().IsKeyDown(sf::Key::Right))
+    if (m_window.GetInput().GetMouseX() > (signed)m_window.GetWidth()-20 || m_window.GetInput().IsKeyDown(sf::Key::Right))
     {
         m_viewPos.x+=g_scrollSpeed*time;
     }
@@ -173,7 +173,7 @@ void game::updateScroll(float time)
     {
         m_viewPos.y-=g_scrollSpeed*time;
     }
-    if (m_window.GetInput().GetMouseY() > m_window.GetHeight()-10 || m_window.GetInput().IsKeyDown(sf::Key::Down))
+    if (m_window.GetInput().GetMouseY() > (signed)m_window.GetHeight()-10 || m_window.GetInput().IsKeyDown(sf::Key::Down))
     {
         m_viewPos.y+=g_scrollSpeed*time;
     }

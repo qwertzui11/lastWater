@@ -1,8 +1,6 @@
 #include "bullet.hpp"
 #include "useful.hpp"
 
-#include <QtCore/QtGlobal>
-
 bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWindow *rw, sf::Color col)
     : m_sprite(*img)
     , m_rw(rw)

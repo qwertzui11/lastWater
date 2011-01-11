@@ -21,6 +21,7 @@ player::player(sf::Vector2f pos,
     , m_colour(colour)
     , m_pos(pos)
 {
+    (void)imgWorld;
 }
 
 player::~player()

@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       -= core gui
 
 TARGET = game
 CONFIG   += console
@@ -27,7 +27,11 @@ SOURCES += main.cpp \
     useful.cpp \
     bullet.cpp \
     bubble.cpp \
-    collectable.cpp
+    collectable.cpp \
+    gui/widget.cpp \
+    gui/button.cpp \
+    gui/statictext.cpp \
+    gui/buttonListener.cpp
 HEADERS += \
     game.hpp \
     world.hpp \
@@ -43,14 +47,17 @@ HEADERS += \
     computer.hpp \
     bullet.hpp \
     bubble.hpp \
-    collectable.hpp
+    collectable.hpp \
+    gui/widget.hpp \
+    gui/button.hpp \
+    gui/statictext.hpp \
+    gui/buttonListener.hpp
 
 unix {
     INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
     LIBS+= -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 }
 
-# dingdong
 win32 {
     LIBS+= C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-graphics.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-window.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-system.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-audio.a C:\Users\andreas\UNI\GameDesign\SFML\lib\libsfml-network.a
     INCLUDEPATH+= C:\Users\andreas\UNI\GameDesign\SFML\include

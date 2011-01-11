@@ -8,11 +8,12 @@ planet::planet(sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::RenderW
     : m_rw(rw)
     , m_spriteWet(*imgWet)
     , m_spriteDry(*imgDry)
+    , m_font(font)
     , m_pos(pos)
     , m_waterLvl(waterLvl)
     , m_ironLvl(ironLvl)
-    , m_font(font)
 {
+    (void)col;
     m_spriteDry.SetPosition(m_pos);
     m_spriteDry.SetCenter(m_spriteDry.GetSize().x/2.0f, m_spriteDry.GetSize().y/2.0f);
     m_spriteWet.SetPosition(m_pos);

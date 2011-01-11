@@ -24,6 +24,7 @@ void world::initialise()
 
 void world::update(float timeLastFrame)
 {
+    (void)timeLastFrame;
     /*const sf::View view = m_rw->GetView();
     m_sprite.SetX(view.GetCenter().x - view.GetHalfSize().x);
     m_sprite.SetY(view.GetCenter().y - view.GetHalfSize().y);*/

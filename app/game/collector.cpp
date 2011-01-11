@@ -4,12 +4,12 @@
 
 collector::collector(sf::Vector2f pos, sf::Image *img, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color col, planet *home)
     : ship(pos, img, rw, col)
-    , m_imgBubble(imgBubble)
-    , m_state(manualPositionGoTo)
-    , m_home(home)
-    , m_goToAs(0)
+    , m_imgBubble(imgBubble)  
     , m_goToPl(0)
+    , m_goToAs(0)
     , m_goToBu(0)
+    , m_home(home)
+    , m_state(manualPositionGoTo)
 {
 
 }
