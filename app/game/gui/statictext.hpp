@@ -6,7 +6,9 @@
 class staticText : public widget
 {
 public:
-    staticText ();
+    staticText (sf::FloatRect posAndSize, std::string text);
+
+    void render();
 };
 
 #endif // STATICTEXT_HPP

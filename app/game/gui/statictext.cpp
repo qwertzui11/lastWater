@@ -1,5 +1,12 @@
 #include "statictext.hpp"
 
-staticText::staticText()
+staticText::staticText(sf::FloatRect posAndSize, std::string text)
+    : widget(posAndSize, text)
 {
+}
+
+
+void staticText::render()
+{
+
 }
