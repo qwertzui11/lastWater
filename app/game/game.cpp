@@ -147,12 +147,12 @@ void game::render()
     {
         (*it)->render();
     }
-    m_planetWater->render();
-    for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
+    for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
     {
         (*it)->render();
     }
-    for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
+    m_planetWater->render();
+    for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
     {
         (*it)->render();
     }

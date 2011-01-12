@@ -2,6 +2,7 @@
 #define HUMAN_HPP
 
 #include "player.hpp"
+#include "gui/button.hpp"
 
 class human : public player
 {
@@ -18,7 +19,8 @@ private:
     void sendSelected();
 
     sf::Shape *m_select;
-
+    button m_btnAttacker;
+    // button m_btnCollector;
 };
 
 #endif // HUMAN_HPP

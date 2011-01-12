@@ -180,10 +180,6 @@ void player::update(float time)
 
 void player::render()
 {
-    for (std::vector<bullet *>::iterator it = m_bullets.begin(); it < m_bullets.end(); ++it)
-    {
-        (*it)->render();
-    }
     for(std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
     {
         (*it)->render();
@@ -193,4 +189,8 @@ void player::render()
         (*it)->render();
     }
     m_planet.render();
+    for (std::vector<bullet *>::iterator it = m_bullets.begin(); it < m_bullets.end(); ++it)
+    {
+        (*it)->render();
+    }
 }

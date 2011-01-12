@@ -4,6 +4,7 @@
 human::human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour)
     , m_select(0)
+    , m_btnAttacker(sf::FloatRect(pos.x, pos.y, pos.x + 100.f, pos.y + 20.f), "button", m_rw)
 {
 }
 
@@ -28,6 +29,8 @@ void human::event(const sf::Event *ev)
     if (ev->Type == sf::Event::KeyReleased)
         if (ev->Key.Code == 'a')
             newAttacker();
+
+    m_btnAttacker.insertEvent(ev);
 }
 
 void human::update(float timeLastFrame)
@@ -98,6 +101,7 @@ void human::render()
     player::render();
     if (m_select)
         m_rw->Draw(*m_select);
+    m_btnAttacker.render();
 }
 
 void human::startSelect()

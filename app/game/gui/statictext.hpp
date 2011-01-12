@@ -2,6 +2,8 @@
 #define STATICTEXT_HPP
 
 #include "widget.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Shape.hpp>
 
 class staticText : public widget
 {
