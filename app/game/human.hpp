@@ -3,8 +3,9 @@
 
 #include "player.hpp"
 #include "gui/button.hpp"
+#include "gui/buttonListener.hpp"
 
-class human : public player
+class human : public player, private buttonListener
 {
 public:
     human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour);
@@ -17,6 +18,8 @@ private:
     void startSelect();
     void stopSelect();
     void sendSelected();
+
+    void buttonPressed(button *btn);
 
     sf::Shape *m_select;
     button m_btnAttacker;

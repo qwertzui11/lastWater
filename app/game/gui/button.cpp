@@ -12,6 +12,7 @@ button::button(sf::FloatRect posAndSize, std::string text, sf::RenderWindow *rw)
             posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color(0, 255, 255), 2.f, sf::Color(255, 255, 0)))
     , m_current(&m_btn)
     , m_posAndSize(posAndSize)
+    , m_listener(0)
 {
 }
 
@@ -25,7 +26,7 @@ void button::render()
     m_rw->Draw(*m_current);
 }
 
-void button::insertEvent(const sf::Event *event)
+bool button::insertEvent(const sf::Event *event)
 {
     sf::Vector2f mPos = mousePos(m_rw);
     if (m_posAndSize.Contains(mPos.x, mPos.y))
@@ -35,13 +36,22 @@ void button::insertEvent(const sf::Event *event)
     else
     {
         m_current = &m_btn;
+        return false;
     }
     if (event->Type == sf::Event::MouseButtonPressed && m_current == &m_hover)
     {
         m_current = &m_pressed;
     }
-    if (event->Type == sf::Event::MouseButtonReleased && m_current == &m_pressed)
+    if (event->Type == sf::Event::MouseButtonReleased && m_current == &m_hover)
     {
         m_current = &m_btn;
+        m_listener->buttonPressed(this);
     }
+    return true;
 }
+
+void button::setListener(buttonListener *listener)
+{
+    m_listener = listener;
+}
+

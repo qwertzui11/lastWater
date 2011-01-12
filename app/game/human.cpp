@@ -6,10 +6,14 @@ human::human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *f
     , m_select(0)
     , m_btnAttacker(sf::FloatRect(pos.x, pos.y, pos.x + 100.f, pos.y + 20.f), "button", m_rw)
 {
+    m_btnAttacker.setListener(this);
 }
 
 void human::event(const sf::Event *ev)
 {
+    if (m_btnAttacker.insertEvent(ev))
+    {return;}
+
     if (ev->Type == sf::Event::MouseButtonPressed)
         if (ev->MouseButton.Button==sf::Mouse::Left)
             startSelect();
@@ -30,7 +34,6 @@ void human::event(const sf::Event *ev)
         if (ev->Key.Code == 'a')
             newAttacker();
 
-    m_btnAttacker.insertEvent(ev);
 }
 
 void human::update(float timeLastFrame)
@@ -172,5 +175,13 @@ void human::sendSelected()
                 ++ind;
             }
         }
+    }
+}
+
+void human::buttonPressed(button *btn)
+{
+    if (btn == &m_btnAttacker)
+    {
+        newAttacker();
     }
 }

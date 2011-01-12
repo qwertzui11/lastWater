@@ -14,6 +14,8 @@ public:
     sf::Vector2f pos();
 
     float lifeTime();
+
+    static const float g_speed = 500.f;
 private:
     sf::Sprite m_sprite;
     sf::Vector2f m_dir;

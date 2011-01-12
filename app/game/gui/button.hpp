@@ -3,6 +3,7 @@
 
 #include "statictext.hpp"
 #include <SFML/Window/Event.hpp>
+#include "buttonListener.hpp"
 
 class button : public staticText
 {
@@ -12,8 +13,9 @@ public:
     void update(float time);
     void render();
 
-    void insertEvent(const sf::Event *event);
+    bool insertEvent(const sf::Event *event);
 
+    void setListener(buttonListener *listener);
 private:
     sf::RenderWindow *m_rw;
 
@@ -23,6 +25,8 @@ private:
     sf::Shape *m_current;
 
     sf::FloatRect m_posAndSize;
+
+    buttonListener *m_listener;
 };
 
 #endif // BUTTON_HPP

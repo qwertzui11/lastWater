@@ -22,7 +22,7 @@ bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWin
 void bullet::update(float time)
 {
     m_lifeTime += time;
-    m_sprite.Move(m_dir.x*500.f*time, m_dir.y*500.f*time);
+    m_sprite.Move(m_dir.x*g_speed*time, m_dir.y*g_speed*time);
 }
 
 void bullet::render()

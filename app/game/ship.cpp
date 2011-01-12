@@ -41,8 +41,8 @@ void ship::update(float timeLastFrame)
 {
     sf::Vector2f wantedDir = normalize(m_goTo - m_sprite.GetPosition());
     float distance = length(m_goTo - m_sprite.GetPosition());
-    if (distance > 300.0f*timeLastFrame)
-        wantedDir *= 300.0f;
+    if (distance > g_speed*timeLastFrame)
+        wantedDir *= g_speed;
     else
         wantedDir *= distance;
 
