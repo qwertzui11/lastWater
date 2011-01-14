@@ -12,6 +12,7 @@ public:
     void update(float timeLastFrame);
     void render();
     sf::Vector2f pos();
+    sf::Vector2f dir();
     void setSelected(bool sel);
     bool isSelected();
 

@@ -104,6 +104,11 @@ void game::clear()
         delete (*it);
     }
     asteroid::g_asteroids.clear();
+    for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
+    {
+        delete (*it);
+    }
+    bubble::g_bubbles.clear();
 }
 
 bool game::event(sf::Event *event)

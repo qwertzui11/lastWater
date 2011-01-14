@@ -117,10 +117,13 @@ void player::update(float time)
             {
                 if (length ((*it)->pos() - (*it2)->pos()) < 400.f)
                 {
-                    (*it2)->m_lastShot = 0.2f;
-/*                    sf::Vector2f calcTime = ((*it2)->pos()-(*it)->pos())/(ship::g_speed-bullet::g_speed);
-                    sf::Vector2f shotAt = (*it2)->pos() + calcTime*bullet::g_speed;
-                    shotAt = (*it2)->pos();*/
+                    (*it2)->m_lastShot = 0.3f;
+                    /*sf::Vector2f dir = normalize((*it2)->dir());
+                    dir*=ship::g_speed-bullet::g_speed;
+                    sf::Vector2f calcTime = ((*it2)->pos()-(*it)->pos());
+                    calcTime.x*=dir.x;
+                    calcTime.y*=dir.y;
+                    sf::Vector2f shotAt = (*it2)->pos() + calcTime*bullet::g_speed;*/
                     m_bullets.push_back(new bullet((*it2)->pos(), (*it)->pos() - (*it2)->pos(), m_imgBullet, m_rw, m_colour));
                     break;
                 }

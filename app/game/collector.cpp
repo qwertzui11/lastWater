@@ -59,7 +59,7 @@ void collector::update (float timeLastFrame)
     if (m_state == gettingHome)
     {
         ship::goTo(m_home->pos());
-        if (length(m_home->pos() - pos()) < collector::g_radius + planet::radius() + 20.0f)
+        if (length(m_home->pos() - pos()) < collector::g_radius + planet::radius() + 40.0f)
         {
             if (m_goToAs)
             {
@@ -92,7 +92,7 @@ void collector::update (float timeLastFrame)
             return;
         }
         ship::goTo(m_goToPl->pos());
-        if (length(m_goToPl->pos() - pos()) < bubble::size() + planet::radius() + 10.0f)
+        if (length(m_goToPl->pos() - pos()) < bubble::size() + planet::radius() + 40.0f)
         {
             if (m_goToPl->water() > 0)
             {
