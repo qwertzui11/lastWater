@@ -2,13 +2,14 @@
 #include <iostream>
 #include <sstream>
 
-human::human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
+human::human(float worldSize, sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour)
     , m_select(0)
     , m_btnAttacker(sf::FloatRect(pos.x, pos.y, pos.x + 100.f, pos.y + 20.f), "Attacker", m_rw)
     , m_btnCollector(sf::FloatRect(pos.x-200.f, pos.y, pos.x-100.f + 100.f, pos.y + 20.f), "Collector", m_rw)
     , m_numNewCollector(1)
     , m_numNewAttacker(1)
+    , m_worldSize(worldSize)
 {
     updateButtonCaption();
     m_btnAttacker.setListener(this);
@@ -253,3 +254,5 @@ void human::updateButtonCaption()
     caption = outStream2.str() + "x Collector";
     m_btnCollector.setCaption(caption);
 }
+
+

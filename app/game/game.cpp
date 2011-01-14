@@ -6,6 +6,8 @@ game::game(int numComputer, sf::RenderWindow *rw)
     , m_world(m_rw)
     , m_nextAsteroid(0.f)
     , m_numPlayer(numComputer+1)
+    , m_worldSize((1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f))*2.f+800.f)
+    , m_afterSingle(m_worldSize, m_rw)
 {
     m_world.initialise();
 
@@ -42,8 +44,7 @@ game::game(int numComputer, sf::RenderWindow *rw)
         std::cout << "m_imgBubble.LoadFromFile";
     }
 
-    float radius = 1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f);
-    m_worldSize = radius*2.f+800.f;
+    float radius = (m_worldSize-800.f)/2.f;
 
     m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(400.f+radius, 400.f+radius), sf::Color(230,185,117), 1000, -1);
 
@@ -55,7 +56,7 @@ game::game(int numComputer, sf::RenderWindow *rw)
         pos+=sf::Vector2f(400.f+radius, 400.f+radius);
         if (ind == numComputer)
         {
-            m_player = new human(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
+            m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
             break;
         }
         computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Cyan);
@@ -86,15 +87,28 @@ void game::clear()
 
 bool game::event(sf::Event *event)
 {
-    bool proccedEvent = m_player->event(event);
-    if (proccedEvent)
+    if (event->Type == sf::Event::KeyReleased)
     {
-        if (event->Type == sf::Event::MouseWheelMoved)
+        if (event->Key.Code == 256)
         {
-            if (event->MouseWheel.Delta < 0)
-                zoom (m_rw->GetFrameTime());
-            else
-                zoom (-m_rw->GetFrameTime());
+            resetCamera();
+            m_afterSingle.activate(!m_afterSingle.active());
+        }
+    }
+    if (m_afterSingle.active())
+        m_afterSingle.event(event);
+    else
+    {
+        bool proccedEvent = m_player->event(event);
+        if (proccedEvent)
+        {
+            if (event->Type == sf::Event::MouseWheelMoved)
+            {
+                if (event->MouseWheel.Delta < 0)
+                    zoom (m_rw->GetFrameTime());
+                else
+                    zoom (-m_rw->GetFrameTime());
+            }
         }
     }
     return true;
@@ -102,6 +116,11 @@ bool game::event(sf::Event *event)
 
 void game::update(float timeLastFrame)
 {
+    if (m_afterSingle.active())
+    {
+        m_afterSingle.update(timeLastFrame);
+        return;
+    }
     updateScroll(timeLastFrame);
     m_player->update(timeLastFrame);
     for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
@@ -176,6 +195,8 @@ void game::render()
         (*it)->render();
     }
     m_player->render();
+
+    m_afterSingle.render();
 }
 
 void game::updateScroll(float time)
@@ -230,3 +251,16 @@ void game::zoom(float time)
 }
 
 
+void game::resetCamera()
+{
+    sf::View * view = &m_rw->GetDefaultView();
+    sf::FloatRect rect = view->GetRect();
+    float width = m_rw->GetWidth();
+    float height = m_rw->GetHeight();
+
+    rect.Left = m_worldSize/2.f - width/2.f;
+    rect.Top = m_worldSize/2.f - height/2.f;
+    rect.Right=rect.Left+width;
+    rect.Bottom=rect.Top+height;
+    view->SetFromRect(rect);
+}
