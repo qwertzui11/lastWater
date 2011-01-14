@@ -61,11 +61,11 @@ void guiAfterSinglePlayer::setStatus (status st)
     m_statusStatus = st;
     if (st == lost)
     {
-        m_status.setCaption("You Lost");
+        m_status.setCaption("You Lost!");
     }
     if (st == won)
     {
-        m_status.setCaption("You Lost");
+        m_status.setCaption("You Won!");
     }
     if (st == pause)
     {

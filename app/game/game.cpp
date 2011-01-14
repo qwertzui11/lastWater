@@ -169,12 +169,16 @@ void game::update(float timeLastFrame)
     {
         if ((*it)->getPlanet()->water() == 1000)
         {
+            resetCamera();
             m_afterSingle.setStatus(guiAfterSinglePlayer::lost);
+            m_afterSingle.activate(true);
         }
     }
     if (m_player->getPlanet()->water() == 1000)
     {
+        resetCamera();
         m_afterSingle.setStatus(guiAfterSinglePlayer::won);
+        m_afterSingle.activate(true);
     }
 }
 
