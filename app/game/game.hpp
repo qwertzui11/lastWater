@@ -57,6 +57,8 @@ private:
 
     sf::Vector2f m_viewPos;
     float m_zoom;
+
+    float m_worldSize;
 };
 
 #endif // GAME_HPP

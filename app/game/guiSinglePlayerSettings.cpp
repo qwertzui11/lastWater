@@ -53,7 +53,7 @@ void guiSinglePlayerSettings::buttonPressed(button *btn)
     {
         if ((*it) == btn)
         {
-            done(new game(counter, m_rw));
+            done(new game(counter+1, m_rw));
             return;
         }
         ++counter;

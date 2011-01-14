@@ -6,7 +6,7 @@
 class asteroid : public collectable
 {
 public:
-    asteroid(sf::Image *img, sf::RenderWindow *rw);
+    asteroid(float worldSize, sf::Image *img, sf::RenderWindow *rw);
     ~asteroid();
 
     void update (float timeLastFrame);

@@ -41,17 +41,25 @@ game::game(int numComputer, sf::RenderWindow *rw)
         std::cout << "m_imgBubble.LoadFromFile";
     }
 
-    float radius = 500.f / sin((2.f*3.14159265f) / (float)numComputer);
+    float radius = 1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f);
+    m_worldSize = radius*2.f+800.f;
 
-    m_player = new human(sf::Vector2f(400.f, radius+400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
-    m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, -1);
+    m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(400.f+radius, 400.f+radius), sf::Color(230,185,117), 1000, -1);
 
-    computer *newComp = new computer(sf::Vector2f(1610.f, 410.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Cyan);
-    m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(410.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Red);
-    m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(1610.f, 1610.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Green);
-    m_computers.push_back(newComp);
+    for (int ind = 0; ind < numComputer+1; ++ind)
+    {
+        float degree = ((float)ind)*((2.f*3.15159f)/((float)numComputer+1.f));
+        sf::Vector2f pos(cos(degree), sin(degree));
+        pos*=radius;
+        pos+=sf::Vector2f(400.f+radius, 400.f+radius);
+        if (ind == numComputer)
+        {
+            m_player = new human(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
+            break;
+        }
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Cyan);
+        m_computers.push_back(newComp);
+    }
 }
 
 game::~game()
@@ -104,7 +112,7 @@ void game::update(float timeLastFrame)
     if (m_nextAsteroid > 0.25f)
     {
         m_nextAsteroid = 0.f;
-        new asteroid(&m_imgAsteroid, m_rw);
+        new asteroid(m_worldSize, &m_imgAsteroid, m_rw);
     }
 
     m_planetWater->update(timeLastFrame);
@@ -114,7 +122,7 @@ void game::update(float timeLastFrame)
     {
         (*it)->update(timeLastFrame);
         sf::Vector2f pos = (*it)->pos();
-        if (pos.x > 2000.f || pos.y > 2000.f || pos.x + m_imgAsteroid.GetWidth() < 0.f || pos.y + m_imgAsteroid.GetHeight() < 0.f)
+        if (pos.x > m_worldSize || pos.y > m_worldSize || pos.x + m_imgAsteroid.GetWidth() < 0.f || pos.y + m_imgAsteroid.GetHeight() < 0.f)
         {
             delete (*it);
             break;
@@ -181,10 +189,10 @@ void game::updateScroll(float time)
     if (m_viewPos.y - m_rw->GetDefaultView().GetHalfSize().y < 0)
         m_viewPos.y = m_rw->GetDefaultView().GetHalfSize().y;
 
-    if (m_viewPos.x + m_rw->GetDefaultView().GetHalfSize().x > 2000)
-        m_viewPos.x = 2000-m_rw->GetDefaultView().GetHalfSize().x;
-    if (m_viewPos.y + m_rw->GetDefaultView().GetHalfSize().y > 2000)
-        m_viewPos.y = 2000-m_rw->GetDefaultView().GetHalfSize().y;
+    if (m_viewPos.x + m_rw->GetDefaultView().GetHalfSize().x > m_worldSize)
+        m_viewPos.x = m_worldSize-m_rw->GetDefaultView().GetHalfSize().x;
+    if (m_viewPos.y + m_rw->GetDefaultView().GetHalfSize().y > m_worldSize)
+        m_viewPos.y = m_worldSize-m_rw->GetDefaultView().GetHalfSize().y;
     m_rw->GetDefaultView().SetCenter(m_viewPos);
     zoom(0.f);
 }
@@ -197,8 +205,8 @@ void game::zoom(float time)
     float width = rect.Right - rect.Left;
     float height = rect.Bottom - rect.Top;
     width*=1.f+time*g_zoomSpeed;
-    if (width>2000.f)
-        width=2000.f;
+    if (width>m_worldSize)
+        width=m_worldSize;
     if (width<400.f)
         width=400.f;
     height=width*aspect;
