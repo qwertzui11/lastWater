@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
     (void)argc;
     (void)argv;
 
-    sf::RenderWindow rw(sf::VideoMode(1920, 1020, 32), "lastWater");
+    sf::RenderWindow rw(sf::VideoMode(1024, 700, 32), "lastWater");
 
     stateManager mgr(new guiMainMenu(&rw), &rw);
     return mgr.run();

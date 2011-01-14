@@ -6,7 +6,7 @@ game::game(int numComputer, sf::RenderWindow *rw)
     , m_world(m_rw)
     , m_nextAsteroid(0.f)
 {
-    m_world.initialise();
+    m_world.initialise(m_worldSize);
 
     if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
     {
@@ -149,7 +149,7 @@ void game::update(float timeLastFrame)
 
 void game::render()
 {
-    m_world.render();
+    m_world.render(m_worldSize);
     for (std::vector<asteroid *>::iterator it = asteroid::g_asteroids.begin(); it < asteroid::g_asteroids.end(); ++it)
     {
         (*it)->render();
