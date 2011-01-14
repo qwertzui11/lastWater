@@ -50,10 +50,6 @@ void guiAfterSinglePlayer::buttonPressed(button *btn)
 void guiAfterSinglePlayer::activate(bool activ)
 {
     m_activ = activ;
-    if (m_activ)
-    {
-
-    }
 }
 
 void guiAfterSinglePlayer::setStatus (status st)
