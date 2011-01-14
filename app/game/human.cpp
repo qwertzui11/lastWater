@@ -29,7 +29,7 @@ bool human::event(const sf::Event *ev)
         {
             m_numNewAttacker+=ev->MouseWheel.Delta;
             if (m_numNewAttacker<1)
-                m_numNewAttacker=0;
+                m_numNewAttacker=1;
             if (m_numNewAttacker>100)
                 m_numNewAttacker=100;
             updateButtonCaption();
@@ -39,7 +39,7 @@ bool human::event(const sf::Event *ev)
         {
             m_numNewCollector+=ev->MouseWheel.Delta;
             if (m_numNewCollector<1)
-                m_numNewCollector=0;
+                m_numNewCollector=1;
             if (m_numNewCollector>100)
                 m_numNewCollector=100;
             updateButtonCaption();
