@@ -29,7 +29,14 @@ void computer::update(float time){
             m_lastMostWater = mostWater;
             for (std::vector<attacker*>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
             {
-                (*it)->goTo(mostWater);
+                if (rand()%2 == 0)
+                {
+                    (*it)->goTo(mostWater);
+                }
+                else
+                {
+                    (*it)->goTo((*(planet::g_planets.begin()+(rand()%planet::g_planets.size())))->pos());
+                }
             }
             for (std::vector<collector*>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
             {
@@ -61,7 +68,7 @@ void computer::update(float time){
             {
                 if (m_collector.size() > 3 && rand()%2 == 0)
                 {
-                    if (rand()%10 != 0)
+                    if (rand()%5 != 0)
                     {
                         coll->goTo(mostWater);
                     }
