@@ -5,7 +5,12 @@
 
 guiSinglePlayerSettings::guiSinglePlayerSettings(sf::RenderWindow *rw)
     : m_rw(rw)
+    , m_exit(sf::FloatRect(rw->GetWidth() / 2.f - 350.f, rw->GetHeight() / 2.f + 40.f, m_rw->GetWidth() / 2.f + 100.f -250.f, rw->GetHeight() / 2.f + 80.f),
+             "Exit",
+             rw)
 {
+    m_exit.setListener(this);
+
     sf::Vector2f calc(rw->GetWidth()/2.f - 100.f, rw->GetHeight()/2.f - 50.f*(g_maxComputer/2.0f));
     for (int ind = 0; ind < g_maxComputer; ++ind)
     {
@@ -18,6 +23,17 @@ guiSinglePlayerSettings::guiSinglePlayerSettings(sf::RenderWindow *rw)
         m_numEnemys.push_back(newOne);
         calc+=sf::Vector2f(10.f, 50.f);
     }
+
+    sf::View * view = &m_rw->GetDefaultView();
+    sf::FloatRect rect = view->GetRect();
+    float width = m_rw->GetWidth();
+    float height = m_rw->GetHeight();
+
+    rect.Left = 0.f;
+    rect.Top = 0.f;
+    rect.Right=rect.Left+width;
+    rect.Bottom=rect.Top+height;
+    view->SetFromRect(rect);
 }
 
 bool guiSinglePlayerSettings::event(sf::Event *event)
@@ -25,7 +41,7 @@ bool guiSinglePlayerSettings::event(sf::Event *event)
     for (std::vector<button *>::iterator it = m_numEnemys.begin(); it < m_numEnemys.end(); ++it)
         if ((*it)->insertEvent(event))
             return false;
-    return true;
+    return !m_exit.insertEvent(event);
 }
 
 void guiSinglePlayerSettings::update(float time)
@@ -37,6 +53,7 @@ void guiSinglePlayerSettings::render()
 {
     for (std::vector<button *>::iterator it = m_numEnemys.begin(); it < m_numEnemys.end(); ++it)
         (*it)->render();
+    m_exit.render();
 }
 
 void guiSinglePlayerSettings::clear()
@@ -48,6 +65,11 @@ void guiSinglePlayerSettings::clear()
 
 void guiSinglePlayerSettings::buttonPressed(button *btn)
 {
+    if (btn == &m_exit)
+    {
+        done(0);
+        return;
+    }
     int counter(0);
     for (std::vector<button *>::iterator it = m_numEnemys.begin(); it < m_numEnemys.end(); ++it)
     {

@@ -26,7 +26,21 @@ player::player(sf::Vector2f pos,
 
 player::~player()
 {
-
+    for(std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
+    {
+        delete (*it);
+    }
+    m_attacker.clear();
+    for(std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+    {
+        delete (*it);
+    }
+    m_collector.clear();
+    for(std::vector<bullet *>::iterator it = m_bullets.begin(); it < m_bullets.end(); ++it)
+    {
+        delete (*it);
+    }
+    m_bullets.clear();
 }
 
 attacker* player::newAttacker()
