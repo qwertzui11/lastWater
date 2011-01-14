@@ -169,12 +169,12 @@ void game::update(float timeLastFrame)
     {
         if ((*it)->getPlanet()->water() == 1000)
         {
-            // PC wins
+            m_afterSingle.setStatus(guiAfterSinglePlayer::lost);
         }
     }
     if (m_player->getPlanet()->water() == 1000)
     {
-        // player wins
+        m_afterSingle.setStatus(guiAfterSinglePlayer::won);
     }
 }
 

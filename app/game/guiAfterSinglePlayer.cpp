@@ -2,10 +2,11 @@
 
 guiAfterSinglePlayer::guiAfterSinglePlayer(float worldSize, sf::RenderWindow *rw)
     : m_rw(rw)
-    , m_status(sf::FloatRect(worldSize/2.f-100.f, worldSize/2.f-20.f, worldSize/2.f+200.f, worldSize/2.f+40.f), "status", m_rw)
-    , m_restart (sf::FloatRect(worldSize/2.f-100.f, worldSize/2.f-20.f, worldSize/2.f+200.f, worldSize/2.f+40.f), "Restart", m_rw)
-    , m_exit (sf::FloatRect(100, 200, 100+200.f, 200+40.f), "Exit", m_rw)
+    , m_status(sf::FloatRect(worldSize/2.f-150.f, worldSize/2.f-110.f, worldSize/2.f+150.f, worldSize/2.f-70.f), "status", m_rw)
+    , m_restart (sf::FloatRect(worldSize/2.f-150.f, worldSize/2.f-50.f, worldSize/2.f+150.f, worldSize/2.f-10.f), "Restart", m_rw)
+    , m_exit (sf::FloatRect(worldSize/2.f-150.f, worldSize/2.f+10.f, worldSize/2.f+150.f, worldSize/2.f+50.f), "Exit", m_rw)
     , m_activ(false)
+    , m_statusStatus(pause)
 {
     m_restart.setListener(this);
     m_exit.setListener(this);
@@ -32,6 +33,7 @@ void guiAfterSinglePlayer::render()
 {
     if (!m_activ)
         return;
+    m_status.render();
     m_restart.render();
     m_exit.render();
 }
@@ -53,3 +55,21 @@ void guiAfterSinglePlayer::activate(bool activ)
 
     }
 }
+
+void guiAfterSinglePlayer::setStatus (status st)
+{
+    m_statusStatus = st;
+    if (st == lost)
+    {
+        m_status.setCaption("You Lost");
+    }
+    if (st == won)
+    {
+        m_status.setCaption("You Lost");
+    }
+    if (st == pause)
+    {
+        m_status.setCaption("Pause");
+    }
+}
+

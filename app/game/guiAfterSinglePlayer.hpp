@@ -18,6 +18,17 @@ public:
 
     void activate(bool activ);
     bool active() {return m_activ;}
+
+    enum status
+    {
+        won,
+        lost,
+        pause
+    };
+
+    void setStatus (status st);
+    status getStatus() {return m_statusStatus;}
+
 private:
     void buttonPressed(button *btn);
     sf::RenderWindow *m_rw;
@@ -27,6 +38,8 @@ private:
     button m_exit;
 
     bool m_activ;
+
+    status m_statusStatus;
 };
 
 #endif // GUIAFTERSINGLEPLAYER_HPP
