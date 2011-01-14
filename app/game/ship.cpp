@@ -97,6 +97,11 @@ void ship::goTo(sf::Vector2f goTo)
     m_goTo = goTo;
 }
 
+sf::Vector2f ship::dir()
+{
+    return m_goTo - pos();
+}
+
 sf::Vector2f ship::pos()
 {
     return m_sprite.GetPosition();/* + m_sprite.GetCenter();*/
