@@ -9,9 +9,9 @@ public:
     world(sf::RenderWindow *rw);
     ~world();
 
-    void initialise();
+    void initialise(float m_worldSize);
     void update(float );
-    void render();
+    void render(float m_worldSize);
 
 private:
     sf::RenderWindow *m_rw;

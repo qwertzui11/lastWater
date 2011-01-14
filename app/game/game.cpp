@@ -9,7 +9,7 @@ game::game(int numComputer, sf::RenderWindow *rw)
     , m_worldSize((1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f))*2.f+800.f)
     , m_afterSingle(m_worldSize, m_rw)
 {
-    m_world.initialise();
+    m_world.initialise(m_worldSize);
 
     if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
     {
@@ -184,7 +184,7 @@ void game::update(float timeLastFrame)
 
 void game::render()
 {
-    m_world.render();
+    m_world.render(m_worldSize);
     for (std::vector<asteroid *>::iterator it = asteroid::g_asteroids.begin(); it < asteroid::g_asteroids.end(); ++it)
     {
         (*it)->render();
