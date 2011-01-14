@@ -16,7 +16,7 @@
 class game : public  state
 {
 public:
-    game(sf::RenderWindow *rw);
+    game(int numComputer, sf::RenderWindow *rw);
     ~game();
 
     bool event(sf::Event *event);

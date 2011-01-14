@@ -1,5 +1,5 @@
 #include "guiMainMenu.hpp"
-#include "game.hpp"
+#include "guiSinglePlayerSettings.hpp"
 
 #include <SFML/Graphics/Rect.hpp>
 
@@ -55,7 +55,7 @@ void guiMainMenu::buttonPressed(button *btn)
     state *res(0);
     if (btn == &m_singleplayer)
     {
-        res = new game(m_rw);
+        res = new guiSinglePlayerSettings(m_rw);
     }
     if (btn == &m_exit)
     {

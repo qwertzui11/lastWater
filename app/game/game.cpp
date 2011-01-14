@@ -1,7 +1,7 @@
 #include "game.hpp"
 #include <iostream>
 
-game::game(sf::RenderWindow *rw)
+game::game(int numComputer, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_world(m_rw)
     , m_nextAsteroid(0.f)
@@ -41,7 +41,9 @@ game::game(sf::RenderWindow *rw)
         std::cout << "m_imgBubble.LoadFromFile";
     }
 
-    m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
+    float radius = 500.f / sin((2.f*3.14159265f) / (float)numComputer);
+
+    m_player = new human(sf::Vector2f(400.f, radius+400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
     m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, -1);
 
     computer *newComp = new computer(sf::Vector2f(1610.f, 410.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Cyan);
