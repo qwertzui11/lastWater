@@ -52,7 +52,7 @@ game::game(int numComputer, sf::RenderWindow *rw)
 
     for (int ind = 0; ind < numComputer+1; ++ind)
     {
-        float degree = ((float)ind)*((2.f*3.15159f)/((float)numComputer+1.f));
+        float degree = ((float)ind)*((2.f*3.15159f)/((float)numComputer+1.f))+1.f;
         sf::Vector2f pos(cos(degree), sin(degree));
         pos*=radius;
         pos+=sf::Vector2f(400.f+radius, 400.f+radius);
@@ -273,14 +273,17 @@ void game::resetCamera()
 
 void game::done (state *from, state *next)
 {
+    (void)from;
+    (void)next;
     if (m_afterSingle.exit())
     {
-        done(0);
+        state::done(0);
         return;
     }
     if (m_afterSingle.restart())
     {
-        done(new game(m_numPlayer-1, m_rw));
+        clear();
+        state::done(new game(m_numPlayer-1, m_rw));
         return;
     }
 }

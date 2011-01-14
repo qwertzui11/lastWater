@@ -50,7 +50,7 @@ void guiAfterSinglePlayer::buttonPressed(button *btn)
     if (btn == &m_exit)
         m_bExit = true;
     if (btn == &m_restart)
-        m_bExit = true;
+        m_bRestart = true;
     done(0);
 }
 
