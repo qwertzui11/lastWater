@@ -9,6 +9,8 @@ game::game(int numComputer, sf::RenderWindow *rw)
     , m_worldSize((1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f))*2.f+800.f)
     , m_afterSingle(m_worldSize, m_rw)
 {
+    m_afterSingle.setListener(this);
+
     m_world.initialise(m_worldSize);
 
     if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
@@ -267,4 +269,18 @@ void game::resetCamera()
     rect.Right=rect.Left+width;
     rect.Bottom=rect.Top+height;
     view->SetFromRect(rect);
+}
+
+void game::done (state *from, state *next)
+{
+    if (m_afterSingle.exit())
+    {
+        done(0);
+        return;
+    }
+    if (m_afterSingle.restart())
+    {
+        done(new game(m_numPlayer-1, m_rw));
+        return;
+    }
 }

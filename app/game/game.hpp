@@ -13,7 +13,7 @@
 #include "computer.hpp"
 #include "guiAfterSinglePlayer.hpp"
 
-class game : public  state
+class game : public state, private stateListener
 {
 public:
     game(int numComputer, sf::RenderWindow *rw);
@@ -29,6 +29,8 @@ private:
     void updateScroll(float time);
     void zoom(float time);
     void resetCamera();
+
+    void done (state *from, state *next);
 
     static const float g_scrollSpeed = 500.f;
     static const float g_zoomSpeed = 20.f;
