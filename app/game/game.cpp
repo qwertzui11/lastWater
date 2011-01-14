@@ -5,6 +5,7 @@ game::game(int numComputer, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_world(m_rw)
     , m_nextAsteroid(0.f)
+    , m_numPlayer(numComputer+1)
 {
     m_world.initialise();
 
@@ -109,7 +110,7 @@ void game::update(float timeLastFrame)
     }
 
     m_nextAsteroid+=timeLastFrame;
-    if (m_nextAsteroid > 0.25f)
+    if (m_nextAsteroid > 1.f/((float)m_numPlayer))
     {
         m_nextAsteroid = 0.f;
         new asteroid(m_worldSize, &m_imgAsteroid, m_rw);
@@ -144,6 +145,17 @@ void game::update(float timeLastFrame)
     for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
     {
         (*it)->update(timeLastFrame);
+    }
+    for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
+    {
+        if ((*it)->getPlanet()->water() == 1000)
+        {
+            // PC wins
+        }
+    }
+    if (m_player->getPlanet()->water() == 1000)
+    {
+        // player wins
     }
 }
 

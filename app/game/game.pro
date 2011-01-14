@@ -37,7 +37,8 @@ SOURCES += main.cpp \
     guiSinglePlayerSettings.cpp \
     state.cpp \
     stateListener.cpp \
-    stateManager.cpp
+    stateManager.cpp \
+    guiAfterSinglePlayer.cpp
 HEADERS += \
     game.hpp \
     world.hpp \
@@ -63,7 +64,8 @@ HEADERS += \
     guiSinglePlayerSettings.hpp \
     state.hpp \
     stateListener.hpp \
-    stateManager.hpp
+    stateManager.hpp \
+    guiAfterSinglePlayer.hpp
 
 unix {
     INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/

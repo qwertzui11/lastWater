@@ -17,7 +17,7 @@ public:
     void render();
     void clear();
 private:
-    static const int g_maxComputer = 15;
+    static const int g_maxComputer = 7;
 
     void buttonPressed(button *btn);
 

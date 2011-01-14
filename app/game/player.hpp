@@ -24,6 +24,8 @@ public:
            sf::RenderWindow *rw,
            sf::Color colour);
     ~player();
+
+    planet *getPlanet() {return &m_planet;}
 protected:
     collector* newCollector();
     attacker* newAttacker();

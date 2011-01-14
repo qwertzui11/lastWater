@@ -59,6 +59,7 @@ private:
     float m_zoom;
 
     float m_worldSize;
+    int m_numPlayer;
 };
 
 #endif // GAME_HPP
