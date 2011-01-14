@@ -2,6 +2,8 @@
 #define GAME_HPP
 
 #include <SFML/Graphics.hpp>
+#include <vector>
+
 #include "ship.hpp"
 #include "world.hpp"
 #include "planet.hpp"
@@ -9,9 +11,7 @@
 #include "bubble.hpp"
 #include "human.hpp"
 #include "computer.hpp"
-#include <vector>
-
-#include "state.hpp"
+#include "guiAfterSinglePlayer.hpp"
 
 class game : public  state
 {
@@ -28,6 +28,7 @@ public:
 private:
     void updateScroll(float time);
     void zoom(float time);
+    void resetCamera();
 
     static const float g_scrollSpeed = 500.f;
     static const float g_zoomSpeed = 20.f;
@@ -58,7 +59,10 @@ private:
     sf::Vector2f m_viewPos;
     float m_zoom;
 
+    int m_numPlayer;
     float m_worldSize;
+
+    guiAfterSinglePlayer m_afterSingle;
 };
 
 #endif // GAME_HPP
