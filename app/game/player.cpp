@@ -11,13 +11,15 @@ player::player(sf::Vector2f pos,
                sf::Image *imgWorld,
                sf::Image *imgBubble,
                sf::RenderWindow *rw,
-               sf::Color colour)
+               sf::Color colour,
+               sf::Image *imgExplosion)
     : m_rw(rw)
     , m_planet(imgWet, imgDry, font, rw, pos, colour, 0, 10)
     , m_imgCollector(imgCollector)
     , m_imgAttacker(imgAttacker)
     , m_imgBullet(imgBullet)
     , m_imgBubble(imgBubble)
+    , m_imgExplosion(imgExplosion)
     , m_colour(colour)
     , m_pos(pos)
 {
@@ -41,6 +43,11 @@ player::~player()
         delete (*it);
     }
     m_bullets.clear();
+    for(std::vector<explosion *>::iterator it = m_explosions.begin(); it < m_explosions.end(); ++it)
+    {
+        delete (*it);
+    }
+    m_explosions.clear();
 }
 
 attacker* player::newAttacker()
@@ -170,8 +177,9 @@ void player::update(float time)
             if (length ((*it)->pos() - (*it2)->pos()) < attacker::g_radius)
             {
                 toDelete.push_back((*it));
-
                 (*it2)->kill();
+                if((*it2)->alive()==false)
+                    m_explosions.push_back(new explosion((*it2)->pos(),m_imgExplosion,m_rw));
 
                 break;
             }
@@ -193,6 +201,15 @@ void player::update(float time)
     toDelete.clear();
 
     m_planet.update(time);
+    for (std::vector<explosion *>::iterator it = m_explosions.begin(); it < m_explosions.end(); ++it)
+    {
+       (*it)->update(time);
+       if((*it)->lifeTime()> 2.85)
+       {
+            m_explosions.erase(it);
+            break;
+       }
+    }
 }
 
 void player::render()
@@ -209,5 +226,9 @@ void player::render()
     for (std::vector<bullet *>::iterator it = m_bullets.begin(); it < m_bullets.end(); ++it)
     {
         (*it)->render();
+    }
+    for (std::vector<explosion *>::iterator it = m_explosions.begin(); it < m_explosions.end(); ++it)
+    {
+       (*it)->render();
     }
 }

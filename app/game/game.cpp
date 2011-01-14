@@ -47,6 +47,10 @@ game::game(int numComputer, sf::RenderWindow *rw)
     {
         std::cout << "m_imgBubble.LoadFromFile";
     }
+    if (!m_explosion.LoadFromFile("../data/img/explosion.tga"))
+    {
+        std::cout << "m_explosion.LoadFromFile";
+    }
 
     float radius = (m_worldSize-800.f)/2.f;
 
@@ -71,10 +75,10 @@ game::game(int numComputer, sf::RenderWindow *rw)
         pos+=sf::Vector2f(400.f+radius, 400.f+radius);
         if (ind == numComputer)
         {
-            m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind]);
+            m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion);
             break;
         }
-        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind]);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion);
         m_computers.push_back(newComp);
     }
 

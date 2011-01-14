@@ -8,6 +8,7 @@
 #include "collector.hpp"
 #include "bullet.hpp"
 #include "planet.hpp"
+#include "explosion.hpp"
 
 class player
 {
@@ -22,7 +23,8 @@ public:
            sf::Image *imgWorld,
            sf::Image *imgBubble,
            sf::RenderWindow *rw,
-           sf::Color colour);
+           sf::Color colour,
+           sf::Image *imgExplosion);
     ~player();
 
     planet *getPlanet() {return &m_planet;}
@@ -38,6 +40,7 @@ protected:
     std::vector<collector *> m_collector;
 
     std::vector<bullet *> m_bullets;
+    std::vector<explosion *> m_explosions;
 
     planet m_planet;
 private:
@@ -45,7 +48,7 @@ private:
     sf::Image *m_imgAttacker;
     sf::Image *m_imgBullet;
     sf::Image *m_imgBubble;
-
+    sf::Image *m_imgExplosion;
     sf::Color m_colour;
 
     sf::Vector2f m_pos;

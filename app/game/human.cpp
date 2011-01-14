@@ -2,8 +2,8 @@
 #include <iostream>
 #include <sstream>
 
-human::human(float worldSize, sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
-    : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour)
+human::human(float worldSize, sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour, sf::Image *imgExplosion)
+    : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour, imgExplosion)
     , m_select(0)
     , m_btnAttacker(sf::FloatRect(pos.x+10, pos.y+130, pos.x + 160.f, pos.y + 160.f), "Attacker", m_rw)
     , m_btnCollector(sf::FloatRect(pos.x-160.f, pos.y+130, pos.x-10.f, pos.y + 160.f), "Collector", m_rw)

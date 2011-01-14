@@ -16,7 +16,8 @@ public:
              sf::Image *imgWorld,
              sf::Image *imgBubble,
              sf::RenderWindow *rw,
-             sf::Color colour);
+             sf::Color colour,
+             sf::Image *imgExplosion);
 
     void update(float time);
     void render();

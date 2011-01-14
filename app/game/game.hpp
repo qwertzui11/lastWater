@@ -43,6 +43,7 @@ private:
     sf::Image m_imgBubble;
     sf::Image m_img1p;
     sf::Image m_imgWater;
+    sf::Image m_explosion;
 
     sf::Font m_font;
 
