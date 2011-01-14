@@ -1,18 +1,50 @@
 #include "human.hpp"
 #include <iostream>
+#include <sstream>
 
 human::human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour)
     , m_select(0)
-    , m_btnAttacker(sf::FloatRect(pos.x, pos.y, pos.x + 100.f, pos.y + 20.f), "button", m_rw)
+    , m_btnAttacker(sf::FloatRect(pos.x, pos.y, pos.x + 100.f, pos.y + 20.f), "Attacker", m_rw)
+    , m_btnCollector(sf::FloatRect(pos.x-200.f, pos.y, pos.x-100.f + 100.f, pos.y + 20.f), "Collector", m_rw)
+    , m_numNewCollector(1)
+    , m_numNewAttacker(1)
 {
+    updateButtonCaption();
     m_btnAttacker.setListener(this);
+    m_btnCollector.setListener(this);
 }
 
-void human::event(const sf::Event *ev)
+bool human::event(const sf::Event *ev)
 {
     if (m_btnAttacker.insertEvent(ev))
-    {return;}
+    {return false;}
+    if (m_btnCollector.insertEvent(ev))
+    {return false;}
+
+    if (ev->Type == sf::Event::MouseWheelMoved)
+    {
+        if (m_btnAttacker.hover())
+        {
+            m_numNewAttacker+=ev->MouseWheel.Delta;
+            if (m_numNewAttacker<1)
+                m_numNewAttacker=0;
+            if (m_numNewAttacker>100)
+                m_numNewAttacker=100;
+            updateButtonCaption();
+            return false;
+        }
+        if (m_btnCollector.hover())
+        {
+            m_numNewCollector+=ev->MouseWheel.Delta;
+            if (m_numNewCollector<1)
+                m_numNewCollector=0;
+            if (m_numNewCollector>100)
+                m_numNewCollector=100;
+            updateButtonCaption();
+            return false;
+        }
+    }
 
     if (ev->Type == sf::Event::MouseButtonPressed)
         if (ev->MouseButton.Button==sf::Mouse::Left)
@@ -33,6 +65,8 @@ void human::event(const sf::Event *ev)
     if (ev->Type == sf::Event::KeyReleased)
         if (ev->Key.Code == 'a')
             newAttacker();
+
+    return true;
 
 }
 
@@ -105,6 +139,7 @@ void human::render()
     if (m_select)
         m_rw->Draw(*m_select);
     m_btnAttacker.render();
+    m_btnCollector.render();
 }
 
 void human::startSelect()
@@ -184,4 +219,37 @@ void human::buttonPressed(button *btn)
     {
         newAttacker();
     }
+    if (btn == &m_btnCollector)
+    {
+        newCollector();
+    }
+}
+
+void human::newAttacker()
+{
+    for (int ind = 0; ind < m_numNewAttacker; ++ind)
+    {
+        player::newAttacker();
+    }
+}
+
+void human::newCollector()
+{
+    for (int ind = 0; ind < m_numNewCollector; ++ind)
+    {
+        player::newCollector();
+    }
+}
+
+void human::updateButtonCaption()
+{
+    std::ostringstream outStream;
+    outStream << m_numNewAttacker;
+    std::string caption = outStream.str() + "x Attacker";
+    m_btnAttacker.setCaption(caption);
+
+    std::ostringstream outStream2;
+    outStream2 << m_numNewCollector;
+    caption = outStream2.str() + "x Collector";
+    m_btnCollector.setCaption(caption);
 }

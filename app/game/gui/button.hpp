@@ -16,9 +16,9 @@ public:
     bool insertEvent(const sf::Event *event);
 
     void setListener(buttonListener *listener);
-private:
-    sf::RenderWindow *m_rw;
 
+    bool hover();
+private:
     sf::Shape m_btn;
     sf::Shape m_hover;
     sf::Shape m_pressed;

@@ -70,16 +70,19 @@ int game::run()
         {
             if (Event.Type == sf::Event::Closed)
                 m_window.Close();
-            if (Event.Type == sf::Event::MouseWheelMoved)
+            bool proccedEvent = m_player->event(&Event);
+            if (proccedEvent)
             {
-                if (Event.MouseWheel.Delta < 0)
-                    zoom (m_window.GetFrameTime());
-                else
-                    zoom (-m_window.GetFrameTime());
+                if (Event.Type == sf::Event::MouseWheelMoved)
+                {
+                    if (Event.MouseWheel.Delta < 0)
+                        zoom (m_window.GetFrameTime());
+                    else
+                        zoom (-m_window.GetFrameTime());
+                }
             }
             if (Event.Type == sf::Event::Resized)
                 m_window.GetDefaultView().SetHalfSize((float)Event.Size.Width, (float)Event.Size.Height);
-            m_player->event(&Event);
         }
         m_window.Clear();
         float frameTime = m_window.GetFrameTime();

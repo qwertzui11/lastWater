@@ -1,12 +1,8 @@
 #include "widget.hpp"
 
-widget::widget(sf::FloatRect posAndSize, std::string text)
+widget::widget(sf::FloatRect posAndSize, sf::RenderWindow *rw)
     : m_posAndSize(posAndSize)
+    , m_rw(rw)
 {
-    setText(text);
 }
 
-void widget::setText(std::string text)
-{
-    m_text.SetText(text);
-}

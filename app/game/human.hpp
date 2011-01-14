@@ -10,7 +10,7 @@ class human : public player, private buttonListener
 public:
     human(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour);
 
-    void event(const sf::Event *ev);
+    bool event(const sf::Event *ev);
 
     void update(float timeLastFrame);
     void render();
@@ -19,11 +19,18 @@ private:
     void stopSelect();
     void sendSelected();
 
+    void newAttacker();
+    void newCollector();
+
     void buttonPressed(button *btn);
+    void updateButtonCaption();
 
     sf::Shape *m_select;
     button m_btnAttacker;
-    // button m_btnCollector;
+    button m_btnCollector;
+
+    int m_numNewCollector;
+    int m_numNewAttacker;
 };
 
 #endif // HUMAN_HPP

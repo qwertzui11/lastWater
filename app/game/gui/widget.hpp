@@ -8,12 +8,13 @@
 class widget
 {
 public:
-    widget(sf::FloatRect posAndSize, std::string text);
+    widget(sf::FloatRect posAndSize, sf::RenderWindow *rw);
 
     void setText(std::string text);
 protected:
     sf::FloatRect m_posAndSize;
-    sf::String m_text;
+
+    sf::RenderWindow *m_rw;
 };
 
 #endif // WIDGET_HPP

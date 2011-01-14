@@ -8,9 +8,13 @@
 class staticText : public widget
 {
 public:
-    staticText (sf::FloatRect posAndSize, std::string text);
+    staticText (sf::FloatRect posAndSize, std::string text, sf::RenderWindow *rw);
 
     void render();
+
+    void setCaption(std::string text);
+private:
+    sf::String m_caption;
 };
 
 #endif // STATICTEXT_HPP
