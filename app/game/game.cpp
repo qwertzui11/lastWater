@@ -1,4 +1,6 @@
 #include "game.hpp"
+#include "guiSinglePlayerSettings.hpp"
+
 #include <iostream>
 
 game::game(int numComputer, sf::RenderWindow *rw)
@@ -9,6 +11,8 @@ game::game(int numComputer, sf::RenderWindow *rw)
     , m_worldSize((1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f))*2.f+800.f)
     , m_afterSingle(m_worldSize, m_rw)
 {
+    m_afterSingle.setListener(this);
+
     m_world.initialise(m_worldSize);
 
     if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
@@ -48,20 +52,33 @@ game::game(int numComputer, sf::RenderWindow *rw)
 
     m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(400.f+radius, 400.f+radius), sf::Color(230,185,117), 1000, -1);
 
+    sf::Color cols[] = {
+        sf::Color::Blue,
+        sf::Color::Cyan,
+        sf::Color::Green,
+        sf::Color::Magenta,
+        sf::Color::Red,
+        sf::Color::White,
+        sf::Color::Yellow,
+        sf::Color::Black
+    };
+
     for (int ind = 0; ind < numComputer+1; ++ind)
     {
-        float degree = ((float)ind)*((2.f*3.15159f)/((float)numComputer+1.f));
+        float degree = ((float)ind)*((2.f*3.15159f)/((float)numComputer+1.f))+1.f;
         sf::Vector2f pos(cos(degree), sin(degree));
         pos*=radius;
         pos+=sf::Vector2f(400.f+radius, 400.f+radius);
         if (ind == numComputer)
         {
-            m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
+            m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind]);
             break;
         }
-        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Cyan);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind]);
         m_computers.push_back(newComp);
     }
+
+    m_viewPos = m_player->getPlanet()->pos();
 }
 
 game::~game()
@@ -267,4 +284,21 @@ void game::resetCamera()
     rect.Right=rect.Left+width;
     rect.Bottom=rect.Top+height;
     view->SetFromRect(rect);
+}
+
+void game::done (state *from, state *next)
+{
+    (void)from;
+    (void)next;
+    if (m_afterSingle.exit())
+    {
+        state::done(new guiSinglePlayerSettings(m_rw));
+        return;
+    }
+    if (m_afterSingle.restart())
+    {
+        clear();
+        state::done(new game(m_numPlayer-1, m_rw));
+        return;
+    }
 }

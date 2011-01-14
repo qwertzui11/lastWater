@@ -24,6 +24,7 @@ private:
     sf::RenderWindow *m_rw;
 
     std::vector<button*> m_numEnemys;
+    button m_exit;
 };
 
 #endif // GUISINGLEPLAYERSETTINGS_HPP

@@ -5,8 +5,8 @@
 human::human(float worldSize, sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour)
     , m_select(0)
-    , m_btnAttacker(sf::FloatRect(pos.x, pos.y, pos.x + 100.f, pos.y + 20.f), "Attacker", m_rw)
-    , m_btnCollector(sf::FloatRect(pos.x-200.f, pos.y, pos.x-100.f + 100.f, pos.y + 20.f), "Collector", m_rw)
+    , m_btnAttacker(sf::FloatRect(pos.x+10, pos.y+130, pos.x + 160.f, pos.y + 160.f), "Attacker", m_rw)
+    , m_btnCollector(sf::FloatRect(pos.x-160.f, pos.y+130, pos.x-10.f, pos.y + 160.f), "Collector", m_rw)
     , m_numNewCollector(1)
     , m_numNewAttacker(1)
     , m_worldSize(worldSize)
@@ -29,7 +29,7 @@ bool human::event(const sf::Event *ev)
         {
             m_numNewAttacker+=ev->MouseWheel.Delta;
             if (m_numNewAttacker<1)
-                m_numNewAttacker=0;
+                m_numNewAttacker=1;
             if (m_numNewAttacker>100)
                 m_numNewAttacker=100;
             updateButtonCaption();
@@ -39,7 +39,7 @@ bool human::event(const sf::Event *ev)
         {
             m_numNewCollector+=ev->MouseWheel.Delta;
             if (m_numNewCollector<1)
-                m_numNewCollector=0;
+                m_numNewCollector=1;
             if (m_numNewCollector>100)
                 m_numNewCollector=100;
             updateButtonCaption();

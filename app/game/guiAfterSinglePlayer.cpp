@@ -7,6 +7,8 @@ guiAfterSinglePlayer::guiAfterSinglePlayer(float worldSize, sf::RenderWindow *rw
     , m_exit (sf::FloatRect(worldSize/2.f-150.f, worldSize/2.f+10.f, worldSize/2.f+150.f, worldSize/2.f+50.f), "Exit", m_rw)
     , m_activ(false)
     , m_statusStatus(pause)
+    , m_bRestart(false)
+    , m_bExit(false)
 {
     m_restart.setListener(this);
     m_exit.setListener(this);
@@ -45,6 +47,11 @@ void guiAfterSinglePlayer::clear()
 
 void guiAfterSinglePlayer::buttonPressed(button *btn)
 {
+    if (btn == &m_exit)
+        m_bExit = true;
+    if (btn == &m_restart)
+        m_bRestart = true;
+    done(0);
 }
 
 void guiAfterSinglePlayer::activate(bool activ)

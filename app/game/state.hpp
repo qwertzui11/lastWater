@@ -7,11 +7,23 @@
 class state
 {
 public:
-    state();
-    ~state();
+    state()
+        : m_listener(0)
+    {
+    }
+    ~state()
+    {
+        clear();
+    }
+    void setListener (stateListener *st)
+    {
+        m_listener = st;
+    }
+    void done(state *nextState)
+    {
+        m_listener->done(this, nextState);
+    }
 
-    void done(state *nextState);
-    void setListener (stateListener *st);
 
     virtual bool event(sf::Event *event) = 0;
     virtual void update(float time) = 0;

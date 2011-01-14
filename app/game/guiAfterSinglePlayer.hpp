@@ -29,6 +29,8 @@ public:
     void setStatus (status st);
     status getStatus() {return m_statusStatus;}
 
+    bool restart() {return m_bRestart;}
+    bool exit() {return m_bExit;}
 private:
     void buttonPressed(button *btn);
     sf::RenderWindow *m_rw;
@@ -40,6 +42,9 @@ private:
     bool m_activ;
 
     status m_statusStatus;
+
+    bool m_bRestart;
+    bool m_bExit;
 };
 
 #endif // GUIAFTERSINGLEPLAYER_HPP

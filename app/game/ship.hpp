@@ -25,7 +25,7 @@ public:
     virtual void kill() = 0;
     bool alive() {return m_alive;}
 
-    static const float g_speed = 300.f;
+    static const float g_speed = 200.f;
 protected:
     bool m_alive;
     sf::RenderWindow *m_rw;

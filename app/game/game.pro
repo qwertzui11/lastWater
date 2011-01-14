@@ -35,7 +35,6 @@ SOURCES += main.cpp \
     guiMainMenu.cpp \
     guiCredits.cpp \
     guiSinglePlayerSettings.cpp \
-    state.cpp \
     stateListener.cpp \
     stateManager.cpp \
     guiAfterSinglePlayer.cpp \
