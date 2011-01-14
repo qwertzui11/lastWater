@@ -1,19 +1,10 @@
 #include "game.hpp"
 #include <iostream>
 
-game::game()
-    : m_window(sf::VideoMode(1920, 1020, 32), "lastWater")
-    , m_world(&m_window)
+game::game(sf::RenderWindow *rw)
+    : m_rw(rw)
+    , m_world(m_rw)
     , m_nextAsteroid(0.f)
-{
-}
-
-game::~game()
-{
-}
-
-
-void game::initialise()
 {
     m_world.initialise();
 
@@ -50,49 +41,52 @@ void game::initialise()
         std::cout << "m_imgBubble.LoadFromFile";
     }
 
-    m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Blue);
-    m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, &m_window, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, -1);
+    m_player = new human(sf::Vector2f(400.f, 400.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Blue);
+    m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(1000.f, 1000.f), sf::Color(230,185,117), 1000, -1);
 
-    computer *newComp = new computer(sf::Vector2f(1610.f, 410.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Cyan);
+    computer *newComp = new computer(sf::Vector2f(1610.f, 410.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Cyan);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(410.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Red);
+    newComp = new computer(sf::Vector2f(410.f, 1600.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Red);
     m_computers.push_back(newComp);
-    newComp = new computer(sf::Vector2f(1610.f, 1610.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, &m_window, sf::Color::Green);
+    newComp = new computer(sf::Vector2f(1610.f, 1610.f), &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, sf::Color::Green);
     m_computers.push_back(newComp);
 }
 
-int game::run()
+game::~game()
 {
-    while (m_window.IsOpened())
+    clear();
+}
+
+void game::clear()
+{
+    delete m_player;
+    delete m_planetWater;
+    for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
     {
-        sf::Event Event;
-        while (m_window.GetEvent(Event))
-        {
-            if (Event.Type == sf::Event::Closed)
-                m_window.Close();
-            bool proccedEvent = m_player->event(&Event);
-            if (proccedEvent)
-            {
-                if (Event.Type == sf::Event::MouseWheelMoved)
-                {
-                    if (Event.MouseWheel.Delta < 0)
-                        zoom (m_window.GetFrameTime());
-                    else
-                        zoom (-m_window.GetFrameTime());
-                }
-            }
-            if (Event.Type == sf::Event::Resized)
-                m_window.GetDefaultView().SetHalfSize((float)Event.Size.Width, (float)Event.Size.Height);
-        }
-        m_window.Clear();
-        float frameTime = m_window.GetFrameTime();
-        if (frameTime > 1.f/60.f)
-            frameTime = 1.f/60.f;
-        update(frameTime);
-        render();
-        m_window.Display();
+        delete (*it);
     }
-    return EXIT_SUCCESS;
+    m_computers.clear();
+    for (std::vector<asteroid *>::iterator it = asteroid::g_asteroids.begin(); it < asteroid::g_asteroids.end(); ++it)
+    {
+        delete (*it);
+    }
+    asteroid::g_asteroids.clear();
+}
+
+bool game::event(sf::Event *event)
+{
+    bool proccedEvent = m_player->event(event);
+    if (proccedEvent)
+    {
+        if (event->Type == sf::Event::MouseWheelMoved)
+        {
+            if (event->MouseWheel.Delta < 0)
+                zoom (m_rw->GetFrameTime());
+            else
+                zoom (-m_rw->GetFrameTime());
+        }
+    }
+    return true;
 }
 
 void game::update(float timeLastFrame)
@@ -108,7 +102,7 @@ void game::update(float timeLastFrame)
     if (m_nextAsteroid > 0.25f)
     {
         m_nextAsteroid = 0.f;
-        new asteroid(&m_imgAsteroid, &m_window);
+        new asteroid(&m_imgAsteroid, m_rw);
     }
 
     m_planetWater->update(timeLastFrame);
@@ -164,40 +158,40 @@ void game::render()
 
 void game::updateScroll(float time)
 {
-    if (m_window.GetInput().GetMouseX() < 20 || m_window.GetInput().IsKeyDown(sf::Key::Left))
+    if (m_rw->GetInput().GetMouseX() < 20 || m_rw->GetInput().IsKeyDown(sf::Key::Left))
     {
         m_viewPos.x-=g_scrollSpeed*time;
     }
-    if (m_window.GetInput().GetMouseX() > (signed)m_window.GetWidth()-20 || m_window.GetInput().IsKeyDown(sf::Key::Right))
+    if (m_rw->GetInput().GetMouseX() > (signed)m_rw->GetWidth()-20 || m_rw->GetInput().IsKeyDown(sf::Key::Right))
     {
         m_viewPos.x+=g_scrollSpeed*time;
     }
-    if (m_window.GetInput().GetMouseY() < 20 || m_window.GetInput().IsKeyDown(sf::Key::Up))
+    if (m_rw->GetInput().GetMouseY() < 20 || m_rw->GetInput().IsKeyDown(sf::Key::Up))
     {
         m_viewPos.y-=g_scrollSpeed*time;
     }
-    if (m_window.GetInput().GetMouseY() > (signed)m_window.GetHeight()-10 || m_window.GetInput().IsKeyDown(sf::Key::Down))
+    if (m_rw->GetInput().GetMouseY() > (signed)m_rw->GetHeight()-10 || m_rw->GetInput().IsKeyDown(sf::Key::Down))
     {
         m_viewPos.y+=g_scrollSpeed*time;
     }
-    if (m_viewPos.x - m_window.GetDefaultView().GetHalfSize().x < 0)
-        m_viewPos.x = m_window.GetDefaultView().GetHalfSize().x;
-    if (m_viewPos.y - m_window.GetDefaultView().GetHalfSize().y < 0)
-        m_viewPos.y = m_window.GetDefaultView().GetHalfSize().y;
+    if (m_viewPos.x - m_rw->GetDefaultView().GetHalfSize().x < 0)
+        m_viewPos.x = m_rw->GetDefaultView().GetHalfSize().x;
+    if (m_viewPos.y - m_rw->GetDefaultView().GetHalfSize().y < 0)
+        m_viewPos.y = m_rw->GetDefaultView().GetHalfSize().y;
 
-    if (m_viewPos.x + m_window.GetDefaultView().GetHalfSize().x > 2000)
-        m_viewPos.x = 2000-m_window.GetDefaultView().GetHalfSize().x;
-    if (m_viewPos.y + m_window.GetDefaultView().GetHalfSize().y > 2000)
-        m_viewPos.y = 2000-m_window.GetDefaultView().GetHalfSize().y;
-    m_window.GetDefaultView().SetCenter(m_viewPos);
+    if (m_viewPos.x + m_rw->GetDefaultView().GetHalfSize().x > 2000)
+        m_viewPos.x = 2000-m_rw->GetDefaultView().GetHalfSize().x;
+    if (m_viewPos.y + m_rw->GetDefaultView().GetHalfSize().y > 2000)
+        m_viewPos.y = 2000-m_rw->GetDefaultView().GetHalfSize().y;
+    m_rw->GetDefaultView().SetCenter(m_viewPos);
     zoom(0.f);
 }
 
 void game::zoom(float time)
 {
-    sf::View * view = &m_window.GetDefaultView();
+    sf::View * view = &m_rw->GetDefaultView();
     sf::FloatRect rect = view->GetRect();
-    float aspect = ((float)m_window.GetHeight())/((float)m_window.GetWidth());
+    float aspect = ((float)m_rw->GetHeight())/((float)m_rw->GetWidth());
     float width = rect.Right - rect.Left;
     float height = rect.Bottom - rect.Top;
     width*=1.f+time*g_zoomSpeed;
@@ -210,7 +204,7 @@ void game::zoom(float time)
     rect.Bottom=rect.Top+height;
     view->SetFromRect(rect);
     /*view->Zoom(1.f + time*g_zoomSpeed);
-    if (view->GetHalfSize().x*2.f > m_window.GetWidth())*/
+    if (view->GetHalfSize().x*2.f > m_rw->GetWidth())*/
 }
 
 

@@ -11,19 +11,20 @@
 #include "computer.hpp"
 #include <vector>
 
-class game
+#include "state.hpp"
+
+class game : public  state
 {
 public:
-    game();
+    game(sf::RenderWindow *rw);
     ~game();
 
-    /* startup */
-    void initialise();
-
-    int run();
+    bool event(sf::Event *event);
 
     void update(float timeLastFrame);
     void render();
+
+    void clear();
 private:
     void updateScroll(float time);
     void zoom(float time);
@@ -31,7 +32,7 @@ private:
     static const float g_scrollSpeed = 500.f;
     static const float g_zoomSpeed = 20.f;
 
-    sf::RenderWindow m_window;
+    sf::RenderWindow *m_rw;
 
     sf::Image m_imgCollector;
     sf::Image m_imgAttacker;

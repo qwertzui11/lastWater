@@ -34,7 +34,10 @@ SOURCES += main.cpp \
     gui/buttonListener.cpp \
     guiMainMenu.cpp \
     guiCredits.cpp \
-    guiSinglePlayerSettings.cpp
+    guiSinglePlayerSettings.cpp \
+    state.cpp \
+    stateListener.cpp \
+    stateManager.cpp
 HEADERS += \
     game.hpp \
     world.hpp \
@@ -57,7 +60,10 @@ HEADERS += \
     gui/buttonListener.hpp \
     guiMainMenu.hpp \
     guiCredits.hpp \
-    guiSinglePlayerSettings.hpp
+    guiSinglePlayerSettings.hpp \
+    state.hpp \
+    stateListener.hpp \
+    stateManager.hpp
 
 unix {
     INCLUDEPATH += /home/markus/Documents/dev/projects/lastWater/dependencies/linux/include/
