@@ -13,7 +13,7 @@ void computer::update(float time){
     m_createShip+= time;
     if (m_createShip > 0.25f)
     {
-        sf::Vector2f mostWater((*it)->goTo((*(planet::g_planets.begin()+(rand()%planet::g_planets.size())))->pos()););
+        sf::Vector2f mostWater((*(planet::g_planets.begin()+(rand()%planet::g_planets.size())))->pos());
         int water = 0;
         for (std::vector<planet*>::iterator it = planet::g_planets.begin(); it < planet::g_planets.end(); ++it)
         {
