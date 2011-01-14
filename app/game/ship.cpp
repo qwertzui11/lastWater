@@ -40,6 +40,15 @@ void ship::render()
 void ship::update(float timeLastFrame)
 {
     sf::Vector2f wantedDir = normalize(m_goTo - m_sprite.GetPosition());
+
+    float rot = acos(wantedDir.x);
+    if (-wantedDir.y < 0.0)
+    {
+        rot = 2.f*3.1415926f - rot;
+    }
+    float res = (rot/(2.f*3.1415926f))*360.f+90.f;
+    m_sprite.SetRotation(res);
+
     float distance = length(m_goTo - m_sprite.GetPosition());
     if (distance > g_speed*timeLastFrame)
         wantedDir *= g_speed;
@@ -82,6 +91,7 @@ void ship::update(float timeLastFrame)
             break;
         }
     }
+
 }
 
 void ship::goTo(sf::Vector2f goTo)
