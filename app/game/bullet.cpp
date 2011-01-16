@@ -1,10 +1,12 @@
 #include "bullet.hpp"
 #include "useful.hpp"
+#include "sounds.hpp"
 
 bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWindow *rw, sf::Color col)
     : m_sprite(*img)
     , m_rw(rw)
     , m_lifeTime(0.f)
+    , m_sndBullet(*sounds::g_shot)
 {
     m_sprite.SetPosition(pos);
     m_sprite.SetColor(col);
@@ -17,6 +19,9 @@ bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWin
     float res = (rot/(2.f*3.1415926f))*360.f+90.f;
 
     m_sprite.SetRotation(res);
+
+    m_sndBullet.SetVolume(0.9f);
+    m_sndBullet.Play();
 }
 
 void bullet::update(float time)

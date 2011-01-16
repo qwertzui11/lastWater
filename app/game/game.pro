@@ -38,7 +38,8 @@ SOURCES += main.cpp \
     stateListener.cpp \
     stateManager.cpp \
     guiAfterSinglePlayer.cpp \
-    explosion.cpp
+    explosion.cpp \
+    sounds.cpp
 
 HEADERS += \
     game.hpp \
@@ -67,7 +68,8 @@ HEADERS += \
     stateListener.hpp \
     stateManager.hpp \
     guiAfterSinglePlayer.hpp \
-    explosion.hpp
+    explosion.hpp \
+    sounds.hpp
  
 
 unix {

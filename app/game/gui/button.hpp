@@ -5,6 +5,10 @@
 #include <SFML/Window/Event.hpp>
 #include "buttonListener.hpp"
 
+#include "sounds.hpp"
+
+#include <SFML/Audio/Sound.hpp>
+
 class button : public staticText
 {
 public:
@@ -27,6 +31,8 @@ private:
     sf::FloatRect m_posAndSize;
 
     buttonListener *m_listener;
+
+    sf::Sound m_sndClick;
 };
 
 #endif // BUTTON_HPP

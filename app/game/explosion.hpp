@@ -2,6 +2,7 @@
 #define EXPLOSION_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 class explosion
 {
@@ -19,6 +20,8 @@ class explosion
         sf::RenderWindow *m_rw;
         float m_lifeTime;
         sf::Vector2f m_pos;
+
+        sf::Sound m_sndExplosion;
     };
 
 #endif // EXPLOSION_HPP

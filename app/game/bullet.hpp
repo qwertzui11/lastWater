@@ -2,6 +2,7 @@
 #define BULLET_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio/Sound.hpp>
 
 class bullet
 {
@@ -23,6 +24,8 @@ private:
     sf::RenderWindow *m_rw;
 
     float m_lifeTime;
+
+    sf::Sound m_sndBullet;
 };
 
 #endif // BULLET_HPP

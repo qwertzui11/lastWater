@@ -12,6 +12,7 @@ button::button(sf::FloatRect posAndSize, std::string text, sf::RenderWindow *rw)
     , m_current(&m_btn)
     , m_posAndSize(posAndSize)
     , m_listener(0)
+    , m_sndClick(*sounds::g_button)
 {
 }
 
@@ -40,6 +41,7 @@ bool button::insertEvent(const sf::Event *event)
     }
     if (event->Type == sf::Event::MouseButtonPressed && m_current == &m_hover)
     {
+        m_sndClick.Play();
         m_current = &m_pressed;
         return true;
     }

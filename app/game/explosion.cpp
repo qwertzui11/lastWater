@@ -1,15 +1,19 @@
 #include "explosion.hpp"
 #include "useful.hpp"
+#include "sounds.hpp"
 
 explosion::explosion(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw)
     : m_sprite(*img)
     , m_rw(rw)
     , m_lifeTime(0.f)
     , m_pos(pos)
+    , m_sndExplosion(*sounds::g_explosion)
 {
     m_sprite.SetPosition(pos);
     m_explosion = sf::IntRect(0,0,35,50);
     m_sprite.SetSubRect(m_explosion);
+
+    m_sndExplosion.Play();
 }
 
 void explosion::update(float time)
