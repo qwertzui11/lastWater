@@ -20,6 +20,7 @@ bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWin
 
     m_sprite.SetRotation(res);
 
+    m_sndBullet.SetVolume(0.9f);
     if (m_rw->GetDefaultView().GetRect().Contains(pos.x, pos.y))
         m_sndBullet.Play();
 }
