@@ -207,7 +207,7 @@ void player::update(float time)
     for (std::vector<explosion *>::iterator it = m_explosions.begin(); it < m_explosions.end(); ++it)
     {
        (*it)->update(time);
-       if((*it)->lifeTime()> 2.85)
+       if((*it)->lifeTime()> 2.85f)
        {
             m_explosions.erase(it);
             break;

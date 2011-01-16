@@ -111,10 +111,10 @@ void explosion::update(float time)
         m_explosion = sf::IntRect(177,100,213,150);
         m_sprite.SetSubRect(m_explosion);
     }
-    if(m_lifeTime>2.85)
+/*    if(m_lifeTime>2.85)
     {
        m_lifeTime = 0.f;
-    }
+    }*/
     m_lifeTime += time;
 }
 
