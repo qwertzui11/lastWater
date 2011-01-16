@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "guiSinglePlayerSettings.hpp"
+#include "sounds.hpp"
 
 #include <iostream>
 
@@ -10,6 +11,8 @@ game::game(int numComputer, sf::RenderWindow *rw)
     , m_numPlayer(numComputer+1)
     , m_worldSize((1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f))*2.f+800.f)
     , m_afterSingle(m_worldSize, m_rw)
+    , m_won(*sounds::g_win)
+    , m_lost(*sounds::g_loose)
 {
     m_afterSingle.setListener(this);
 
@@ -197,6 +200,7 @@ void game::update(float timeLastFrame)
         {
             resetCamera();
             m_afterSingle.setStatus(guiAfterSinglePlayer::lost);
+            m_lost.Play();
             m_afterSingle.activate(true);
         }
     }
@@ -204,6 +208,7 @@ void game::update(float timeLastFrame)
     {
         resetCamera();
         m_afterSingle.setStatus(guiAfterSinglePlayer::won);
+        m_won.Play();
         m_afterSingle.activate(true);
     }
 }

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include <SFML/Audio/Sound.hpp>
 
 #include "ship.hpp"
 #include "world.hpp"
@@ -66,6 +67,9 @@ private:
     float m_worldSize;
 
     guiAfterSinglePlayer m_afterSingle;
+
+    sf::Sound m_won;
+    sf::Sound m_lost;
 };
 
 #endif // GAME_HPP
