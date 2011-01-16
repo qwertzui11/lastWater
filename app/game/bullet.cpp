@@ -20,8 +20,8 @@ bullet::bullet(sf::Vector2f pos, sf::Vector2f dir, sf::Image *img, sf::RenderWin
 
     m_sprite.SetRotation(res);
 
-    m_sndBullet.SetVolume(0.9f);
-    m_sndBullet.Play();
+    if (m_rw->GetDefaultView().GetRect().Contains(pos.x, posy))
+        m_sndBullet.Play();
 }
 
 void bullet::update(float time)

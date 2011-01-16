@@ -13,8 +13,9 @@ explosion::explosion(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw)
     m_explosion = sf::IntRect(0,0,35,50);
     m_sprite.SetSubRect(m_explosion);
 
-    m_sndExplosion.SetVolume(0.6f);
-    m_sndExplosion.Play();
+    m_sndExplosion.SetVolume(0.8f);
+    if (m_rw->GetDefaultView().GetRect().Contains(pos.x, posy))
+        m_sndExplosion.Play();
 }
 
 void explosion::update(float time)
