@@ -27,11 +27,11 @@ int main(int argc, char *argv[])
 
     mgr.run();
 
-    delete sounds::g_button;
+    /* delete sounds::g_button;
     delete sounds::g_shot;
     delete sounds::g_explosion;
     delete sounds::g_win;
-    delete sounds::g_loose;
+    delete sounds::g_loose;*/
 
     /*game gm(&rw);
     gm.initialise();

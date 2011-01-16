@@ -8,6 +8,8 @@ guiSinglePlayerSettings::guiSinglePlayerSettings(sf::RenderWindow *rw)
     , m_exit(sf::FloatRect(rw->GetWidth() / 2.f - 350.f, rw->GetHeight() / 2.f + 40.f, m_rw->GetWidth() / 2.f + 100.f -250.f, rw->GetHeight() / 2.f + 80.f),
              "Exit",
              rw)
+    , m_title("lastWater")
+    , m_credits("by Markus Lanner & Andreas Fink")
 {
     m_exit.setListener(this);
 
@@ -34,6 +36,16 @@ guiSinglePlayerSettings::guiSinglePlayerSettings(sf::RenderWindow *rw)
     rect.Right=rect.Left+width;
     rect.Bottom=rect.Top+height;
     view->SetFromRect(rect);
+
+    m_font.LoadFromFile("../data/font/pirulen.ttf", 50);
+
+    m_title.SetPosition(rect.Left + width/2.f - 240.f, rect.Top + 10.f);
+    m_credits.SetPosition(rect.Left + width/2.f - 240.f, rect.Top + 70.f);
+    m_title.SetColor(sf::Color(255, 255, 255, 255));
+    m_credits.SetSize(20);
+    m_title.SetSize(50);
+
+    m_title.SetFont(m_font);
 }
 
 bool guiSinglePlayerSettings::event(sf::Event *event)
@@ -54,6 +66,8 @@ void guiSinglePlayerSettings::render()
     for (std::vector<button *>::iterator it = m_numEnemys.begin(); it < m_numEnemys.end(); ++it)
         (*it)->render();
     m_exit.render();
+    m_rw->Draw(m_title);
+    m_rw->Draw(m_credits);
 }
 
 void guiSinglePlayerSettings::clear()

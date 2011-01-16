@@ -5,6 +5,7 @@
 #include "gui/button.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/String.hpp>
 
 class guiAfterSinglePlayer : public state, private buttonListener
 {

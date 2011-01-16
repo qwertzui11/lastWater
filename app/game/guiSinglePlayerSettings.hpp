@@ -25,6 +25,12 @@ private:
 
     std::vector<button*> m_numEnemys;
     button m_exit;
+
+    sf::Font m_font;
+
+    sf::String m_title;
+    sf::String m_credits;
+
 };
 
 #endif // GUISINGLEPLAYERSETTINGS_HPP
