@@ -14,7 +14,7 @@ explosion::explosion(sf::Vector2f pos, sf::Image *img, sf::RenderWindow *rw)
     m_sprite.SetSubRect(m_explosion);
 
     m_sndExplosion.SetVolume(0.8f);
-    if (m_rw->GetDefaultView().GetRect().Contains(pos.x, posy))
+    if (m_rw->GetDefaultView().GetRect().Contains(pos.x, pos.y))
         m_sndExplosion.Play();
 }
 
