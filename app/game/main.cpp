@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
     (void)argc;
     (void)argv;
 
-    sf::RenderWindow rw(sf::VideoMode(1024, 700, 32), "lastWater");//, sf::Style::Fullscreen | sf::Style::Close);
+    sf::RenderWindow rw(sf::VideoMode(1024, 700, 32), "lastWater", sf::Style::Fullscreen | sf::Style::Close);
 
     sounds::g_button = new sf::SoundBuffer();
     sounds::g_button->LoadFromFile("../data/sounds/click.wav");
