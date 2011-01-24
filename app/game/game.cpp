@@ -50,11 +50,24 @@ game::game(int level, sf::RenderWindow *rw)
         std::cout << "m_explosion.LoadFromFile";
     }
 
-    if (level == 1)
-    {
-        m_numPlayer = 2;
-    }
     m_numPlayer = level+1;
+    if (level == 1)
+        m_numPlayer = 2;
+    if (level == 2)
+        m_numPlayer = 3;
+    if (level == 3)
+        m_numPlayer = 4;
+    if (level == 4)
+        m_numPlayer = 5;
+    if (level == 5)
+        m_numPlayer = 2;
+    if (level == 6)
+        m_numPlayer = 3;
+    if (level == 7)
+        m_numPlayer = 4;
+    if (level == 8)
+        m_numPlayer = 5;
+
     m_worldSize = (1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)m_numPlayer)))/2.f))*2.f+800.f;
 
     m_world.initialise(m_worldSize);
@@ -77,17 +90,110 @@ game::game(int level, sf::RenderWindow *rw)
         sf::Color::Black
     };
 
-    for (int ind = 0; ind < m_numPlayer; ++ind)
+    sf::Vector2f pos = createPlanetPosition(0);
+    m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[0], &m_explosion);
+
+    if (level == 1)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 5, 5.0f);
+        m_computers.push_back(newComp);
+    }
+
+    if (level == 2)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(2);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+    }
+
+    if (level == 3)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(2);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(3);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+    }
+    if (level == 4)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(2);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(3);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(4);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 50, 5.0f);
+        m_computers.push_back(newComp);
+    }
+    if (level == 5)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+    }
+    if (level == 6)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(2);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+    }
+    if (level == 7)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(2);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(3);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+    }
+    if (level == 8)
+    {
+        pos = createPlanetPosition(1);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(2);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(3);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+        pos = createPlanetPosition(4);
+        newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[1], &m_explosion, 500, 0.25f);
+        m_computers.push_back(newComp);
+    }
+
+    pos = createPlanetPosition(0);
+    m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[0], &m_explosion);
+
+    /*for (int ind = 0; ind < m_numPlayer; ++ind)
     {
         sf::Vector2f pos = createPlanetPosition(ind);
         if (ind == 0)
         {
-            m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion);
+
             continue;
         }
         computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion, 100, 0.25f);
         m_computers.push_back(newComp);
-    }
+    }*/
 
     m_viewPos = m_player->getPlanet()->pos();
 }
@@ -328,6 +434,7 @@ void game::done (state *from, state *next)
     (void)next;
     if (m_afterSingle->exit())
     {
+        clear();
         state::done(new guiSinglePlayerSettings(m_rw));
         return;
     }
