@@ -8,13 +8,11 @@ game::game(int level, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_world(m_rw)
     , m_nextAsteroid(0.f)
-    , m_afterSingle(m_worldSize, m_rw)
+    , m_afterSingle(0)
     , m_won(*sounds::g_win)
     , m_lost(*sounds::g_loose)
     , m_totalWater(1000.f)
 {
-    m_afterSingle.setListener(this);
-
     m_world.initialise(m_worldSize);
 
     if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
@@ -60,6 +58,9 @@ game::game(int level, sf::RenderWindow *rw)
     }
     m_numPlayer = level+1;
     m_worldSize = (1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)m_numPlayer)))/2.f))*2.f+800.f;
+
+    m_afterSingle = new guiAfterSinglePlayer(m_worldSize, m_rw);
+    m_afterSingle->setListener(this);
 
     float radius = (m_worldSize-800.f)/2.f;
 
@@ -115,6 +116,8 @@ void game::clear()
         delete (*it);
     }
     bubble::g_bubbles.clear();
+    delete m_afterSingle;
+    m_afterSingle = 0;
 }
 
 sf::Vector2f game::createPlanetPosition (unsigned int ind)
@@ -134,11 +137,11 @@ bool game::event(sf::Event *event)
         if (event->Key.Code == 256)
         {
             resetCamera();
-            m_afterSingle.activate(!m_afterSingle.active());
+            m_afterSingle->activate(!m_afterSingle->active());
         }
     }
-    if (m_afterSingle.active())
-        m_afterSingle.event(event);
+    if (m_afterSingle->active())
+        m_afterSingle->event(event);
     else
     {
         bool proccedEvent = m_player->event(event);
@@ -158,9 +161,9 @@ bool game::event(sf::Event *event)
 
 void game::update(float timeLastFrame)
 {
-    if (m_afterSingle.active())
+    if (m_afterSingle->active())
     {
-        m_afterSingle.update(timeLastFrame);
+        m_afterSingle->update(timeLastFrame);
         return;
     }
     updateScroll(timeLastFrame);
@@ -218,17 +221,17 @@ void game::update(float timeLastFrame)
         if ((*it)->getPlanet()->water() > m_totalWater*0.9f)
         {
             resetCamera();
-            m_afterSingle.setStatus(guiAfterSinglePlayer::lost);
+            m_afterSingle->setStatus(guiAfterSinglePlayer::lost);
             m_lost.Play();
-            m_afterSingle.activate(true);
+            m_afterSingle->activate(true);
         }
     }
     if (m_player->getPlanet()->water() > m_totalWater*0.9f)
     {
         resetCamera();
-        m_afterSingle.setStatus(guiAfterSinglePlayer::won);
+        m_afterSingle->setStatus(guiAfterSinglePlayer::won);
         m_won.Play();
-        m_afterSingle.activate(true);
+        m_afterSingle->activate(true);
     }
 }
 
@@ -250,7 +253,7 @@ void game::render()
     }
     m_player->render();
 
-    m_afterSingle.render();
+    m_afterSingle->render();
 }
 
 void game::updateScroll(float time)
@@ -323,12 +326,12 @@ void game::done (state *from, state *next)
 {
     (void)from;
     (void)next;
-    if (m_afterSingle.exit())
+    if (m_afterSingle->exit())
     {
         state::done(new guiSinglePlayerSettings(m_rw));
         return;
     }
-    if (m_afterSingle.restart())
+    if (m_afterSingle->restart())
     {
         clear();
         state::done(new game(m_numPlayer-1, m_rw));

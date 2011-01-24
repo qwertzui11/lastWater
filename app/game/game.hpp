@@ -68,7 +68,7 @@ private:
     int m_numPlayer;
     float m_worldSize;
 
-    guiAfterSinglePlayer m_afterSingle;
+    guiAfterSinglePlayer *m_afterSingle;
 
     sf::Sound m_won;
     sf::Sound m_lost;

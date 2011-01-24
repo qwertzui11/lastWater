@@ -18,7 +18,7 @@ public:
     void clear();
 
     void activate(bool activ);
-    bool active() {return m_activ;}
+    bool active() {return m_activ;}    
 
     enum status
     {

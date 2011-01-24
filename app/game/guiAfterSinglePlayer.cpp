@@ -14,7 +14,6 @@ guiAfterSinglePlayer::guiAfterSinglePlayer(float worldSize, sf::RenderWindow *rw
     m_exit.setListener(this);
 }
 
-
 bool guiAfterSinglePlayer::event(sf::Event *event)
 {
     if (!m_activ)
