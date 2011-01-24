@@ -4,11 +4,11 @@
 button::button(sf::FloatRect posAndSize, std::string text, sf::RenderWindow *rw)
     : staticText(posAndSize, text, rw)
     , m_btn(sf::Shape::Rectangle(
-            posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color(255, 0, 0), 2.f, sf::Color(0, 0, 255)))
+            posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color(40, 150, 40), 2.f, sf::Color(0, 100, 0)))
     , m_hover(sf::Shape::Rectangle(
-            posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color(0, 255, 0), 2.f, sf::Color(255, 0, 0)))
+            posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color(0, 200, 0), 2.f, sf::Color(0, 100, 0)))
     , m_pressed(sf::Shape::Rectangle(
-            posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color(0, 255, 255), 2.f, sf::Color(255, 255, 0)))
+            posAndSize.Left, posAndSize.Top, posAndSize.Right, posAndSize.Bottom, sf::Color::Green, 2.f, sf::Color(40, 150, 40)))
     , m_current(&m_btn)
     , m_posAndSize(posAndSize)
     , m_listener(0)

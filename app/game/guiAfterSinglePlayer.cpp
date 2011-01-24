@@ -65,14 +65,17 @@ void guiAfterSinglePlayer::setStatus (status st)
     if (st == lost)
     {
         m_status.setCaption("You Lost!");
+        m_status.setColour(sf::Color::Red);
     }
     if (st == won)
     {
         m_status.setCaption("You Won!");
+        m_status.setColour(sf::Color::Blue);
     }
     if (st == pause)
     {
         m_status.setCaption("Pause");
+        m_status.setColour(sf::Color::White);
     }
 }
 

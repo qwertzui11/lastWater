@@ -1,9 +1,24 @@
 #include "computer.hpp"
 
-computer::computer(sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour, sf::Image *imgExplosion)
+computer::computer(sf::Vector2f pos,
+                   sf::Image *imgWet,
+                   sf::Image *imgDry,
+                   sf::Font *font,
+                   sf::Image *imgCollector,
+                   sf::Image *imgAttacker,
+                   sf::Image *imgBullet,
+                   sf::Image *imgWorld,
+                   sf::Image *imgBubble,
+                   sf::RenderWindow *rw,
+                   sf::Color colour,
+                   sf::Image *imgExplosion,
+                   unsigned int maxCollector,
+                   float timeMove)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour, imgExplosion)
     , m_createShip(0.f)
     , m_lastMostWater(1000.f, 1000.f)
+    , m_maxCollector(maxCollector)
+    , m_timeMove(timeMove)
 {
 }
 
@@ -11,7 +26,7 @@ void computer::update(float time){
     player::update(time);
 
     m_createShip+= time;
-    if (m_createShip > 0.25f)
+    if (m_createShip > m_timeMove)
     {
         sf::Vector2f mostWater((*(planet::g_planets.begin()+(rand()%planet::g_planets.size())))->pos());
         int water = 0;
@@ -61,7 +76,7 @@ void computer::update(float time){
                     createAColl = true;
             }
         }
-        if (createAColl)
+        if (createAColl && m_collector.size() < m_maxCollector)
         {
             collector *coll = player::newCollector();
             if (coll)

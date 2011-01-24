@@ -17,7 +17,9 @@ public:
              sf::Image *imgBubble,
              sf::RenderWindow *rw,
              sf::Color colour,
-             sf::Image *imgExplosion);
+             sf::Image *imgExplosion,
+             unsigned int maxCollector,
+             float timeMove);
 
     void update(float time);
     void render();
@@ -26,6 +28,9 @@ private:
     float m_createShip;
 
     sf::Vector2f m_lastMostWater;
+
+    unsigned int m_maxCollector;
+    float m_timeMove;
 };
 
 #endif // COMPUTER_HPP

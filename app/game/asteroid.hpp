@@ -14,6 +14,8 @@ public:
     static std::vector <asteroid*> g_asteroids;
 private:
     sf::Vector2f m_dir;
+
+    float m_rotSpeed;
 };
 
 #endif // ASTEROID_HPP

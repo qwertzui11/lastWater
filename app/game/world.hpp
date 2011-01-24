@@ -17,6 +17,8 @@ private:
     sf::RenderWindow *m_rw;
     sf::Image m_image;
     sf::Sprite m_sprite;
+
+    sf::Shape m_border[4];
 };
 
 #endif // WORLD_HPP

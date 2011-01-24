@@ -19,7 +19,7 @@ guiSinglePlayerSettings::guiSinglePlayerSettings(sf::RenderWindow *rw)
         button *newOne = new button(sf::FloatRect(calc.x, calc.y, calc.x+200.f, calc.y+40.f), "text", m_rw);
         std::ostringstream outStream;
         outStream << ind+1;
-        std::string caption = outStream.str() + "x Enemys";
+        std::string caption = "Level " + outStream.str();
         newOne->setCaption(caption);
         newOne->setListener(this);
         m_numEnemys.push_back(newOne);

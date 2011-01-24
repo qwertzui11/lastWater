@@ -3,9 +3,14 @@
 staticText::staticText(sf::FloatRect posAndSize, std::string text, sf::RenderWindow *rw)
     : widget(posAndSize, rw)
 {
-    m_caption.SetSize(20);
+    m_caption.SetSize(30);
     m_caption.SetColor(sf::Color(255, 255, 255));
     setCaption(text);
+}
+
+void staticText::setColour(sf::Color col)
+{
+    m_caption.SetColor(col);
 }
 
 void staticText::setCaption(std::string text)
@@ -21,6 +26,12 @@ void staticText::setCaption(std::string text)
 
 void staticText::render()
 {
+    sf::Color buffer = m_caption.GetColor();
+    m_caption.SetColor(sf::Color(0,0,0));
     m_rw->Draw(m_caption);
+    m_caption.SetPosition(m_caption.GetPosition()+sf::Vector2f(2.f, 2.f));
+    m_caption.SetColor(buffer);
+    m_rw->Draw(m_caption);
+    m_caption.SetPosition(m_caption.GetPosition()-sf::Vector2f(2.f, 2.f));
 }
 

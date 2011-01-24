@@ -4,15 +4,14 @@
 
 #include <iostream>
 
-game::game(int numComputer, sf::RenderWindow *rw)
+game::game(int level, sf::RenderWindow *rw)
     : m_rw(rw)
     , m_world(m_rw)
     , m_nextAsteroid(0.f)
-    , m_numPlayer(numComputer+1)
-    , m_worldSize((1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)numComputer+1.f)))/2.f))*2.f+800.f)
     , m_afterSingle(m_worldSize, m_rw)
     , m_won(*sounds::g_win)
     , m_lost(*sounds::g_loose)
+    , m_totalWater(1000.f)
 {
     m_afterSingle.setListener(this);
 
@@ -55,6 +54,13 @@ game::game(int numComputer, sf::RenderWindow *rw)
         std::cout << "m_explosion.LoadFromFile";
     }
 
+    if (level == 1)
+    {
+        m_numPlayer = 2;
+    }
+    m_numPlayer = level+1;
+    m_worldSize = (1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)m_numPlayer)))/2.f))*2.f+800.f;
+
     float radius = (m_worldSize-800.f)/2.f;
 
     m_planetWater = new planet(&m_imgWater, &m_img1p, &m_font, m_rw, sf::Vector2f(400.f+radius, 400.f+radius), sf::Color(230,185,117), 1000, -1);
@@ -70,18 +76,15 @@ game::game(int numComputer, sf::RenderWindow *rw)
         sf::Color::Black
     };
 
-    for (int ind = 0; ind < numComputer+1; ++ind)
+    for (int ind = 0; ind < m_numPlayer; ++ind)
     {
-        float degree = ((float)ind)*((2.f*3.15159f)/((float)numComputer+1.f))+1.f;
-        sf::Vector2f pos(cos(degree), sin(degree));
-        pos*=radius;
-        pos+=sf::Vector2f(400.f+radius, 400.f+radius);
-        if (ind == numComputer)
+        sf::Vector2f pos = createPlanetPosition(ind);
+        if (ind == 0)
         {
             m_player = new human(m_worldSize, pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion);
-            break;
+            continue;
         }
-        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion);
+        computer *newComp = new computer(pos, &m_imgWater, &m_img1p, &m_font, &m_imgCollector, &m_imgAttacker, &m_imgBullet, 0, &m_imgBubble, m_rw, cols[ind],&m_explosion, 100, 0.25f);
         m_computers.push_back(newComp);
     }
 
@@ -112,6 +115,16 @@ void game::clear()
         delete (*it);
     }
     bubble::g_bubbles.clear();
+}
+
+sf::Vector2f game::createPlanetPosition (unsigned int ind)
+{
+    float degree = ((float)ind)*((2.f*3.15159f)/((float)m_numPlayer))+1.f;
+    float radius = m_worldSize/2.f-400.f;
+    sf::Vector2f pos(cos(degree), sin(degree));
+    pos*=radius;
+    pos+=sf::Vector2f(400.f+radius, 400.f+radius);
+    return pos;
 }
 
 bool game::event(sf::Event *event)
@@ -179,7 +192,7 @@ void game::update(float timeLastFrame)
         bool cancel(false);
         for (std::vector<planet *>::iterator it2 = planet::g_planets.begin(); it2 < planet::g_planets.end(); ++it2)
         {
-            if (length(pos - (*it2)->pos()) < planet::size())
+            if (length(pos - (*it2)->pos()) < planet::size()-20)
             {
                 (*it2)->addIron(5);
                 delete (*it);
@@ -193,10 +206,16 @@ void game::update(float timeLastFrame)
     for (std::vector<bubble *>::iterator it = bubble::g_bubbles.begin(); it < bubble::g_bubbles.end(); ++it)
     {
         (*it)->update(timeLastFrame);
+        if (!(*it)->getCollector())
+        {
+            bubble::g_bubbles.erase(it);
+            m_totalWater-=10;
+            break;
+        }
     }
     for (std::vector<computer *>::iterator it = m_computers.begin(); it < m_computers.end(); ++it)
     {
-        if ((*it)->getPlanet()->water() == 1000)
+        if ((*it)->getPlanet()->water() > m_totalWater*0.9f)
         {
             resetCamera();
             m_afterSingle.setStatus(guiAfterSinglePlayer::lost);
@@ -204,7 +223,7 @@ void game::update(float timeLastFrame)
             m_afterSingle.activate(true);
         }
     }
-    if (m_player->getPlanet()->water() == 1000)
+    if (m_player->getPlanet()->water() > m_totalWater*0.9f)
     {
         resetCamera();
         m_afterSingle.setStatus(guiAfterSinglePlayer::won);
@@ -236,19 +255,19 @@ void game::render()
 
 void game::updateScroll(float time)
 {
-    if (m_rw->GetInput().GetMouseX() < 20 || m_rw->GetInput().IsKeyDown(sf::Key::Left))
+    if (m_rw->GetInput().GetMouseX() < 40 || m_rw->GetInput().IsKeyDown(sf::Key::Left))
     {
         m_viewPos.x-=g_scrollSpeed*time;
     }
-    if (m_rw->GetInput().GetMouseX() > (signed)m_rw->GetWidth()-20 || m_rw->GetInput().IsKeyDown(sf::Key::Right))
+    if (m_rw->GetInput().GetMouseX() > (signed)m_rw->GetWidth()-40 || m_rw->GetInput().IsKeyDown(sf::Key::Right))
     {
         m_viewPos.x+=g_scrollSpeed*time;
     }
-    if (m_rw->GetInput().GetMouseY() < 20 || m_rw->GetInput().IsKeyDown(sf::Key::Up))
+    if (m_rw->GetInput().GetMouseY() < 40 || m_rw->GetInput().IsKeyDown(sf::Key::Up))
     {
         m_viewPos.y-=g_scrollSpeed*time;
     }
-    if (m_rw->GetInput().GetMouseY() > (signed)m_rw->GetHeight()-10 || m_rw->GetInput().IsKeyDown(sf::Key::Down))
+    if (m_rw->GetInput().GetMouseY() > (signed)m_rw->GetHeight()-40 || m_rw->GetInput().IsKeyDown(sf::Key::Down))
     {
         m_viewPos.y+=g_scrollSpeed*time;
     }

@@ -11,9 +11,13 @@ asteroid::asteroid(float worldSize, sf::Image *img, sf::RenderWindow *rw)
 {
     int size = worldSize;
     // kommt der asteroid von oben?
+    m_rotSpeed = rand()%100+100;
+    m_rotSpeed/=1000.f;
+    m_rotSpeed*=360.f;
     int start = rand()%4;
     float dir = (rand()%size)-1000;
     dir/=1000.f;
+    m_sprite.SetCenter(m_sprite.GetSize()/2.f);
     if (start == 0)
     {
         m_sprite.SetPosition(rand()%size, -(int)img->GetHeight());
@@ -49,9 +53,14 @@ asteroid::~asteroid()
 void asteroid::update (float timeLastFrame)
 {
     if (!m_collector)
+    {
+        m_sprite.Rotate(timeLastFrame*m_rotSpeed);
         m_sprite.Move(m_dir*timeLastFrame*100.0f);
+    }
     else
+    {
         collectable::update(timeLastFrame);
+    }
 }
 
 

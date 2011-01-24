@@ -13,6 +13,7 @@ public:
     void render();
 
     void setCaption(std::string text);
+    void setColour(sf::Color col);
 private:
     sf::String m_caption;
 };

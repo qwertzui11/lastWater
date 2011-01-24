@@ -9,7 +9,7 @@ world::~world()
 {
 }
 
-void world::initialise(float m_worldSize)
+void world::initialise(float worldSize)
 {
     if (!m_image.LoadFromFile("../data/img/background.tga"))
     {
@@ -17,7 +17,11 @@ void world::initialise(float m_worldSize)
     }
     m_image.SetSmooth(false);
     m_sprite.SetImage(m_image);
-    int cntx = m_worldSize / 1000;
+    m_border[0] = sf::Shape::Line(sf::Vector2f(10, 10), sf::Vector2f(worldSize - 10, 10), 5.f, sf::Color::Red);
+    m_border[1] = sf::Shape::Line(sf::Vector2f(worldSize - 10, 10), sf::Vector2f(worldSize - 10, worldSize - 10), 5.f, sf::Color::Red);
+    m_border[2] = sf::Shape::Line(sf::Vector2f(worldSize - 10, worldSize - 10), sf::Vector2f(10, worldSize - 10), 5.f, sf::Color::Red);
+    m_border[3] = sf::Shape::Line(sf::Vector2f(10, worldSize - 10), sf::Vector2f(10, 10), 5.f, sf::Color::Red);
+/*    int cntx = m_worldSize / 1000;
     int cnty = m_worldSize / 625;
     for (int y=0; y<cnty+1; y++)
         for (int x=0; x<cntx+1; x++)
@@ -25,7 +29,7 @@ void world::initialise(float m_worldSize)
             m_sprite.SetPosition(x*1000,y*625);
             m_rw->Draw(m_sprite);
         }
-    //m_sprite.SetX(0);
+*/    //m_sprite.SetX(0);
     //m_sprite.SetY(0);
 
 }
@@ -48,4 +52,6 @@ void world::render(float m_worldSize)
             m_sprite.SetPosition(x*1245,y*1245);
             m_rw->Draw(m_sprite);
         }
+    for (int ind =  0; ind < 4; ++ind)
+        m_rw->Draw(m_border[ind]);
 }

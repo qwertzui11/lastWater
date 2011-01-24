@@ -56,7 +56,9 @@ attacker* player::newAttacker()
         return 0;
     m_planet.subIron(10);
 
-    attacker *newOne = new attacker(m_pos, m_imgAttacker, m_rw, m_colour);
+    sf::Vector2f pos = m_pos;
+    pos += sf::Vector2f(planet::radius(), 0.f);
+    attacker *newOne = new attacker(pos, m_imgAttacker, m_rw, m_colour);
     float ra = rand()%10000;
     ra/=1000.f;
     newOne->goTo(sf::Vector2f(m_pos.x+ra, m_pos.y+1.f));
@@ -70,7 +72,9 @@ collector* player::newCollector()
         return 0;
     m_planet.subIron(5);
 
-    collector *newOne = new collector(m_pos, m_imgCollector, m_imgBubble, m_rw, m_colour, &m_planet);
+    sf::Vector2f pos = m_pos;
+    pos -= sf::Vector2f(planet::radius(), 0.f);
+    collector *newOne = new collector(pos, m_imgCollector, m_imgBubble, m_rw, m_colour, &m_planet);
     float ra = rand()%10000;
     ra/=1000.f;
     newOne->goTo(sf::Vector2f(m_pos.x+ra, m_pos.y+1.f));

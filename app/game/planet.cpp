@@ -53,9 +53,12 @@ void planet::render()
     wText.SetText("Water: "+w);
     wText.SetFont(*m_font);
     wText.SetSize(20);
-    wText.SetColor(sf::Color(255, 255, 255));
+    wText.SetColor(sf::Color(0, 0, 0));
     wText.SetScale(2.f, 2.f);
-    wText.SetPosition(m_spriteDry.GetPosition() + sf::Vector2f(-wText.GetRect().GetWidth()/2.f, -10.0f-wText.GetRect().GetHeight()/2.f));
+    wText.SetPosition(m_spriteDry.GetPosition() + sf::Vector2f(-wText.GetRect().GetWidth()/2.f, -30.0f-wText.GetRect().GetHeight()/2.f));
+    m_rw->Draw(wText);
+    wText.SetColor(sf::Color(255, 255, 255));
+    wText.SetPosition(wText.GetPosition()+sf::Vector2f(2.f, 2.f));
     m_rw->Draw(wText);
 
     if(m_ironLvl > -1)
@@ -68,9 +71,12 @@ void planet::render()
         iText.SetText("Iron: "+i);
         iText.SetFont(*m_font);
         iText.SetSize(20);
-        iText.SetColor(sf::Color(255, 255, 255));
+        iText.SetColor(sf::Color(0, 0, 0));
         iText.SetScale(2.f, 2.f);
-        iText.SetPosition(m_spriteDry.GetPosition() + sf::Vector2f(-iText.GetRect().GetWidth()/2.f, 10.0f+iText.GetRect().GetHeight()/2.f));
+        iText.SetPosition(m_spriteDry.GetPosition() + sf::Vector2f(-iText.GetRect().GetWidth()/2.f, -10.0f+iText.GetRect().GetHeight()/2.f));
+        m_rw->Draw(iText);
+        iText.SetColor(sf::Color(255, 255, 255));
+        iText.SetPosition(iText.GetPosition()+sf::Vector2f(2.f, 2.f));
         m_rw->Draw(iText);
     }
 }

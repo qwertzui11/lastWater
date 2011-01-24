@@ -36,6 +36,8 @@ private:
     static const float g_scrollSpeed = 500.f;
     static const float g_zoomSpeed = 20.f;
 
+    sf::Vector2f createPlanetPosition (unsigned int ind);
+
     sf::RenderWindow *m_rw;
 
     sf::Image m_imgCollector;
@@ -70,6 +72,8 @@ private:
 
     sf::Sound m_won;
     sf::Sound m_lost;
+
+    float m_totalWater;
 };
 
 #endif // GAME_HPP

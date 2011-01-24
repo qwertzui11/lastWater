@@ -5,8 +5,8 @@
 human::human(float worldSize, sf::Vector2f pos, sf::Image *imgWet, sf::Image *imgDry, sf::Font *font, sf::Image *imgCollector, sf::Image *imgAttacker, sf::Image *imgBullet, sf::Image *imgWorld, sf::Image *imgBubble, sf::RenderWindow *rw, sf::Color colour, sf::Image *imgExplosion)
     : player(pos, imgWet, imgDry, font, imgCollector, imgAttacker, imgBullet, imgWorld, imgBubble, rw, colour, imgExplosion)
     , m_select(0)
-    , m_btnAttacker(sf::FloatRect(pos.x+10, pos.y+130, pos.x + 160.f, pos.y + 160.f), "Attacker", m_rw)
-    , m_btnCollector(sf::FloatRect(pos.x-160.f, pos.y+130, pos.x-10.f, pos.y + 160.f), "Collector", m_rw)
+    , m_btnAttacker(sf::FloatRect(pos.x+10, pos.y+90, pos.x + 180.f, pos.y + 130.f), "Attacker", m_rw)
+    , m_btnCollector(sf::FloatRect(pos.x-180.f, pos.y+90, pos.x-10.f, pos.y + 130.f), "Collector", m_rw)
     , m_numNewCollector(1)
     , m_numNewAttacker(1)
     , m_worldSize(worldSize)
@@ -87,48 +87,54 @@ void human::update(float timeLastFrame)
         if (coll.GetHeight() == 0)
             coll.Bottom = coll.Top+1.0f;
 
-        bool gotOneAttacker(false);
-        for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
+        //bool gotOneAttacker(false);
+        if (!m_rw->GetInput().IsKeyDown(sf::Key::LShift))
         {
-            if (pos.x < m_select->GetPointPosition(0).x)
+            for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
             {
-                coll.Left = pos.x;
-                coll.Right = m_select->GetPointPosition(0).x;
-            }
-            if (pos.y < m_select->GetPointPosition(0).y)
-            {
-                coll.Top = pos.y;
-                coll.Bottom = m_select->GetPointPosition(0).y;
-            }
-            if (coll.Intersects((*it)->collRect()))
-            {
-                gotOneAttacker = true;
-                (*it)->setSelected(true);
-            }
-            else
-            {
-                (*it)->setSelected(false);
+                if (pos.x < m_select->GetPointPosition(0).x)
+                {
+                    coll.Left = pos.x;
+                    coll.Right = m_select->GetPointPosition(0).x;
+                }
+                if (pos.y < m_select->GetPointPosition(0).y)
+                {
+                    coll.Top = pos.y;
+                    coll.Bottom = m_select->GetPointPosition(0).y;
+                }
+                if (coll.Intersects((*it)->collRect()))
+                {
+            //        gotOneAttacker = true;
+                    (*it)->setSelected(true);
+                }
+                else
+                {
+                    (*it)->setSelected(false);
+                }
             }
         }
-        for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
+        if (!m_rw->GetInput().IsKeyDown(sf::Key::LControl))
         {
-            if (pos.x < m_select->GetPointPosition(0).x)
+            for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
             {
-                coll.Left = pos.x;
-                coll.Right = m_select->GetPointPosition(0).x;
-            }
-            if (pos.y < m_select->GetPointPosition(0).y)
-            {
-                coll.Top = pos.y;
-                coll.Bottom = m_select->GetPointPosition(0).y;
-            }
-            if (coll.Intersects((*it)->collRect()) && !gotOneAttacker)
-            {
-                (*it)->setSelected(true);
-            }
-            else
-            {
-                (*it)->setSelected(false);
+                if (pos.x < m_select->GetPointPosition(0).x)
+                {
+                    coll.Left = pos.x;
+                    coll.Right = m_select->GetPointPosition(0).x;
+                }
+                if (pos.y < m_select->GetPointPosition(0).y)
+                {
+                    coll.Top = pos.y;
+                    coll.Bottom = m_select->GetPointPosition(0).y;
+                }
+                if (coll.Intersects((*it)->collRect()))
+                {
+                    (*it)->setSelected(true);
+                }
+                else
+                {
+                    (*it)->setSelected(false);
+                }
             }
         }
     }
@@ -164,12 +170,12 @@ void human::stopSelect()
 void human::sendSelected()
 {
     int num(0);
-    bool gotAnAttacker(false);
+//    bool gotAnAttacker(false);
     for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
     {
         if ((*it)->isSelected())
         {
-            gotAnAttacker = true;
+//            gotAnAttacker = true;
             ++num;
         }
     }
@@ -184,7 +190,7 @@ void human::sendSelected()
 
     float sqrtNum = sqrt(num);
     int ind = 0;
-    if (gotAnAttacker)
+//    if (gotAnAttacker)
     {
         for (std::vector<attacker *>::iterator it = m_attacker.begin(); it < m_attacker.end(); ++it)
         {
@@ -198,15 +204,26 @@ void human::sendSelected()
             }
         }
     }
-    else
+//    else
     {
+        bool manual(true);
         for (std::vector<collector *>::iterator it = m_collector.begin(); it < m_collector.end(); ++it)
         {
             if ((*it)->isSelected())
             {
                 sf::Vector2f to = mousePos(m_rw);
-                /*to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*3.5f,
-                                   (-sqrtNum/2.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*3.5f);*/
+
+                if (it == m_collector.begin())
+                {
+                    (*it)->goTo(to);
+                    if ((*it)->getState() == collector::manualPositionGoTo)
+                        manual = false;
+                }
+                if (!manual)
+                {
+                    to += sf::Vector2f((-sqrtNum/2.f + ((float)(ind%(int)(sqrtNum+1))))*ship::g_radius*2.5f,
+                                       (-sqrtNum/2.f + ((float)(ind/(int)(sqrtNum+1))))*ship::g_radius*2.5f);
+                }
                 (*it)->goTo(to);
                 ++ind;
             }
