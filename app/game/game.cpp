@@ -13,8 +13,6 @@ game::game(int level, sf::RenderWindow *rw)
     , m_lost(*sounds::g_loose)
     , m_totalWater(1000.f)
 {
-    m_world.initialise(m_worldSize);
-
     if (!m_imgCollector.LoadFromFile("../data/img/1p_collector.tga"))
     {
         std::cout << "m_imgShip.LoadFromFile";
@@ -58,6 +56,8 @@ game::game(int level, sf::RenderWindow *rw)
     }
     m_numPlayer = level+1;
     m_worldSize = (1000.f / sin(((2.f*3.1415926535897932384626433f) / (((float)m_numPlayer)))/2.f))*2.f+800.f;
+
+    m_world.initialise(m_worldSize);
 
     m_afterSingle = new guiAfterSinglePlayer(m_worldSize, m_rw);
     m_afterSingle->setListener(this);
